@@ -1,7 +1,7 @@
 {
     "name": "setono/sylius-google-ads-plugin",
     "type": "symfony-bundle",
-    "description": "Acme example plugin for Sylius.",
+    "description": "Google Ads plugin for Sylius.",
     "keywords": [
         "sylius",
         "sylius-plugin"
