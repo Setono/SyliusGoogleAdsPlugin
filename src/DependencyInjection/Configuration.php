@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Acme\SyliusExamplePlugin\DependencyInjection;
+namespace Setono\SyliusGoogleAdsPlugin\DependencyInjection;
 
 use function method_exists;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -12,22 +12,13 @@ final class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('acme_sylius_example');
+        $treeBuilder = new TreeBuilder('setono_sylius_google_ads');
         if (method_exists($treeBuilder, 'getRootNode')) {
             $rootNode = $treeBuilder->getRootNode();
         } else {
             // BC layer for symfony/config 4.1 and older
-            $rootNode = $treeBuilder->root('acme_sylius_example');
+            $rootNode = $treeBuilder->root('setono_sylius_google_ads');
         }
-
-        $rootNode
-            ->children()
-                ->scalarNode('option')
-                    ->info('This is an example configuration option')
-                    ->isRequired()
-                    ->cannotBeEmpty()
-                ->end()
-        ;
 
         return $treeBuilder;
     }

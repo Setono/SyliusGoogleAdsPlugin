@@ -1,5 +1,5 @@
 {
-    "name": "setono/sylius-plugin-skeleton",
+    "name": "setono/sylius-google-ads-plugin",
     "type": "symfony-bundle",
     "description": "Acme example plugin for Sylius.",
     "keywords": [
@@ -45,12 +45,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Acme\\SyliusExamplePlugin\\": "src/"
+            "Setono\\SyliusGoogleAdsPlugin\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\Acme\\SyliusExamplePlugin\\": "tests/"
+            "Tests\\Setono\\SyliusGoogleAdsPlugin\\": "tests/"
         },
         "classmap": [
             "tests/Application/Kernel.php"

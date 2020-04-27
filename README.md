@@ -1,4 +1,4 @@
-# Setono Sylius Plugin Skeleton
+# Setono Sylius Google Ads Plugin
 
 [![Latest Version][ico-version]][link-packagist]
 [![Latest Unstable Version][ico-unstable-version]][link-packagist]
@@ -6,40 +6,40 @@
 [![Build Status][ico-github-actions]][link-github-actions]
 [![Quality Score][ico-code-quality]][link-code-quality]
 
-[Setono](https://setono.com) have made a bunch of [plugins for Sylius](https://github.com/Setono), and we have some guidelines
-which we try to follow when developing plugins. These guidelines are used in this repository and it gives you a very
-solid base when developing plugins.
+Plugin for tracking Google Ads related events and adding respective tags.
 
-Enjoy! 
+## Installation
 
-## Quickstart
+### Step 1: Install and enable plugin
 
-1. Run `composer create-project setono/sylius-plugin-skeleton ProjectName`.
+Open a command console, enter your project directory and execute the following command to download the latest stable version of this plugin:
 
-2. From the plugin skeleton root directory, run the following commands:
+```bash
+$ composer require setono/sylius-google-ads-plugin
+```
 
-    ```bash
-    $ php init
-    $ (cd tests/Application && yarn install)
-    $ (cd tests/Application && yarn build)
-    $ (cd tests/Application && bin/console assets:install)
-    
-    $ (cd tests/Application && bin/console doctrine:database:create)
-    $ (cd tests/Application && bin/console doctrine:schema:create)
-   
-    $ (cd tests/Application && bin/console sylius:fixtures:load -n)
-    ```
-   
-3. Start your local PHP server: `symfony serve` (see https://symfony.com/doc/current/setup/symfony_server.html for docs)
+This command requires you to have Composer installed globally, as explained in the [installation chapter](https://getcomposer.org/doc/00-intro.md) of the Composer documentation.
 
-To be able to setup a plugin's database, remember to configure you database credentials in `tests/Application/.env` and `tests/Application/.env.test`.
+Add bundle to your `config/bundles.php`:
 
-[ico-version]: https://poser.pugx.org/setono/sylius-plugin-skeleton/v/stable
-[ico-unstable-version]: https://poser.pugx.org/setono/sylius-plugin-skeleton/v/unstable
-[ico-license]: https://poser.pugx.org/setono/sylius-plugin-skeleton/license
-[ico-github-actions]: https://github.com/Setono/SyliusPluginSkeleton/workflows/build/badge.svg
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/Setono/SyliusPluginSkeleton.svg?style=flat-square
+```php
+<?php
+# config/bundles.php
 
-[link-packagist]: https://packagist.org/packages/setono/sylius-plugin-skeleton
-[link-github-actions]: https://github.com/Setono/SyliusPluginSkeleton/actions
-[link-code-quality]: https://scrutinizer-ci.com/g/Setono/SyliusPluginSkeleton
+return [
+    // ...
+    Setono\SyliusGoogleAdsPlugin\SetonoSyliusGoogleAdsPlugin::class => ['all' => true],
+    // ...
+];
+
+```
+
+[ico-version]: https://poser.pugx.org/setono/sylius-google-ads-plugin/v/stable
+[ico-unstable-version]: https://poser.pugx.org/setono/sylius-google-ads-plugin/v/unstable
+[ico-license]: https://poser.pugx.org/setono/sylius-google-ads-plugin/license
+[ico-github-actions]: https://github.com/Setono/SyliusGoogleAdsPlugin/workflows/build/badge.svg
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/Setono/SyliusGoogleAdsPlugin.svg?style=flat-square
+
+[link-packagist]: https://packagist.org/packages/setono/sylius-google-ads-plugin
+[link-github-actions]: https://github.com/Setono/SyliusGoogleAdsPlugin/actions
+[link-code-quality]: https://scrutinizer-ci.com/g/Setono/SyliusGoogleAdsPlugin
