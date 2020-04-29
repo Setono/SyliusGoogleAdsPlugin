@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\DependencyInjection;
 
+use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-final class SetonoSyliusGoogleAdsExtension extends Extension
+final class SetonoSyliusGoogleAdsExtension extends AbstractResourceExtension
 {
     public function load(array $config, ContainerBuilder $container): void
     {
@@ -17,5 +17,7 @@ final class SetonoSyliusGoogleAdsExtension extends Extension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
         $loader->load('services.xml');
+
+        $this->registerResources('setono_sylius_google_ads', $config['driver'], $config['resources'], $container);
     }
 }
