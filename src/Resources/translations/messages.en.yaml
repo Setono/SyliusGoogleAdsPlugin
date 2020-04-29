@@ -1,0 +1,29 @@
+setono_sylius_google_ads:
+    ui:
+        category: Category
+        category_placeholder: Select category...
+        category_choices:
+            add_to_cart: Add to cart
+            begin_checkout: Begin checkout
+            book_appointment: Book appointment
+            contact: Contact
+            get_directions: Get directions
+            other: Other
+            outbound_click: Outbound click
+            page_view: Page view
+            purchase: Purchase
+            request_quote: Request quote
+            sign_up: Sign-up
+            submit_lead_form: Submit lead form
+            subscribe: Subscribe
+        conversion: Conversion
+        conversions: Conversions
+        conversion_index: Conversion index
+        conversion_id: Conversion id
+        conversion_id_placeholder: Insert your conversion id, i.e. AW-1234567890...
+        conversion_label: Conversion label
+        conversion_label_placeholder: Insert your conversion label, i.e. 1-23abc123abc123-ab...
+        edit_conversion: Edit conversion
+        enabled: Enabled
+        new_conversion: New conversion
+        no_channels: No channels

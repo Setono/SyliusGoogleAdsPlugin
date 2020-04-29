@@ -14,8 +14,10 @@
         </id>
 
         <field name="code" type="string" unique="true"/>
-        <field name="conversionId" type="string" unique="true"/>
-        <field name="conversionLabel" type="string" unique="true"/>
+        <field name="category" type="string"/>
+        <!-- todo should there be a unique index over conversionId and conversionLabel? -->
+        <field name="conversionId" type="string"/>
+        <field name="conversionLabel" type="string"/>
         <field name="enabled" column="enabled" type="boolean"/>
 
         <many-to-many field="channels" target-entity="Sylius\Component\Channel\Model\ChannelInterface">
