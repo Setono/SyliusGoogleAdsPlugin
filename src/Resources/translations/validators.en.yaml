@@ -1,0 +1,13 @@
+setono_sylius_analytics:
+    property:
+        category:
+            not_blank: Category cannot be blank.
+            choice: The category is not valid.
+        conversion_id_conversion_label:
+            unique: You already have one conversion with this conversion id and conversion label
+        conversion_id:
+            not_blank: Conversion id cannot be blank.
+        conversion_label:
+            not_blank: Conversion label cannot be blank.
+        channels:
+            min_count: You must select {{ limit }} or more channels.

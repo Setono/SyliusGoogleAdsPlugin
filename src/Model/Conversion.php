@@ -9,7 +9,6 @@ use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Channel\Model\ChannelInterface as BaseChannelInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Resource\Model\ToggleableTrait;
-use Webmozart\Assert\Assert;
 
 class Conversion implements ConversionInterface
 {
@@ -74,8 +73,6 @@ class Conversion implements ConversionInterface
 
     public function setCategory(string $category): void
     {
-        Assert::oneOf($category, static::getCategories());
-
         $this->category = $category;
     }
 
