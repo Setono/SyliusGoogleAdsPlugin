@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\DependencyInjection;
 
+use function method_exists;
 use Setono\SyliusGoogleAdsPlugin\Doctrine\ORM\ConversionRepository;
 use Setono\SyliusGoogleAdsPlugin\Form\Type\ConversionType;
 use Setono\SyliusGoogleAdsPlugin\Model\Conversion;
@@ -12,7 +13,6 @@ use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
 use Sylius\Component\Resource\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
-use function method_exists;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
