@@ -1,0 +1,2 @@
+setono_sylius_google_ads:
+    use_analytics_plugin: false
