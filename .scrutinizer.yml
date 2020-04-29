@@ -1,6 +1,9 @@
 build:
     nodes:
         analysis:
+            dependencies:
+                before:
+                    - sudo apt-get install -y php7.4-gd
             tests:
                 override:
                     - php-scrutinizer-run
