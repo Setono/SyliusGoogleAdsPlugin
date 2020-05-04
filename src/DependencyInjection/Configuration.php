@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin\DependencyInjection;
 
 use function method_exists;
-use Setono\SyliusAnalyticsPlugin\SetonoSyliusAnalyticsPlugin;
 use Setono\SyliusGoogleAdsPlugin\Doctrine\ORM\ConversionRepository;
 use Setono\SyliusGoogleAdsPlugin\Form\Type\ConversionType;
 use Setono\SyliusGoogleAdsPlugin\Model\Conversion;
@@ -35,10 +34,6 @@ final class Configuration implements ConfigurationInterface
                 ->scalarNode('driver')
                     ->defaultValue(SyliusResourceBundle::DRIVER_DOCTRINE_ORM)
                     ->cannotBeEmpty()
-                ->end()
-                ->booleanNode('use_analytics_plugin')
-                    ->info('If the Setono Sylius Analytics plugin is installed you can use this plugin to inject the library. It is recommended to do so.')
-                    ->defaultValue(class_exists(SetonoSyliusAnalyticsPlugin::class))
                 ->end()
             ->end()
         ;

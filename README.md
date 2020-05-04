@@ -34,18 +34,8 @@ return [
 
 ```
 
-## Integration with Setonos Google Analytics plugin
-If you're using the [Google Analytics plugin by Setono](https://github.com/Setono/SyliusAnalyticsPlugin) then this plugin
-integrates seamlessly with that. No setup needed.
-
-If you have made your own custom things with the Analytics plugin it may be that you don't want to use this integration,
-and you can disable this by setting the `use_analytics_plugin` to `false` like so:
-
-```yaml
-# config/packages/setono_sylius_google_ads.yaml
-setono_sylius_google_ads:
-    use_analytics_plugin: false
-```
+## TODO
+- Remove hard dependency on Google Analytics plugin
 
 [ico-version]: https://poser.pugx.org/setono/sylius-google-ads-plugin/v/stable
 [ico-unstable-version]: https://poser.pugx.org/setono/sylius-google-ads-plugin/v/unstable

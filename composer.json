@@ -9,6 +9,8 @@
     "license": "MIT",
     "require": {
         "php": "^7.4",
+        "psr/event-dispatcher": "^1.0",
+        "setono/sylius-analytics-plugin": "^1.1",
         "sylius/sylius": "^1.7"
     },
     "require-dev": {
@@ -25,7 +27,6 @@
         "phpstan/phpstan-webmozart-assert": "^0.12.3",
         "phpunit/phpunit": "^8.5",
         "roave/security-advisories": "dev-master",
-        "setono/sylius-analytics-plugin": "^1.1",
         "sylius-labs/coding-standard": "^3.1",
         "symfony/browser-kit": "^4.4 || ^5.0",
         "symfony/debug-bundle": "^4.4 || ^5.0",
