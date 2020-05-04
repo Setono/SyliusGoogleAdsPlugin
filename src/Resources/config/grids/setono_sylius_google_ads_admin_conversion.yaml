@@ -1,0 +1,28 @@
+sylius_grid:
+    grids:
+        setono_sylius_google_ads_admin_conversion:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%setono_sylius_google_ads.model.conversion.class%"
+            fields:
+                conversionId:
+                    type: string
+                    label: setono_sylius_google_ads.ui.conversion_id
+                conversionLabel:
+                    type: string
+                    label: setono_sylius_google_ads.ui.conversion_label
+                channels:
+                    type: twig
+                    label: sylius.ui.channels
+                    options:
+                        template: "@SetonoSyliusGoogleAdsPlugin/admin/grid/field/channels.html.twig"
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    update:
+                        type: update
+                    delete:
+                        type: delete

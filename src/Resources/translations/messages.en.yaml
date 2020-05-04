@@ -16,14 +16,15 @@ setono_sylius_google_ads:
             sign_up: Sign-up
             submit_lead_form: Submit lead form
             subscribe: Subscribe
-        conversion: Conversion
-        conversions: Conversions
-        conversion_index: Conversion index
+        conversion: Google Ads conversion
+        conversions: Google Ads conversions
         conversion_id: Conversion id
         conversion_id_placeholder: Insert your conversion id, i.e. AW-1234567890...
         conversion_label: Conversion label
         conversion_label_placeholder: Insert your conversion label, i.e. 1-23abc123abc123-ab...
         edit_conversion: Edit conversion
         enabled: Enabled
+        google_ads: Google Ads
+        manage_conversions: Manage your Google Ads conversions
         new_conversion: New conversion
         no_channels: No channels

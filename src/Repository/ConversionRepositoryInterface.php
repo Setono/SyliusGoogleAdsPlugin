@@ -10,7 +10,7 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 interface ConversionRepositoryInterface extends RepositoryInterface
 {
     /**
-     * Returns the conversions that are enabled and enabled on the given channel
+     * Returns the conversions that are enabled, enabled on the given channel and has the given category
      */
-    public function findEnabledByChannel(ChannelInterface $channel): array;
+    public function findEnabledByChannelAndCategory(ChannelInterface $channel, string $category): array;
 }

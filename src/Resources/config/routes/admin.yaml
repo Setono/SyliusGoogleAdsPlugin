@@ -1,1 +1,13 @@
-# TODO Add your admin routes here
+setono_sylius_google_ads_admin_conversion:
+    resource: |
+        section: admin
+        alias: setono_sylius_google_ads.conversion
+        templates: SyliusAdminBundle:Crud
+        redirect: update
+        grid: setono_sylius_google_ads_admin_conversion
+        vars:
+            all:
+                subheader: setono_sylius_google_ads.ui.manage_conversions
+            index:
+                icon: 'money bill alternate outline'
+    type: sylius.resource
