@@ -31,7 +31,7 @@ final class ConversionType extends AbstractResourceType
                 },
                 'preferred_choices' => [
                     ConversionInterface::CATEGORY_PURCHASE,
-                ]
+                ],
             ])
             ->add('conversionId', TextType::class, [
                 'label' => 'setono_sylius_google_ads.ui.conversion_id',
