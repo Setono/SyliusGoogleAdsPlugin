@@ -10,14 +10,12 @@ use Sylius\Component\Channel\Model\ChannelInterface;
 
 class ConversionRepository extends EntityRepository implements ConversionRepositoryInterface
 {
-    public function findEnabledByChannelAndCategory(ChannelInterface $channel, string $category): array
+    public function findEnabledByChannel(ChannelInterface $channel): array
     {
         return $this->createQueryBuilder('o')
             ->andWhere(':channel MEMBER OF o.channels')
             ->andWhere('o.enabled = true')
-            ->andWhere('o.category = :category')
             ->setParameter('channel', $channel)
-            ->setParameter('category', $category)
             ->getQuery()
             ->getResult()
         ;
