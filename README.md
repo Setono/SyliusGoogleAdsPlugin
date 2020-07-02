@@ -10,9 +10,14 @@ Plugin for tracking Google Ads related events and adding respective tags.
 
 ## Installation
 
-### Step 1: Install and enable plugin
+### Step 1: Install required bundles
 
-Open a command console, enter your project directory and execute the following command to download the latest stable version of this plugin:
+This plugin depends on two other bundles, so you have to install those first:
+
+- Install [PHP templates bundle](https://github.com/Setono/PhpTemplatesBundle)
+- Install [tag bag bundle](https://github.com/Setono/TagBagBundle)
+
+### Step 2: Install and enable plugin
 
 ```bash
 $ composer require setono/sylius-google-ads-plugin
@@ -33,9 +38,6 @@ return [
 ];
 
 ```
-
-## TODO
-- Remove hard dependency on Google Analytics plugin
 
 [ico-version]: https://poser.pugx.org/setono/sylius-google-ads-plugin/v/stable
 [ico-unstable-version]: https://poser.pugx.org/setono/sylius-google-ads-plugin/v/unstable
