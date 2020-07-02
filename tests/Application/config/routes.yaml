@@ -1,2 +1,0 @@
-setono_sylius_google_ads:
-    resource: "@SetonoSyliusGoogleAdsPlugin/Resources/config/routes.yaml"
