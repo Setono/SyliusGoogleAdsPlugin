@@ -39,11 +39,11 @@ final class LibraryAndConfigSubscriber extends TagSubscriber
 
         $firstConversion = $conversions[0];
 
-        $this->tagBag->addTag(new GtagLibrary($firstConversion->getConversionId()));
+        $this->tagBag->addTag(new GtagLibrary((string) $firstConversion->getConversionId()));
 
         foreach ($conversions as $conversion) {
             $this->tagBag->addTag(
-                (new GtagConfig($conversion->getConversionId()))
+                (new GtagConfig((string) $conversion->getConversionId()))
                     ->setSection(TagInterface::SECTION_HEAD)
                     ->addDependency(GtagLibrary::NAME)
             );
