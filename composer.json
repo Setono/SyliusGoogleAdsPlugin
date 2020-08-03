@@ -11,7 +11,7 @@
         "php": "^7.4",
         "psr/event-dispatcher": "^1.0",
         "setono/php-templates-bundle": "^1.0",
-        "setono/tag-bag-bundle": "^2.0@alpha",
+        "setono/tag-bag-bundle": "^2.0",
         "setono/tag-bag-gtag": "^1.2",
         "sylius/sylius": "^1.7"
     },
