@@ -11,9 +11,8 @@ Plugin for tracking Google Ads related events and adding respective tags.
 
 ### Step 1: Install required bundles
 
-This plugin depends on two other bundles, so you have to install those first:
+This plugin depends on the tag bag bundle, so install that bundle first:
 
-- Install [PHP templates bundle](https://github.com/Setono/PhpTemplatesBundle)
 - Install [tag bag bundle](https://github.com/Setono/TagBagBundle)
 
 ### Step 2: Install and enable plugin

@@ -29,10 +29,9 @@ return [
     Sylius\Bundle\ReviewBundle\SyliusReviewBundle::class => ['all' => true],
     Sylius\Bundle\CoreBundle\SyliusCoreBundle::class => ['all' => true],
 
-    // These three bundles are the ones you need to enable to make this plugin work
+    // These two bundles are the ones you need to enable to make this plugin work
     Setono\SyliusGoogleAdsPlugin\SetonoSyliusGoogleAdsPlugin::class => ['all' => true], // Added before the grid bundle
     Setono\TagBagBundle\SetonoTagBagBundle::class => ['all' => true],
-    Setono\PhpTemplatesBundle\SetonoPhpTemplatesBundle::class => ['all' => true],
 
     Sylius\Bundle\ResourceBundle\SyliusResourceBundle::class => ['all' => true],
     Sylius\Bundle\GridBundle\SyliusGridBundle::class => ['all' => true],
