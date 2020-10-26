@@ -16,7 +16,15 @@ final class SetonoSyliusGoogleAdsExtension extends AbstractResourceExtension
         $config = $this->processConfiguration($this->getConfiguration([], $container), $config);
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
+        $container->setParameter('setono_sylius_google_ads.use_offline_conversions', $config['use_offline_conversions']);
+
         $loader->load('services.xml');
+
+        if($config['use_offline_conversions']) {
+            $loader->load('services/conditional/offline_conversions/event_listener.xml');
+        } else {
+            $loader->load('services/conditional/realtime_conversions/event_listener.xml');
+        }
 
         $this->registerResources('setono_sylius_google_ads', $config['driver'], $config['resources'], $container);
     }

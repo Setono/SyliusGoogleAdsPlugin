@@ -21,12 +21,7 @@ final class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('setono_sylius_google_ads');
-        if (method_exists($treeBuilder, 'getRootNode')) {
-            $rootNode = $treeBuilder->getRootNode();
-        } else {
-            // BC layer for symfony/config 4.1 and older
-            $rootNode = $treeBuilder->root('setono_sylius_google_ads');
-        }
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->addDefaultsIfNotSet()
@@ -34,6 +29,10 @@ final class Configuration implements ConfigurationInterface
                 ->scalarNode('driver')
                     ->defaultValue(SyliusResourceBundle::DRIVER_DOCTRINE_ORM)
                     ->cannotBeEmpty()
+                ->end()
+                ->booleanNode('use_offline_conversions')
+                    ->info('Use offline conversions. This will send conversion data to Google through the Google Ads API instead of javascript.')
+                    ->defaultFalse()
                 ->end()
             ->end()
         ;
