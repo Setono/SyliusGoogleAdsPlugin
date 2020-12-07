@@ -10,7 +10,7 @@
     <services>
         <service id="setono_sylius_google_ads.form_type.conversion"
                  class="Setono\SyliusGoogleAdsPlugin\Form\Type\ConversionType">
-            <argument>%setono_sylius_google_ads.model.conversion.class%</argument>
+            <argument>ConversionAction</argument>
             <argument>%setono_sylius_google_ads.form_type.conversion.validation_groups%</argument>
             <tag name="form.type"/>
         </service>

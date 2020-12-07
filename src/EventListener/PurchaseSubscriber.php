@@ -4,16 +4,32 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\EventListener;
 
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Setono\SyliusGoogleAdsPlugin\Event\GtagPurchaseEvent;
-use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
+use Setono\SyliusGoogleAdsPlugin\Model\ConversionActionInterface;
+use Setono\SyliusGoogleAdsPlugin\Repository\ConversionRepositoryInterface;
 use Setono\TagBag\DTO\PurchaseEventDTO;
 use Setono\TagBag\Tag\GtagEvent;
 use Setono\TagBag\Tag\GtagLibrary;
+use Setono\TagBag\TagBagInterface;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
+use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Model\OrderInterface;
+use Symfony\Bundle\SecurityBundle\Security\FirewallMap;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
-final class PurchaseSubscriber extends TagSubscriber
+final class PurchaseSubscriber implements EventSubscriberInterface
 {
+    private RequestStack $requestStack;
+    private string $cookieName;
+
+    public function __construct(RequestStack $requestStack, string $cookieName)
+    {
+        $this->requestStack = $requestStack;
+        $this->cookieName = $cookieName;
+    }
+
     public static function getSubscribedEvents(): array
     {
         return [
@@ -25,32 +41,19 @@ final class PurchaseSubscriber extends TagSubscriber
     {
         $order = $event->getSubject();
 
-        if (!$order instanceof OrderInterface || !$this->isShopContext()) {
+        if (!$order instanceof OrderInterface) {
             return;
         }
 
-        $channel = $order->getChannel();
-        if (null === $channel) {
+        $request = $this->requestStack->getMasterRequest();
+        if(null === $request) {
             return;
         }
 
-        $conversions = $this->getConversionsByCategory(ConversionInterface::CATEGORY_PURCHASE);
-
-        if (count($conversions) === 0) {
+        if(!$request->cookies->has($this->cookieName)) {
             return;
         }
 
-        foreach ($conversions as $conversion) {
-            $dto = new PurchaseEventDTO(
-                $conversion->getConversionId() . '/' . $conversion->getConversionLabel(),
-                (string) $order->getCurrencyCode(),
-                $this->formatMoney($order->getTotal()),
-                (string) $order->getNumber()
-            );
 
-            $this->eventDispatcher->dispatch(new GtagPurchaseEvent($dto, $order));
-
-            $this->tagBag->addTag(GtagEvent::createFromDTO($dto)->addDependency(GtagLibrary::NAME));
-        }
     }
 }

@@ -5,15 +5,23 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin\EventListener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-final class SaveGclidInSessionSubscriber implements EventSubscriberInterface
+final class SaveGclidInCookieSubscriber implements EventSubscriberInterface
 {
+    private string $cookieName;
+
+    public function __construct(string $cookieName) {
+
+        $this->cookieName = $cookieName;
+    }
+
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::REQUEST => 'save',
+            KernelEvents::RESPONSE => 'save',
         ];
     }
 
@@ -28,7 +36,10 @@ final class SaveGclidInSessionSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $session = $request->getSession();
-        $session->set('setono_sylius_google_ads_gclid', $request->query->get('gclid'));
+        $response = $event->getResponse();
+        $response->headers->setCookie(Cookie::create(
+            $this->cookieName, $request->query->get('gclid'), new \DateTimeImmutable('+3 months'),
+            null, null, false, false
+        ));
     }
 }
