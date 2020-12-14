@@ -7,7 +7,7 @@
     <entity name="Setono\SyliusGoogleAdsPlugin\Model\ConversionAction"
             table="setono_sylius_google_ads__conversion_action">
         <indexes>
-            <index columns="enabled" name="idx_enabled"/>
+            <index columns="enabled,category" name="idx_enabled_category"/>
         </indexes>
 
         <id name="id" type="integer">
@@ -15,10 +15,8 @@
         </id>
 
         <field name="code" type="string" unique="true"/>
-        <field name="category" type="string"/>
-        <!-- todo should there be a unique index over conversionId and conversionLabel? -->
-        <field name="conversionId" type="string"/>
-        <field name="conversionLabel" type="string"/>
+        <field name="name" type="string"/>
+        <field name="category" column="category" type="string"/>
         <field name="enabled" column="enabled" type="boolean"/>
 
         <many-to-many field="channels" target-entity="Sylius\Component\Channel\Model\ChannelInterface">

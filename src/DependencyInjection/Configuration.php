@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\DependencyInjection;
 
-use function method_exists;
+use Setono\SyliusGoogleAdsPlugin\Doctrine\ORM\ConversionActionRepository;
 use Setono\SyliusGoogleAdsPlugin\Doctrine\ORM\ConversionRepository;
-use Setono\SyliusGoogleAdsPlugin\Form\Type\ConversionType;
+use Setono\SyliusGoogleAdsPlugin\Form\Type\ConversionActionType;
+use Setono\SyliusGoogleAdsPlugin\Model\Conversion;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionAction;
-use Setono\SyliusGoogleAdsPlugin\Model\ConversionActionInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
+use Sylius\Bundle\ResourceBundle\Form\Type\DefaultResourceType;
 use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
 use Sylius\Component\Resource\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
@@ -29,10 +30,6 @@ final class Configuration implements ConfigurationInterface
                 ->scalarNode('driver')
                     ->defaultValue(SyliusResourceBundle::DRIVER_DOCTRINE_ORM)
                     ->cannotBeEmpty()
-                ->end()
-                ->booleanNode('server_side_tracking')
-                    ->info('This will send conversion data to Google through the Google Ads API instead of javascript')
-                    ->defaultFalse()
                 ->end()
             ->end()
         ;
@@ -56,11 +53,27 @@ final class Configuration implements ConfigurationInterface
                                 ->arrayNode('classes')
                                     ->addDefaultsIfNotSet()
                                     ->children()
-                                        ->scalarNode('model')->defaultValue(ConversionAction::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('model')->defaultValue(Conversion::class)->cannotBeEmpty()->end()
                                         ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
                                         ->scalarNode('repository')->defaultValue(ConversionRepository::class)->cannotBeEmpty()->end()
                                         ->scalarNode('factory')->defaultValue(Factory::class)->end()
-                                        ->scalarNode('form')->defaultValue(ConversionType::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('form')->defaultValue(DefaultResourceType::class)->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('conversion_action')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode('options')->end()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(ConversionAction::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('repository')->defaultValue(ConversionActionRepository::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
+                                        ->scalarNode('form')->defaultValue(ConversionActionType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()

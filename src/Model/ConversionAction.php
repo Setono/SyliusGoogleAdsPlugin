@@ -18,11 +18,9 @@ class ConversionAction implements ConversionActionInterface
 
     protected ?string $code = null;
 
+    protected ?string $name = null;
+
     protected ?string $category = null;
-
-    protected ?string $conversionId = null;
-
-    protected ?string $conversionLabel = null;
 
     /** @var Collection|ChannelInterface[] */
     protected Collection $channels;
@@ -66,6 +64,16 @@ class ConversionAction implements ConversionActionInterface
         $this->code = $code;
     }
 
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
     public function getCategory(): ?string
     {
         return $this->category;
@@ -74,26 +82,6 @@ class ConversionAction implements ConversionActionInterface
     public function setCategory(string $category): void
     {
         $this->category = $category;
-    }
-
-    public function getConversionId(): ?string
-    {
-        return $this->conversionId;
-    }
-
-    public function setConversionId(string $conversionId): void
-    {
-        $this->conversionId = $conversionId;
-    }
-
-    public function getConversionLabel(): ?string
-    {
-        return $this->conversionLabel;
-    }
-
-    public function setConversionLabel(string $conversionLabel): void
-    {
-        $this->conversionLabel = $conversionLabel;
     }
 
     public function getChannels(): Collection

@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Model;
 
-use Sylius\Component\Channel\Model\ChannelsAwareInterface;
-use Sylius\Component\Resource\Model\CodeAwareInterface;
+use Sylius\Component\Channel\Model\ChannelInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\TimestampableInterface;
-use Sylius\Component\Resource\Model\ToggleableInterface;
 
 interface ConversionInterface extends ResourceInterface, TimestampableInterface
 {
     public function getId(): ?int;
+
+    public function getName(): ?string;
+
+    public function setName(string $name): void;
 
     public function getGoogleClickId(): ?string;
 
@@ -24,9 +26,13 @@ interface ConversionInterface extends ResourceInterface, TimestampableInterface
 
     public function getValue(): ?int;
 
-    public function setValue(string $value): void;
+    public function setValue(int $value): void;
 
     public function getCurrencyCode(): ?string;
 
     public function setCurrencyCode(string $currencyCode): void;
+
+    public function getChannel(): ?ChannelInterface;
+
+    public function setChannel(ChannelInterface $channel): void;
 }

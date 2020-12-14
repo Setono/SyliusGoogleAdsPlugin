@@ -13,8 +13,8 @@ final class SaveGclidInCookieSubscriber implements EventSubscriberInterface
 {
     private string $cookieName;
 
-    public function __construct(string $cookieName) {
-
+    public function __construct(string $cookieName)
+    {
         $this->cookieName = $cookieName;
     }
 
@@ -27,12 +27,12 @@ final class SaveGclidInCookieSubscriber implements EventSubscriberInterface
 
     public function save(ResponseEvent $event): void
     {
-        if(!$event->isMasterRequest()) {
+        if (!$event->isMasterRequest()) {
             return;
         }
 
         $request = $event->getRequest();
-        if(!$request->query->has('gclid')) {
+        if (!$request->query->has('gclid')) {
             return;
         }
 
