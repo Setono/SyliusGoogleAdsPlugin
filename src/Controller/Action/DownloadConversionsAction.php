@@ -11,6 +11,8 @@ use Setono\SyliusGoogleAdsPlugin\KeyGenerator\KeyGeneratorInterface;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConversionRepositoryInterface;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
+use Sylius\Component\Channel\Model\ChannelInterface;
+use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -45,7 +47,7 @@ final class DownloadConversionsAction
         $manager = $qb->getEntityManager();
         $iterableResult = $qb->getQuery()->iterate();
 
-        return new StreamedResponse(function () use ($manager, $iterableResult): void {
+        $response = new StreamedResponse(function () use ($manager, $iterableResult): void {
             $output = fopen('php://output', 'wb');
 
             fputcsv($output, [sprintf('Parameters:TimeZone=%s', date_default_timezone_get())]);
@@ -74,12 +76,26 @@ final class DownloadConversionsAction
 
             flush();
         }, 200, [
-            'content-type' => 'text/csv',
+            'Content-Type' => 'text/csv',
         ]);
+
+        $disposition = HeaderUtils::makeDisposition(
+            HeaderUtils::DISPOSITION_INLINE,
+            self::generateFilename($channel)
+        );
+
+        $response->headers->set('Content-Disposition', $disposition);
+
+        return $response;
     }
 
     private static function formatValue(int $value): float
     {
         return round($value / 100, 2);
+    }
+
+    private static function generateFilename(ChannelInterface $channel): string
+    {
+        return 'conversions---' . mb_strtolower((string) $channel->getCode()) . '.csv';
     }
 }

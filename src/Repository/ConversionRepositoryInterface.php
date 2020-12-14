@@ -10,5 +10,9 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 interface ConversionRepositoryInterface extends RepositoryInterface
 {
-    public function findByChannelQueryBuilder(ChannelInterface $channel): QueryBuilder;
+    /**
+     * If the $since argument is given, this method returns conversion since that date, however, if it isn't given
+     * it returns conversion since three days ago. This is because this is what Google recommends
+     */
+    public function findByChannelQueryBuilder(ChannelInterface $channel, \DateTimeInterface $since = null): QueryBuilder;
 }
