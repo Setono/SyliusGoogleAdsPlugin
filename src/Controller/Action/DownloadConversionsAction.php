@@ -45,7 +45,7 @@ final class DownloadConversionsAction
         $manager = $qb->getEntityManager();
         $iterableResult = $qb->getQuery()->iterate();
 
-        return new StreamedResponse(function () use ($manager, $iterableResult) {
+        return new StreamedResponse(function () use ($manager, $iterableResult): void {
             $output = fopen('php://output', 'wb');
 
             fputcsv($output, [sprintf('Parameters:TimeZone=%s', date_default_timezone_get())]);
