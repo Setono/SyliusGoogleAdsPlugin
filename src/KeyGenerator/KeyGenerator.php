@@ -10,14 +10,17 @@ final class KeyGenerator implements KeyGeneratorInterface
 {
     private string $salt;
 
-    public function __construct(string $salt)
+    private string $algo;
+
+    public function __construct(string $salt, string $algo = 'sha256')
     {
         $this->salt = $salt;
+        $this->algo = $algo;
     }
 
     public function generate(ChannelInterface $channel): string
     {
-        return hash('sha256', $channel->getId() . $this->salt);
+        return hash($this->algo, $channel->getId() . $this->salt);
     }
 
     public function check(ChannelInterface $channel, string $key): bool

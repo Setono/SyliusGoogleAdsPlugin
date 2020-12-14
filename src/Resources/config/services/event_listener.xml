@@ -17,6 +17,7 @@
             <argument type="service" id="setono_sylius_google_ads.repository.conversion_action"/>
             <argument type="service" id="setono_sylius_google_ads.factory.conversion"/>
             <argument type="service" id="doctrine"/>
+            <argument type="service" id="setono_sylius_google_ads.consent_checker.always_given"/>
             <argument>%setono_sylius_google_ads.gclid_cookie_name%</argument>
 
             <tag name="kernel.event_subscriber"/>
