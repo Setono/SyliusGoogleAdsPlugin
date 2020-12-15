@@ -25,9 +25,6 @@ final class ConversionActionType extends AbstractResourceType
             ])
             ->add('category', ChoiceType::class, [
                 'label' => 'setono_sylius_google_ads.form.conversion_action.category',
-                'attr' => [
-                    'placeholder' => 'setono_sylius_google_ads.form.conversion_action.category_placeholder',
-                ],
                 'choices' => ConversionAction::getCategories(),
                 'choice_label' => static function (string $choice): string {
                     return 'setono_sylius_google_ads.form.conversion_action.category_choices.' . $choice;
