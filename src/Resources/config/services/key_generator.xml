@@ -8,7 +8,7 @@
     <services>
         <service id="setono_sylius_google_ads.key_generator.default"
                  class="Setono\SyliusGoogleAdsPlugin\KeyGenerator\KeyGenerator">
-            <argument>%kernel.secret%</argument>
+            <argument>%setono_sylius_google_ads.salt%</argument>
             <argument>%setono_sylius_google_ads.key_generator_algo%</argument>
         </service>
     </services>

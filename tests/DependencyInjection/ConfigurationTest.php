@@ -52,6 +52,7 @@ final class ConfigurationTest extends TestCase
                         ],
                     ],
                 ],
+                'salt' => '%kernel.secret%',
             ]
         );
     }

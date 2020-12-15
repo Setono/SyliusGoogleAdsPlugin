@@ -16,6 +16,8 @@ final class SetonoSyliusGoogleAdsExtension extends AbstractResourceExtension
         $config = $this->processConfiguration($this->getConfiguration([], $container), $config);
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
+        $container->setParameter('setono_sylius_google_ads.salt', $config['salt']);
+
         $loader->load('services.xml');
 
         $this->registerResources('setono_sylius_google_ads', $config['driver'], $config['resources'], $container);

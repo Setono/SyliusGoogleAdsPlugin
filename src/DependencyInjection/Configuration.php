@@ -31,6 +31,12 @@ final class Configuration implements ConfigurationInterface
                     ->defaultValue(SyliusResourceBundle::DRIVER_DOCTRINE_ORM)
                     ->cannotBeEmpty()
                 ->end()
+                ->scalarNode('salt')
+                    ->info('The salt is used to generate the keys for the URLs used for downloading conversions. It is a good idea to set this value so it is independent of the kernel.secret.')
+                    ->example('l0ng$tringth4t1$n0te4$y2guess')
+                    ->defaultValue('%kernel.secret%')
+                    ->cannotBeEmpty()
+                ->end()
             ->end()
         ;
 
