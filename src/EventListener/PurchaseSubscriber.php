@@ -6,8 +6,10 @@ namespace Setono\SyliusGoogleAdsPlugin\EventListener;
 
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use function Safe\sprintf;
 use Setono\SyliusGoogleAdsPlugin\ConsentChecker\ConsentCheckerInterface;
+use Setono\SyliusGoogleAdsPlugin\Event\PrePersistConversionFromOrderEvent;
 use Setono\SyliusGoogleAdsPlugin\Factory\ConversionFactoryInterface;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionActionInterface;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConversionActionRepositoryInterface;
@@ -31,6 +33,8 @@ final class PurchaseSubscriber implements EventSubscriberInterface
 
     private ConsentCheckerInterface $consentChecker;
 
+    private EventDispatcherInterface $eventDispatcher;
+
     private string $cookieName;
 
     public function __construct(
@@ -39,6 +43,7 @@ final class PurchaseSubscriber implements EventSubscriberInterface
         ConversionFactoryInterface $conversionFactory,
         ManagerRegistry $managerRegistry,
         ConsentCheckerInterface $consentChecker,
+        EventDispatcherInterface $eventDispatcher,
         string $cookieName
     ) {
         $this->requestStack = $requestStack;
@@ -46,6 +51,7 @@ final class PurchaseSubscriber implements EventSubscriberInterface
         $this->conversionFactory = $conversionFactory;
         $this->managerRegistry = $managerRegistry;
         $this->consentChecker = $consentChecker;
+        $this->eventDispatcher = $eventDispatcher;
         $this->cookieName = $cookieName;
     }
 
@@ -92,6 +98,8 @@ final class PurchaseSubscriber implements EventSubscriberInterface
             $conversion->setCategory((string) $conversionAction->getCategory());
             $conversion->setGoogleClickId((string) $request->cookies->get($this->cookieName));
             $conversion->setChannel($channel);
+
+            $this->eventDispatcher->dispatch(new PrePersistConversionFromOrderEvent($conversion, $conversionAction, $order));
 
             $manager = $this->getManager($conversion);
             $manager->persist($conversion);
