@@ -51,6 +51,7 @@ final class DownloadConversionsAction
             $output = fopen('php://output', 'wb');
 
             fputcsv($output, [sprintf('Parameters:TimeZone=%s', date_default_timezone_get())]);
+            fputcsv($output, ['Google Click ID', 'Conversion Name', 'Conversion Time', 'Conversion Value', 'Conversion Currency']);
 
             foreach ($iterableResult as $row) {
                 /** @var ConversionInterface $conversion */
