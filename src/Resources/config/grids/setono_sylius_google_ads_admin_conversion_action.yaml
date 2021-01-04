@@ -1,17 +1,22 @@
 sylius_grid:
     grids:
-        setono_sylius_google_ads_admin_conversion:
+        setono_sylius_google_ads_admin_conversion_action:
             driver:
                 name: doctrine/orm
                 options:
-                    class: "%setono_sylius_google_ads.model.conversion.class%"
+                    class: "%setono_sylius_google_ads.model.conversion_action.class%"
             fields:
-                conversionId:
+                code:
                     type: string
-                    label: setono_sylius_google_ads.ui.conversion_id
-                conversionLabel:
+                    label: sylius.ui.code
+                name:
                     type: string
-                    label: setono_sylius_google_ads.ui.conversion_label
+                    label: sylius.ui.name
+                enabled:
+                    type: twig
+                    label: sylius.ui.enabled
+                    options:
+                        template: "@SyliusUi/Grid/Field/enabled.html.twig"
                 channels:
                     type: twig
                     label: sylius.ui.channels

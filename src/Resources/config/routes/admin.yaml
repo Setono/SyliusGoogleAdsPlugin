@@ -1,13 +1,21 @@
-setono_sylius_google_ads_admin_conversion:
+setono_sylius_google_ads_admin_show_help:
+    path: /_partial/google-ads/help
+    methods: [GET]
+    defaults:
+        _controller: setono_sylius_google_ads.controller.action.show_help
+
+setono_sylius_google_ads_admin_conversion_action:
     resource: |
         section: admin
-        alias: setono_sylius_google_ads.conversion
+        alias: setono_sylius_google_ads.conversion_action
         templates: SyliusAdminBundle:Crud
         redirect: update
-        grid: setono_sylius_google_ads_admin_conversion
+        grid: setono_sylius_google_ads_admin_conversion_action
         vars:
             all:
-                subheader: setono_sylius_google_ads.ui.manage_conversions
+                subheader: setono_sylius_google_ads.ui.manage_conversion_actions
+                templates:
+                    form: "@SetonoSyliusGoogleAdsPlugin/conversion_action/_form.html.twig"
             index:
                 icon: 'money bill alternate outline'
     type: sylius.resource

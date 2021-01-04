@@ -4,66 +4,50 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Sylius\Component\Channel\Model\ChannelInterface as BaseChannelInterface;
-use Sylius\Component\Core\Model\ChannelInterface;
-use Sylius\Component\Resource\Model\ToggleableTrait;
+use Sylius\Component\Channel\Model\ChannelInterface;
+use Sylius\Component\Resource\Model\TimestampableTrait;
 
 class Conversion implements ConversionInterface
 {
-    use ToggleableTrait;
+    use TimestampableTrait;
 
     protected ?int $id = null;
 
-    protected ?string $code = null;
+    protected ?string $name = null;
+
+    protected ?string $googleClickId = null;
 
     protected ?string $category = null;
 
-    protected ?string $conversionId = null;
+    protected ?int $value = null;
 
-    protected ?string $conversionLabel = null;
+    protected ?string $currencyCode = null;
 
-    /** @var Collection|ChannelInterface[] */
-    protected Collection $channels;
-
-    public function __construct()
-    {
-        $this->channels = new ArrayCollection();
-    }
-
-    public static function getCategories(): array
-    {
-        return [
-            self::CATEGORY_ADD_TO_CART => self::CATEGORY_ADD_TO_CART,
-            self::CATEGORY_BEGIN_CHECKOUT => self::CATEGORY_BEGIN_CHECKOUT,
-            self::CATEGORY_BOOK_APPOINTMENT => self::CATEGORY_BOOK_APPOINTMENT,
-            self::CATEGORY_CONTACT => self::CATEGORY_CONTACT,
-            self::CATEGORY_GET_DIRECTIONS => self::CATEGORY_GET_DIRECTIONS,
-            self::CATEGORY_OTHER => self::CATEGORY_OTHER,
-            self::CATEGORY_OUTBOUND_CLICK => self::CATEGORY_OUTBOUND_CLICK,
-            self::CATEGORY_PAGE_VIEW => self::CATEGORY_PAGE_VIEW,
-            self::CATEGORY_PURCHASE => self::CATEGORY_PURCHASE,
-            self::CATEGORY_REQUEST_QUOTE => self::CATEGORY_REQUEST_QUOTE,
-            self::CATEGORY_SIGN_UP => self::CATEGORY_SIGN_UP,
-            self::CATEGORY_SUBMIT_LEAD_FORM => self::CATEGORY_SUBMIT_LEAD_FORM,
-            self::CATEGORY_SUBSCRIBE => self::CATEGORY_SUBSCRIBE,
-        ];
-    }
+    protected ?ChannelInterface $channel = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCode(): ?string
+    public function getName(): ?string
     {
-        return $this->code;
+        return $this->name;
     }
 
-    public function setCode(?string $code): void
+    public function setName(string $name): void
     {
-        $this->code = $code;
+        $this->name = $name;
+    }
+
+    public function getGoogleClickId(): ?string
+    {
+        return $this->googleClickId;
+    }
+
+    public function setGoogleClickId(string $googleClickId): void
+    {
+        $this->googleClickId = $googleClickId;
     }
 
     public function getCategory(): ?string
@@ -76,47 +60,33 @@ class Conversion implements ConversionInterface
         $this->category = $category;
     }
 
-    public function getConversionId(): ?string
+    public function getValue(): ?int
     {
-        return $this->conversionId;
+        return $this->value;
     }
 
-    public function setConversionId(string $conversionId): void
+    public function setValue(int $value): void
     {
-        $this->conversionId = $conversionId;
+        $this->value = $value;
     }
 
-    public function getConversionLabel(): ?string
+    public function getCurrencyCode(): ?string
     {
-        return $this->conversionLabel;
+        return $this->currencyCode;
     }
 
-    public function setConversionLabel(string $conversionLabel): void
+    public function setCurrencyCode(string $currencyCode): void
     {
-        $this->conversionLabel = $conversionLabel;
+        $this->currencyCode = $currencyCode;
     }
 
-    public function getChannels(): Collection
+    public function getChannel(): ?ChannelInterface
     {
-        return $this->channels;
+        return $this->channel;
     }
 
-    public function addChannel(BaseChannelInterface $channel): void
+    public function setChannel(ChannelInterface $channel): void
     {
-        if (!$this->hasChannel($channel)) {
-            $this->channels->add($channel);
-        }
-    }
-
-    public function removeChannel(BaseChannelInterface $channel): void
-    {
-        if ($this->hasChannel($channel)) {
-            $this->channels->removeElement($channel);
-        }
-    }
-
-    public function hasChannel(BaseChannelInterface $channel): bool
-    {
-        return $this->channels->contains($channel);
+        $this->channel = $channel;
     }
 }

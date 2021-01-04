@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Form\Type;
 
-use Setono\SyliusGoogleAdsPlugin\Model\Conversion;
-use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
+use Setono\SyliusGoogleAdsPlugin\Model\ConversionAction;
+use Setono\SyliusGoogleAdsPlugin\Model\ConversionActionInterface;
 use Sylius\Bundle\ChannelBundle\Form\Type\ChannelChoiceType;
 use Sylius\Bundle\ResourceBundle\Form\EventSubscriber\AddCodeFormSubscriber;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
@@ -14,35 +14,23 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-final class ConversionType extends AbstractResourceType
+final class ConversionActionType extends AbstractResourceType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->addEventSubscriber(new AddCodeFormSubscriber())
+            ->add('name', TextType::class, [
+                'label' => 'setono_sylius_google_ads.form.conversion_action.name',
+            ])
             ->add('category', ChoiceType::class, [
-                'label' => 'setono_sylius_google_ads.ui.category',
-                'attr' => [
-                    'placeholder' => 'setono_sylius_google_ads.ui.category_placeholder',
-                ],
-                'choices' => Conversion::getCategories(),
+                'label' => 'setono_sylius_google_ads.form.conversion_action.category',
+                'choices' => ConversionAction::getCategories(),
                 'choice_label' => static function (string $choice): string {
-                    return 'setono_sylius_google_ads.ui.category_choices.' . $choice;
+                    return 'setono_sylius_google_ads.form.conversion_action.category_choices.' . $choice;
                 },
                 'preferred_choices' => [
-                    ConversionInterface::CATEGORY_PURCHASE,
-                ],
-            ])
-            ->add('conversionId', TextType::class, [
-                'label' => 'setono_sylius_google_ads.ui.conversion_id',
-                'attr' => [
-                    'placeholder' => 'setono_sylius_google_ads.ui.conversion_id_placeholder',
-                ],
-            ])
-            ->add('conversionLabel', TextType::class, [
-                'label' => 'setono_sylius_google_ads.ui.conversion_label',
-                'attr' => [
-                    'placeholder' => 'setono_sylius_google_ads.ui.conversion_label_placeholder',
+                    ConversionActionInterface::CATEGORY_PURCHASE,
                 ],
             ])
             ->add('enabled', CheckboxType::class, [
@@ -52,13 +40,13 @@ final class ConversionType extends AbstractResourceType
             ->add('channels', ChannelChoiceType::class, [
                 'multiple' => true,
                 'expanded' => true,
-                'label' => 'sylius.form.product.channels',
+                'label' => 'sylius.ui.channels',
             ])
         ;
     }
 
     public function getBlockPrefix(): string
     {
-        return 'setono_sylius_google_ads_conversion';
+        return 'setono_sylius_google_ads_conversion_action';
     }
 }

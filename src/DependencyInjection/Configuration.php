@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\DependencyInjection;
 
-use function method_exists;
+use Setono\SyliusGoogleAdsPlugin\Doctrine\ORM\ConversionActionRepository;
 use Setono\SyliusGoogleAdsPlugin\Doctrine\ORM\ConversionRepository;
-use Setono\SyliusGoogleAdsPlugin\Form\Type\ConversionType;
+use Setono\SyliusGoogleAdsPlugin\Form\Type\ConversionActionType;
 use Setono\SyliusGoogleAdsPlugin\Model\Conversion;
-use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
+use Setono\SyliusGoogleAdsPlugin\Model\ConversionAction;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
+use Sylius\Bundle\ResourceBundle\Form\Type\DefaultResourceType;
 use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
 use Sylius\Component\Resource\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
@@ -21,18 +22,19 @@ final class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('setono_sylius_google_ads');
-        if (method_exists($treeBuilder, 'getRootNode')) {
-            $rootNode = $treeBuilder->getRootNode();
-        } else {
-            // BC layer for symfony/config 4.1 and older
-            $rootNode = $treeBuilder->root('setono_sylius_google_ads');
-        }
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
                 ->scalarNode('driver')
                     ->defaultValue(SyliusResourceBundle::DRIVER_DOCTRINE_ORM)
+                    ->cannotBeEmpty()
+                ->end()
+                ->scalarNode('salt')
+                    ->info('The salt is used to generate the keys for the URLs used for downloading conversions. It is a good idea to set this value so it is independent of the kernel.secret.')
+                    ->example('l0ng$tringth4t1$n0te4$y2guess')
+                    ->defaultValue('%kernel.secret%')
                     ->cannotBeEmpty()
                 ->end()
             ->end()
@@ -58,11 +60,26 @@ final class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode('model')->defaultValue(Conversion::class)->cannotBeEmpty()->end()
-                                        ->scalarNode('interface')->defaultValue(ConversionInterface::class)->cannotBeEmpty()->end()
                                         ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
                                         ->scalarNode('repository')->defaultValue(ConversionRepository::class)->cannotBeEmpty()->end()
                                         ->scalarNode('factory')->defaultValue(Factory::class)->end()
-                                        ->scalarNode('form')->defaultValue(ConversionType::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('form')->defaultValue(DefaultResourceType::class)->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('conversion_action')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode('options')->end()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(ConversionAction::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('repository')->defaultValue(ConversionActionRepository::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
+                                        ->scalarNode('form')->defaultValue(ConversionActionType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()

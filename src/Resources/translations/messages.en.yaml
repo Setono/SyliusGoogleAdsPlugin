@@ -1,30 +1,36 @@
 setono_sylius_google_ads:
+    form:
+        conversion_action:
+            category: Category
+            category_choices:
+                add_to_cart: Add to cart
+                begin_checkout: Begin checkout
+                book_appointment: Book appointment
+                contact: Contact
+                get_directions: Get directions
+                other: Other
+                outbound_click: Outbound click
+                page_view: Page view
+                purchase: Purchase
+                request_quote: Request quote
+                sign_up: Sign-up
+                submit_lead_form: Submit lead form
+                subscribe: Subscribe
+            name: Name
     ui:
-        category: Category
-        category_placeholder: Select category...
-        category_choices:
-            add_to_cart: Add to cart
-            begin_checkout: Begin checkout
-            book_appointment: Book appointment
-            contact: Contact
-            get_directions: Get directions
-            other: Other
-            outbound_click: Outbound click
-            page_view: Page view
-            purchase: Purchase
-            request_quote: Request quote
-            sign_up: Sign-up
-            submit_lead_form: Submit lead form
-            subscribe: Subscribe
-        conversion: Google Ads conversion
-        conversions: Google Ads conversions
-        conversion_id: Conversion id
-        conversion_id_placeholder: Insert your conversion id, i.e. AW-1234567890...
-        conversion_label: Conversion label
-        conversion_label_placeholder: Insert your conversion label, i.e. 1-23abc123abc123-ab...
-        edit_conversion: Edit conversion
+        conversion_action: Google Ads conversion action
+        conversion_action_explainer: |
+            <p>Here you create conversion actions that match the conversion actions you have created inside your Google Ads interface.</p>
+            <p>It's very <strong>important</strong> that the name of the conversion matches the name in the Google Ads interface exactly.
+            The name is used for associating conversions in your Sylius shop with the conversion action in Google Ads.
+            If the names doesn't match you won't have conversion data inside Google Ads.</p>
+            <p>When you create a new conversion action you choose the category and this category determines whether the
+            conversion is tracked automatically or your developer has to implement it manually. The only category that
+            is tracked automatically is the <code>Purchase</code> category.</p>
+        conversion_actions: Google Ads conversion actions
+        edit_conversion_action: Edit conversion action
         enabled: Enabled
         google_ads: Google Ads
-        manage_conversions: Manage your Google Ads conversions
-        new_conversion: New conversion
+        manage_conversion_actions: Manage your Google Ads conversion actions
+        new_conversion_action: New conversion action
         no_channels: No channels
