@@ -9,7 +9,7 @@ This plugin tracks conversions in your Sylius store. It's done with [offline con
 instead of the default javascript tracking. It has a few benefits to do this:
 - Easier to control the consent status for a given user
 - Easier to change the value of a given order after the fact
-- No javascripts on your page to track Google Ads
+- No javascripts on your page to track Google Ads, which means faster page load
 
 ## Installation
 
