@@ -3,45 +3,44 @@
                     xmlns="http://symfony.com/schema/dic/constraint-mapping"
                     xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
         https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
-    <class name="Setono\SyliusGoogleAdsPlugin\Model\Conversion">
+    <class name="Setono\SyliusGoogleAdsPlugin\Model\ConversionAction">
         <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
             <option name="fields">
-                <value>conversionId</value>
-                <value>conversionLabel</value>
+                <value>code</value>
             </option>
-            <option name="message">setono_sylius_google_ads.conversion.conversion_id_conversion_label.unique</option>
+            <option name="message">setono_sylius_google_ads.conversion_action.code.unique</option>
             <option name="groups">
                 <value>setono_sylius_google_ads</value>
             </option>
         </constraint>
+        <property name="code">
+            <constraint name="NotBlank">
+                <option name="message">setono_sylius_google_ads.conversion_action.code.not_blank</option>
+                <option name="groups">
+                    <value>setono_sylius_google_ads</value>
+                </option>
+            </constraint>
+        </property>
+        <property name="name">
+            <constraint name="NotBlank">
+                <option name="message">setono_sylius_google_ads.conversion_action.name.not_blank</option>
+                <option name="groups">
+                    <value>setono_sylius_google_ads</value>
+                </option>
+            </constraint>
+        </property>
         <property name="category">
             <constraint name="NotBlank">
-                <option name="message">setono_sylius_google_ads.conversion.category.not_blank</option>
+                <option name="message">setono_sylius_google_ads.conversion_action.category.not_blank</option>
                 <option name="groups">
                     <value>setono_sylius_google_ads</value>
                 </option>
             </constraint>
             <constraint name="Choice">
                 <option name="callback">
-                    <value>Setono\SyliusGoogleAdsPlugin\Model\Conversion</value>
+                    <value>Setono\SyliusGoogleAdsPlugin\Model\ConversionAction</value>
                     <value>getCategories</value>
                 </option>
-                <option name="groups">
-                    <value>setono_sylius_google_ads</value>
-                </option>
-            </constraint>
-        </property>
-        <property name="conversionId">
-            <constraint name="NotBlank">
-                <option name="message">setono_sylius_google_ads.conversion.conversion_id.not_blank</option>
-                <option name="groups">
-                    <value>setono_sylius_google_ads</value>
-                </option>
-            </constraint>
-        </property>
-        <property name="conversionLabel">
-            <constraint name="NotBlank">
-                <option name="message">setono_sylius_google_ads.conversion.conversion_label.not_blank</option>
                 <option name="groups">
                     <value>setono_sylius_google_ads</value>
                 </option>
@@ -50,7 +49,7 @@
         <property name="channels">
             <constraint name="Count">
                 <option name="min">1</option>
-                <option name="minMessage">setono_sylius_google_ads.conversion.channels.min_count</option>
+                <option name="minMessage">setono_sylius_google_ads.conversion_action.channels.min_count</option>
                 <option name="groups">
                     <value>setono_sylius_google_ads</value>
                 </option>
