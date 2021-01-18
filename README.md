@@ -42,6 +42,12 @@ imports:
     - "@SetonoSyliusGoogleAdsPlugin/Resources/config/app/config.yaml"
 ```
 
+```yaml
+# config/routes/setonno_sylius_google_ads.yaml
+setono_sylius_google_ads:
+    resource: "@SetonoSyliusGoogleAdsPlugin/Resources/config/routes.yaml"
+```
+
 That's it!
 
 ## Usage
