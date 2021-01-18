@@ -1,6 +1,6 @@
 setono_sylius_google_ads_admin:
     resource: "@SetonoSyliusGoogleAdsPlugin/Resources/config/routes/admin.yaml"
-    prefix: /admin
+    prefix: /google-ads/admin
 
 setono_sylius_google_ads_shop:
     resource: "@SetonoSyliusGoogleAdsPlugin/Resources/config/routes/shop.yaml"
