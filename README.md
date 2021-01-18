@@ -35,6 +35,13 @@ return [
 ];
 ```
 
+### Step 2: Add configuration
+```yaml
+# config/packages/setonno_sylius_google_ads.yaml
+imports:
+    - "@SetonoSyliusGoogleAdsPlugin/Resources/config/app/config.yaml"
+```
+
 That's it!
 
 ## Usage
