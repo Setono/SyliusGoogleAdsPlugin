@@ -20,6 +20,7 @@
         <field name="category" type="string"/>
         <field name="value" type="integer"/>
         <field name="currencyCode" type="string"/>
+        <field name="state" type="string"/>
 
         <field name="createdAt" column="created_at" type="datetime">
             <gedmo:timestampable on="create"/>

@@ -8,6 +8,8 @@
             <argument type="service" id="setono_sylius_google_ads.repository.conversion"/>
             <argument type="service" id="setono_sylius_google_ads.state_resolver.conversion_with_order"/>
             <argument type="service" id="doctrine"/>
+
+            <tag name="console.command"/>
         </service>
     </services>
 </container>
