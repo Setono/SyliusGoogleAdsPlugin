@@ -27,6 +27,10 @@ final class ConversionWithOrderStateResolver implements StateResolverInterface
             return $state;
         }
 
+        if ($order->getPaymentState() === OrderPaymentStates::STATE_CANCELLED) {
+            return ConversionInterface::STATE_CANCELLED;
+        }
+
         if (!in_array($order->getPaymentState(), [OrderPaymentStates::STATE_PAID, OrderPaymentStates::STATE_AUTHORIZED], true)) {
             return $state;
         }
