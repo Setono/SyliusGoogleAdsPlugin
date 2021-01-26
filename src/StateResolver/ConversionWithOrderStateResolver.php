@@ -6,7 +6,7 @@ namespace Setono\SyliusGoogleAdsPlugin\StateResolver;
 
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
 use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Payment\Model\PaymentInterface;
+use Sylius\Component\Core\OrderPaymentStates;
 
 /**
  * This state resolver more or less mimics the default behavior of the Google Ads javascript tracking snippet
@@ -27,7 +27,7 @@ final class ConversionWithOrderStateResolver implements StateResolverInterface
             return $state;
         }
 
-        if (!in_array($order->getPaymentState(), [PaymentInterface::STATE_COMPLETED, PaymentInterface::STATE_AUTHORIZED], true)) {
+        if (!in_array($order->getPaymentState(), [OrderPaymentStates::STATE_PAID, OrderPaymentStates::STATE_AUTHORIZED], true)) {
             return $state;
         }
 

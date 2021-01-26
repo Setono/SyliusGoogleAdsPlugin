@@ -1,2 +1,6 @@
 imports:
     - { resource: "@SetonoSyliusGoogleAdsPlugin/Resources/config/app/config.yaml" }
+
+setono_sylius_google_ads:
+    default_conversion_states:
+        purchase: !php/const Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface::STATE_PENDING
