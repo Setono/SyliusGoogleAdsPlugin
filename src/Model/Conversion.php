@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin\Model;
 
 use Sylius\Component\Channel\Model\ChannelInterface;
+use Sylius\Component\Order\Model\OrderInterface;
 use Sylius\Component\Resource\Model\TimestampableTrait;
 
 class Conversion implements ConversionInterface
@@ -23,7 +24,11 @@ class Conversion implements ConversionInterface
 
     protected ?string $currencyCode = null;
 
+    protected string $state = ConversionInterface::STATE_READY;
+
     protected ?ChannelInterface $channel = null;
+
+    protected ?OrderInterface $order = null;
 
     public function getId(): ?int
     {
@@ -80,6 +85,16 @@ class Conversion implements ConversionInterface
         $this->currencyCode = $currencyCode;
     }
 
+    public function getState(): string
+    {
+        return $this->state;
+    }
+
+    public function setState(string $state): void
+    {
+        $this->state = $state;
+    }
+
     public function getChannel(): ?ChannelInterface
     {
         return $this->channel;
@@ -88,5 +103,15 @@ class Conversion implements ConversionInterface
     public function setChannel(ChannelInterface $channel): void
     {
         $this->channel = $channel;
+    }
+
+    public function getOrder(): ?OrderInterface
+    {
+        return $this->order;
+    }
+
+    public function setOrder(?OrderInterface $order): void
+    {
+        $this->order = $order;
     }
 }

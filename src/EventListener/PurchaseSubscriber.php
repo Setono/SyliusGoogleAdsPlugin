@@ -93,9 +93,8 @@ final class PurchaseSubscriber implements EventSubscriberInterface
         );
 
         foreach ($conversionActions as $conversionAction) {
-            $conversion = $this->conversionFactory->createFromOrder($order);
+            $conversion = $this->conversionFactory->createFromOrder($order, (string) $conversionAction->getCategory());
             $conversion->setName((string) $conversionAction->getName());
-            $conversion->setCategory((string) $conversionAction->getCategory());
             $conversion->setGoogleClickId((string) $request->cookies->get($this->cookieName));
             $conversion->setChannel($channel);
 

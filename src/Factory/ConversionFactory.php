@@ -12,24 +12,33 @@ final class ConversionFactory implements ConversionFactoryInterface
 {
     private FactoryInterface $decorated;
 
-    public function __construct(FactoryInterface $decorated)
+    private array $defaultStates;
+
+    public function __construct(FactoryInterface $decorated, array $defaultStates)
     {
         $this->decorated = $decorated;
+        $this->defaultStates = $defaultStates;
     }
 
-    public function createNew(): ConversionInterface
+    public function createNew(string $category = null): ConversionInterface
     {
         /** @var ConversionInterface $conversion */
         $conversion = $this->decorated->createNew();
 
+        if (null !== $category) {
+            $conversion->setCategory($category);
+            $conversion->setState($this->defaultStates[$category] ?? ConversionInterface::STATE_READY);
+        }
+
         return $conversion;
     }
 
-    public function createFromOrder(OrderInterface $order): ConversionInterface
+    public function createFromOrder(OrderInterface $order, string $category): ConversionInterface
     {
-        $conversion = $this->createNew();
+        $conversion = $this->createNew($category);
         $conversion->setValue($order->getTotal());
         $conversion->setCurrencyCode((string) $order->getCurrencyCode());
+        $conversion->setOrder($order);
 
         return $conversion;
     }

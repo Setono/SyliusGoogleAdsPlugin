@@ -9,6 +9,8 @@ use Setono\SyliusGoogleAdsPlugin\Doctrine\ORM\ConversionRepository;
 use Setono\SyliusGoogleAdsPlugin\Form\Type\ConversionActionType;
 use Setono\SyliusGoogleAdsPlugin\Model\Conversion;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionAction;
+use Setono\SyliusGoogleAdsPlugin\Model\ConversionActionInterface;
+use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Sylius\Bundle\ResourceBundle\Form\Type\DefaultResourceType;
 use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
@@ -22,6 +24,8 @@ final class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('setono_sylius_google_ads');
+
+        /** @var ArrayNodeDefinition $rootNode */
         $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
@@ -36,6 +40,51 @@ final class Configuration implements ConfigurationInterface
                     ->example('l0ng$tringth4t1$n0te4$y2guess')
                     ->defaultValue('%kernel.secret%')
                     ->cannotBeEmpty()
+                ->end()
+                ->arrayNode('default_states')
+                    ->info('A list of default states on conversions per category')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode(ConversionActionInterface::CATEGORY_ADD_TO_CART)
+                            ->defaultValue(ConversionInterface::STATE_READY)
+                        ->end()
+                        ->scalarNode(ConversionActionInterface::CATEGORY_BEGIN_CHECKOUT)
+                            ->defaultValue(ConversionInterface::STATE_READY)
+                        ->end()
+                        ->scalarNode(ConversionActionInterface::CATEGORY_BOOK_APPOINTMENT)
+                            ->defaultValue(ConversionInterface::STATE_READY)
+                        ->end()
+                        ->scalarNode(ConversionActionInterface::CATEGORY_CONTACT)
+                            ->defaultValue(ConversionInterface::STATE_READY)
+                        ->end()
+                        ->scalarNode(ConversionActionInterface::CATEGORY_GET_DIRECTIONS)
+                            ->defaultValue(ConversionInterface::STATE_READY)
+                        ->end()
+                        ->scalarNode(ConversionActionInterface::CATEGORY_OTHER)
+                            ->defaultValue(ConversionInterface::STATE_READY)
+                        ->end()
+                        ->scalarNode(ConversionActionInterface::CATEGORY_OUTBOUND_CLICK)
+                            ->defaultValue(ConversionInterface::STATE_READY)
+                        ->end()
+                        ->scalarNode(ConversionActionInterface::CATEGORY_PAGE_VIEW)
+                            ->defaultValue(ConversionInterface::STATE_READY)
+                        ->end()
+                        ->scalarNode(ConversionActionInterface::CATEGORY_PURCHASE)
+                            ->defaultValue(ConversionInterface::STATE_READY)
+                        ->end()
+                        ->scalarNode(ConversionActionInterface::CATEGORY_REQUEST_QUOTE)
+                            ->defaultValue(ConversionInterface::STATE_READY)
+                        ->end()
+                        ->scalarNode(ConversionActionInterface::CATEGORY_SIGN_UP)
+                            ->defaultValue(ConversionInterface::STATE_READY)
+                        ->end()
+                        ->scalarNode(ConversionActionInterface::CATEGORY_SUBMIT_LEAD_FORM)
+                            ->defaultValue(ConversionInterface::STATE_READY)
+                        ->end()
+                        ->scalarNode(ConversionActionInterface::CATEGORY_SUBSCRIBE)
+                            ->defaultValue(ConversionInterface::STATE_READY)
+                        ->end()
+                    ->end()
                 ->end()
             ->end()
         ;
