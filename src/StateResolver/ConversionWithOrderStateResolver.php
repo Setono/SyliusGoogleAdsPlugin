@@ -8,6 +8,10 @@ use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Payment\Model\PaymentInterface;
 
+/**
+ * This state resolver more or less mimics the default behavior of the Google Ads javascript tracking snippet
+ * which is injected on the 'success' page which usually means the order is completed and paid, but hasn't been shipped
+ */
 final class ConversionWithOrderStateResolver implements StateResolverInterface
 {
     public function resolve(ConversionInterface $conversion): string
