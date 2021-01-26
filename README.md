@@ -37,13 +37,13 @@ return [
 
 ### Step 2: Add configuration
 ```yaml
-# config/packages/setonno_sylius_google_ads.yaml
+# config/packages/setono_sylius_google_ads.yaml
 imports:
     - "@SetonoSyliusGoogleAdsPlugin/Resources/config/app/config.yaml"
 ```
 
 ```yaml
-# config/routes/setonno_sylius_google_ads.yaml
+# config/routes/setono_sylius_google_ads.yaml
 setono_sylius_google_ads:
     resource: "@SetonoSyliusGoogleAdsPlugin/Resources/config/routes.yaml"
 ```
@@ -73,6 +73,23 @@ find the URL you need to give to Google. It will look something like: `https://y
 
 ![Upload conversions](docs/images/conversion-uploads.png)
 
+## Advanced usage
+Conversions have a state property, which is `ready` by default. This means that purchase conversions will be downloaded
+by Google when a customer has completed an order. This is not always the intended behavior. Some times it's more likely
+that the conversion should first be counted when the order is paid. To fix this, edit the configuration:
+
+```yaml
+# config/packages/setono_sylius_google_ads.yaml
+setono_sylius_google_ads:
+    default_states:
+        purchase: !php/const Setono\SyliusGoogleAdsPlugin\Model\ConversionActionInterface::CATEGORY_PURCHASE
+```
+
+and run this command periodically:
+
+```bash
+$ php bin/console setono:sylius-google-ads:process-pending-conversions
+```
 
 [ico-version]: https://poser.pugx.org/setono/sylius-google-ads-plugin/v/stable
 [ico-unstable-version]: https://poser.pugx.org/setono/sylius-google-ads-plugin/v/unstable
