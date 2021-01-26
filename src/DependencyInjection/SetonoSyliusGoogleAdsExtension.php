@@ -11,12 +11,13 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
 final class SetonoSyliusGoogleAdsExtension extends AbstractResourceExtension
 {
-    public function load(array $config, ContainerBuilder $container): void
+    public function load(array $configs, ContainerBuilder $container): void
     {
-        $config = $this->processConfiguration($this->getConfiguration([], $container), $config);
+        $config = $this->processConfiguration($this->getConfiguration([], $container), $configs);
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
         $container->setParameter('setono_sylius_google_ads.salt', $config['salt']);
+        $container->setParameter('setono_sylius_google_ads.default_conversion_states', $config['default_conversion_states']);
 
         $loader->load('services.xml');
 
