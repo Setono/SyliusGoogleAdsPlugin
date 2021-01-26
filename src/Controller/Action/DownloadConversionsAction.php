@@ -43,7 +43,7 @@ final class DownloadConversionsAction
             throw new NotFoundHttpException('The page you are looking for does not exist'); // todo throw an unauthorized exception?
         }
 
-        $qb = $this->conversionRepository->findByChannelQueryBuilder($channel);
+        $qb = $this->conversionRepository->findReadyByChannelQueryBuilder($channel);
         $manager = $qb->getEntityManager();
         $iterableResult = $qb->getQuery()->iterate();
 

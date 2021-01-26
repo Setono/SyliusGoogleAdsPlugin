@@ -14,5 +14,5 @@ interface ConversionRepositoryInterface extends RepositoryInterface
      * If the $since argument is given, this method returns conversion since that date, however, if it isn't given
      * it returns conversion since three days ago. This is because this is what Google recommends
      */
-    public function findByChannelQueryBuilder(ChannelInterface $channel, \DateTimeInterface $since = null): QueryBuilder;
+    public function findReadyByChannelQueryBuilder(ChannelInterface $channel, \DateTimeInterface $since = null): QueryBuilder;
 }
