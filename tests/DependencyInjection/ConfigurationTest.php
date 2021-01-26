@@ -53,6 +53,21 @@ final class ConfigurationTest extends TestCase
                     ],
                 ],
                 'salt' => '%kernel.secret%',
+                'default_conversion_states' => [
+                    'add_to_cart' => 'ready',
+                    'begin_checkout' => 'ready',
+                    'book_appointment' => 'ready',
+                    'contact' => 'ready',
+                    'get_directions' => 'ready',
+                    'other' => 'ready',
+                    'outbound_click' => 'ready',
+                    'page_view' => 'ready',
+                    'purchase' => 'ready',
+                    'request_quote' => 'ready',
+                    'sign_up' => 'ready',
+                    'submit_lead_form' => 'ready',
+                    'subscribe' => 'ready',
+                ],
             ]
         );
     }
