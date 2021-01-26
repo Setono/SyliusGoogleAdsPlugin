@@ -17,7 +17,7 @@ final class SetonoSyliusGoogleAdsExtension extends AbstractResourceExtension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
         $container->setParameter('setono_sylius_google_ads.salt', $config['salt']);
-        $container->setParameter('setono_sylius_google_ads.default_states', $config['default_states']);
+        $container->setParameter('setono_sylius_google_ads.default_conversion_states', $config['default_conversion_states']);
 
         $loader->load('services.xml');
 
