@@ -24,4 +24,17 @@ class ConversionRepository extends EntityRepository implements ConversionReposit
             ->setParameter('since', $since ?? new DateTimeImmutable('-3 days'))
         ;
     }
+
+    public function findPending(\DateTimeInterface $since = null): array
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.state = :state')
+            ->andWhere('o.createdAt >= :since')
+            ->setParameter('state', ConversionInterface::STATE_PENDING)
+            ->setParameter('since', $since ?? new DateTimeImmutable('-3 days'))
+            ->setMaxResults(1000) // to avoid memory issues
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
