@@ -81,7 +81,7 @@ that the conversion should first be counted when the order is paid. To fix this,
 ```yaml
 # config/packages/setono_sylius_google_ads.yaml
 setono_sylius_google_ads:
-    default_states:
+    default_conversion_states:
         purchase: !php/const Setono\SyliusGoogleAdsPlugin\Model\ConversionActionInterface::CATEGORY_PURCHASE
 ```
 
