@@ -46,7 +46,6 @@ final class ProcessPendingConversionsCommand extends Command
 
         $i = 0;
 
-        $conversion = null;
         $conversions = $this->conversionRepository->findPending();
         foreach ($conversions as $conversion) {
             $conversion->setState($this->stateResolver->resolve($conversion));
@@ -54,7 +53,7 @@ final class ProcessPendingConversionsCommand extends Command
             ++$i;
         }
 
-        if (null !== $conversion) {
+        if (isset($conversion) && is_object($conversion)) {
             $manager = $this->managerRegistry->getManagerForClass(get_class($conversion));
             if (null !== $manager) {
                 $manager->flush();
