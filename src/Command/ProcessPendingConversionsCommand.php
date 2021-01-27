@@ -46,6 +46,7 @@ final class ProcessPendingConversionsCommand extends Command
 
         $i = 0;
 
+        $conversion = null;
         $conversions = $this->conversionRepository->findPending();
         foreach ($conversions as $conversion) {
             $conversion->setState($this->stateResolver->resolve($conversion));
@@ -53,12 +54,7 @@ final class ProcessPendingConversionsCommand extends Command
             ++$i;
         }
 
-        if (isset($conversion)) {
-            /**
-             * Supressing until this issue is fixed: https://github.com/vimeo/psalm/issues/5110
-             *
-             * @psalm-suppress MixedArgument
-             */
+        if (null !== $conversion) {
             $manager = $this->managerRegistry->getManagerForClass(get_class($conversion));
             if (null !== $manager) {
                 $manager->flush();
