@@ -27,6 +27,8 @@ setono_sylius_google_ads:
             <p>When you create a new conversion action you choose the category and this category determines whether the
             conversion is tracked automatically or your developer has to implement it manually. The only category that
             is tracked automatically is the <code>Purchase</code> category.</p>
+            <p>Here is a video from Google describing and telling how to setup offline conversion tracking:
+            <a href="https://www.youtube.com/watch?v=xoeis7WHc_s&t=90s" target="_blank">Google Ads Tutorials: How to import offline conversions</a></p>
         conversion_actions: Google Ads conversion actions
         edit_conversion_action: Edit conversion action
         enabled: Enabled
