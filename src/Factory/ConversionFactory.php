@@ -12,8 +12,12 @@ final class ConversionFactory implements ConversionFactoryInterface
 {
     private FactoryInterface $decorated;
 
+    /** @var array<string, string> */
     private array $defaultStates;
 
+    /**
+     * @param array<string, string> $defaultStates
+     */
     public function __construct(FactoryInterface $decorated, array $defaultStates)
     {
         $this->decorated = $decorated;

@@ -62,7 +62,10 @@
     },
     "prefer-stable": true,
     "scripts": {
-        "analyse": "phpstan analyse",
+        "analyse": [
+            "phpstan analyse",
+            "psalm"
+        ],
         "check-style": "ecs check src/ tests/",
         "fix-style": "ecs check src/ tests/ --fix",
         "phpunit": "phpunit"

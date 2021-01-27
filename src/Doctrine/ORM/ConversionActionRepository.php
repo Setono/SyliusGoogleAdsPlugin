@@ -39,7 +39,7 @@ class ConversionActionRepository extends EntityRepository implements ConversionA
 
         foreach ($conversionActions as $conversionAction) {
             foreach ($conversionAction->getChannels() as $channel) {
-                $channels[$channel->getId()] = $channel;
+                $channels[(string) $channel->getId()] = $channel;
             }
         }
 

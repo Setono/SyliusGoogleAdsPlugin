@@ -45,6 +45,8 @@ final class DownloadConversionsAction
 
         $qb = $this->conversionRepository->findReadyByChannelQueryBuilder($channel);
         $manager = $qb->getEntityManager();
+
+        /** @var array<array-key, array<array-key, ConversionInterface>> $iterableResult */
         $iterableResult = $qb->getQuery()->iterate();
 
         $response = new StreamedResponse(function () use ($manager, $iterableResult): void {
@@ -53,8 +55,10 @@ final class DownloadConversionsAction
             fputcsv($output, [sprintf('Parameters:TimeZone=%s', date_default_timezone_get())]);
             fputcsv($output, ['Google Click ID', 'Conversion Name', 'Conversion Time', 'Conversion Value', 'Conversion Currency']);
 
+            $i = 0;
             foreach ($iterableResult as $row) {
-                /** @var ConversionInterface $conversion */
+                ++$i;
+
                 $conversion = $row[0];
 
                 $createdAt = $conversion->getCreatedAt();
@@ -70,7 +74,9 @@ final class DownloadConversionsAction
                     self::formatValue((int) $conversion->getValue()), $conversion->getCurrencyCode(),
                 ]);
 
-                $manager->detach($row[0]);
+                if ($i % 100 === 0) {
+                    $manager->clear();
+                }
 
                 flush();
             }

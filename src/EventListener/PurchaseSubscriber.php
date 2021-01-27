@@ -92,19 +92,23 @@ final class PurchaseSubscriber implements EventSubscriberInterface
             $channel, ConversionActionInterface::CATEGORY_PURCHASE
         );
 
+        $manager = null;
+
         foreach ($conversionActions as $conversionAction) {
             $conversion = $this->conversionFactory->createFromOrder($order, (string) $conversionAction->getCategory());
             $conversion->setName((string) $conversionAction->getName());
             $conversion->setGoogleClickId((string) $request->cookies->get($this->cookieName));
             $conversion->setChannel($channel);
 
-            $this->eventDispatcher->dispatch(new PrePersistConversionFromOrderEvent($conversion, $conversionAction, $order));
+            $this->eventDispatcher->dispatch(
+                new PrePersistConversionFromOrderEvent($conversion, $conversionAction, $order)
+            );
 
             $manager = $this->getManager($conversion);
             $manager->persist($conversion);
         }
 
-        if (isset($manager)) {
+        if (null !== $manager) {
             $manager->flush();
         }
     }

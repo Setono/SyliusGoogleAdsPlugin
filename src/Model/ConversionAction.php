@@ -7,7 +7,6 @@ namespace Setono\SyliusGoogleAdsPlugin\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Channel\Model\ChannelInterface as BaseChannelInterface;
-use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Resource\Model\ToggleableTrait;
 
 class ConversionAction implements ConversionActionInterface
@@ -22,7 +21,11 @@ class ConversionAction implements ConversionActionInterface
 
     protected ?string $category = null;
 
-    /** @var Collection|ChannelInterface[] */
+    /**
+     * @var Collection|BaseChannelInterface[]
+     *
+     * @psalm-var Collection<array-key, BaseChannelInterface>
+     */
     protected Collection $channels;
 
     public function __construct()

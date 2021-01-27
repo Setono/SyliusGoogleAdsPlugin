@@ -54,6 +54,11 @@ final class ProcessPendingConversionsCommand extends Command
         }
 
         if (isset($conversion)) {
+            /**
+             * Supressing until this issue is fixed: https://github.com/vimeo/psalm/issues/5110
+             *
+             * @psalm-suppress MixedArgument
+             */
             $manager = $this->managerRegistry->getManagerForClass(get_class($conversion));
             if (null !== $manager) {
                 $manager->flush();

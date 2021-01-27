@@ -20,7 +20,7 @@ final class KeyGenerator implements KeyGeneratorInterface
 
     public function generate(ChannelInterface $channel): string
     {
-        return hash($this->algo, $channel->getId() . $this->salt);
+        return hash($this->algo, (string) $channel->getId() . $this->salt);
     }
 
     public function check(ChannelInterface $channel, string $key): bool

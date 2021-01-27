@@ -20,7 +20,7 @@ interface ConversionRepositoryInterface extends RepositoryInterface
     /**
      * The default for $since is 3 days as the method above
      *
-     * @return ConversionInterface[]
+     * @return array<array-key, ConversionInterface>
      */
     public function findPending(\DateTimeInterface $since = null): array;
 }

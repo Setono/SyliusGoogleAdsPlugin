@@ -39,7 +39,7 @@ final class SaveGclidInCookieSubscriber implements EventSubscriberInterface
 
         $response = $event->getResponse();
         $response->headers->setCookie(Cookie::create(
-            $this->cookieName, $request->query->get('gclid'), new DateTimeImmutable('+3 months'),
+            $this->cookieName, (string) $request->query->get('gclid'), new DateTimeImmutable('+3 months'),
             null, null, false, false
         ));
     }
