@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Command;
 
-use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
 use function Safe\sprintf;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConversionRepositoryInterface;
 use Setono\SyliusGoogleAdsPlugin\StateResolver\StateResolverInterface;
@@ -21,18 +21,18 @@ final class ProcessPendingConversionsCommand extends Command
 
     private StateResolverInterface $stateResolver;
 
-    private ManagerRegistry $managerRegistry;
+    private ObjectManager $manager;
 
     public function __construct(
         ConversionRepositoryInterface $conversionRepository,
         StateResolverInterface $stateResolver,
-        ManagerRegistry $managerRegistry
+        ObjectManager $manager
     ) {
         parent::__construct();
 
         $this->conversionRepository = $conversionRepository;
         $this->stateResolver = $stateResolver;
-        $this->managerRegistry = $managerRegistry;
+        $this->manager = $manager;
     }
 
     protected function configure(): void
@@ -48,17 +48,16 @@ final class ProcessPendingConversionsCommand extends Command
 
         $conversions = $this->conversionRepository->findPending();
         foreach ($conversions as $conversion) {
+            ++$i;
+
             $conversion->setState($this->stateResolver->resolve($conversion));
 
-            ++$i;
-        }
-
-        if (isset($conversion) && is_object($conversion)) {
-            $manager = $this->managerRegistry->getManagerForClass(get_class($conversion));
-            if (null !== $manager) {
-                $manager->flush();
+            if ($i % 100 === 0) {
+                $this->manager->flush();
             }
         }
+
+        $this->manager->flush();
 
         $io->success(sprintf('Processed %d conversions', $i));
 

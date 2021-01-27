@@ -7,7 +7,7 @@
                  class="Setono\SyliusGoogleAdsPlugin\Command\ProcessPendingConversionsCommand">
             <argument type="service" id="setono_sylius_google_ads.repository.conversion"/>
             <argument type="service" id="setono_sylius_google_ads.state_resolver.conversion_with_order"/>
-            <argument type="service" id="doctrine"/>
+            <argument type="service" id="setono_sylius_google_ads.manager.conversion"/>
 
             <tag name="console.command"/>
         </service>
