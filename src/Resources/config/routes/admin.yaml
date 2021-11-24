@@ -8,7 +8,7 @@ setono_sylius_google_ads_admin_conversion_action:
     resource: |
         section: admin
         alias: setono_sylius_google_ads.conversion_action
-        templates: SyliusAdminBundle:Crud
+        templates: '@SyliusAdmin\\Crud'
         redirect: update
         grid: setono_sylius_google_ads_admin_conversion_action
         vars:
