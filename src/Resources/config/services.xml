@@ -11,6 +11,7 @@
         <import resource="services/form.xml"/>
         <import resource="services/key_generator.xml"/>
         <import resource="services/menu.xml"/>
+        <import resource="services/order_processor.xml"/>
         <import resource="services/state_resolver.xml"/>
         <import resource="services/twig.xml"/>
     </imports>

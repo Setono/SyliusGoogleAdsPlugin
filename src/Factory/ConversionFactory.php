@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin\Factory;
 
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
-use Sylius\Component\Core\Model\OrderInterface;
+use Setono\SyliusGoogleAdsPlugin\Model\OrderInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 
 final class ConversionFactory implements ConversionFactoryInterface
@@ -43,6 +43,11 @@ final class ConversionFactory implements ConversionFactoryInterface
         $conversion->setValue($order->getTotal());
         $conversion->setCurrencyCode((string) $order->getCurrencyCode());
         $conversion->setOrder($order);
+
+        $clickId = $order->getGoogleClickId();
+        if (null !== $clickId) {
+            $conversion->setGoogleClickId($clickId);
+        }
 
         return $conversion;
     }
