@@ -46,7 +46,10 @@ final class DownloadConversionsAction
         $qb = $this->conversionRepository->findReadyByChannelQueryBuilder($channel);
         $manager = $qb->getEntityManager();
 
-        /** @var array<array-key, array<array-key, ConversionInterface>> $iterableResult */
+        /**
+         * @var array<array-key, array<array-key, ConversionInterface>> $iterableResult
+         * @psalm-suppress DeprecatedMethod,DeprecatedClass
+         */
         $iterableResult = $qb->getQuery()->iterate();
 
         $response = new StreamedResponse(function () use ($manager, $iterableResult): void {
@@ -65,7 +68,7 @@ final class DownloadConversionsAction
                 if (null === $createdAt) {
                     throw new \LogicException(sprintf(
                         'The created at timestamp on the conversion with id %s is null. This should not be possible.',
-                        $conversion->getId()
+                        (int) $conversion->getId()
                     ));
                 }
 
