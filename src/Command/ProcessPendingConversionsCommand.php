@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin\Command;
 
 use Doctrine\Persistence\ObjectManager;
-use function Safe\sprintf;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConversionRepositoryInterface;
 use Setono\SyliusGoogleAdsPlugin\StateResolver\StateResolverInterface;
+use function sprintf;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

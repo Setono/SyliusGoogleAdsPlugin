@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\EventListener;
 
-use Safe\DateTimeImmutable;
+use DateTimeImmutable;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
@@ -39,8 +39,13 @@ final class SaveGclidInCookieSubscriber implements EventSubscriberInterface
 
         $response = $event->getResponse();
         $response->headers->setCookie(Cookie::create(
-            $this->cookieName, (string) $request->query->get('gclid'), new DateTimeImmutable('+3 months'),
-            null, null, false, false
+            $this->cookieName,
+            (string) $request->query->get('gclid'),
+            new DateTimeImmutable('+3 months'),
+            null,
+            null,
+            false,
+            false
         ));
     }
 }

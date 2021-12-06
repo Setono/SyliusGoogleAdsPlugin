@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Controller\Action;
 
-use function Safe\fopen;
-use function Safe\fputcsv;
-use function Safe\sprintf;
+use function fopen;
+use function fputcsv;
 use Setono\SyliusGoogleAdsPlugin\KeyGenerator\KeyGeneratorInterface;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConversionRepositoryInterface;
+use function sprintf;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Channel\Model\ChannelInterface;
 use Symfony\Component\HttpFoundation\HeaderUtils;
@@ -46,7 +46,10 @@ final class DownloadConversionsAction
         $qb = $this->conversionRepository->findReadyByChannelQueryBuilder($channel);
         $manager = $qb->getEntityManager();
 
-        /** @var array<array-key, array<array-key, ConversionInterface>> $iterableResult */
+        /**
+         * @var array<array-key, array<array-key, ConversionInterface>> $iterableResult
+         * @psalm-suppress DeprecatedMethod,DeprecatedClass
+         */
         $iterableResult = $qb->getQuery()->iterate();
 
         $response = new StreamedResponse(function () use ($manager, $iterableResult): void {
@@ -65,7 +68,7 @@ final class DownloadConversionsAction
                 if (null === $createdAt) {
                     throw new \LogicException(sprintf(
                         'The created at timestamp on the conversion with id %s is null. This should not be possible.',
-                        $conversion->getId()
+                        (int) $conversion->getId()
                     ));
                 }
 

@@ -7,12 +7,12 @@ namespace Setono\SyliusGoogleAdsPlugin\EventListener;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use function Safe\sprintf;
 use Setono\SyliusGoogleAdsPlugin\ConsentChecker\ConsentCheckerInterface;
 use Setono\SyliusGoogleAdsPlugin\Event\PrePersistConversionFromOrderEvent;
 use Setono\SyliusGoogleAdsPlugin\Factory\ConversionFactoryInterface;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionActionInterface;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConversionActionRepositoryInterface;
+use function sprintf;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Sylius\Component\Core\Model\OrderInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -89,7 +89,8 @@ final class PurchaseSubscriber implements EventSubscriberInterface
         }
 
         $conversionActions = $this->conversionActionRepository->findEnabledByChannelAndCategory(
-            $channel, ConversionActionInterface::CATEGORY_PURCHASE
+            $channel,
+            ConversionActionInterface::CATEGORY_PURCHASE
         );
 
         $manager = null;

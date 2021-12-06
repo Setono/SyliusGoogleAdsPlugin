@@ -1,7 +1,7 @@
 framework:
-    secret: '%env(APP_SECRET)%'
-    form: true
     csrf_protection: true
-    templating: { engines: ["twig"] }
+    form: true
+    ide: phpstorm
+    secret: '%env(APP_SECRET)%'
     session:
         handler_id: ~
