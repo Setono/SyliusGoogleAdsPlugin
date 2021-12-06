@@ -8,12 +8,13 @@ use Setono\SyliusGoogleAdsPlugin\Model\ConversionActionInterface;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConversionActionRepositoryInterface;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Component\Channel\Model\ChannelInterface;
+use Webmozart\Assert\Assert;
 
 class ConversionActionRepository extends EntityRepository implements ConversionActionRepositoryInterface
 {
     public function findEnabledByChannelAndCategory(ChannelInterface $channel, string $category): array
     {
-        return $this->createQueryBuilder('o')
+        $res = $this->createQueryBuilder('o')
             ->andWhere(':channel MEMBER OF o.channels')
             ->andWhere('o.enabled = true')
             ->andWhere('o.category = :category')
@@ -22,6 +23,11 @@ class ConversionActionRepository extends EntityRepository implements ConversionA
             ->getQuery()
             ->getResult()
         ;
+
+        Assert::isArray($res);
+        Assert::allIsInstanceOf($res, ConversionActionInterface::class);
+
+        return $res;
     }
 
     public function findChannels(): array

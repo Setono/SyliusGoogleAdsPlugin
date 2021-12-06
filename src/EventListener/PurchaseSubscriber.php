@@ -89,7 +89,8 @@ final class PurchaseSubscriber implements EventSubscriberInterface
         }
 
         $conversionActions = $this->conversionActionRepository->findEnabledByChannelAndCategory(
-            $channel, ConversionActionInterface::CATEGORY_PURCHASE
+            $channel,
+            ConversionActionInterface::CATEGORY_PURCHASE
         );
 
         $manager = null;

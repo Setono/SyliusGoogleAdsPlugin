@@ -10,6 +10,7 @@ use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConversionRepositoryInterface;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Component\Channel\Model\ChannelInterface;
+use Webmozart\Assert\Assert;
 
 class ConversionRepository extends EntityRepository implements ConversionRepositoryInterface
 {
@@ -27,7 +28,7 @@ class ConversionRepository extends EntityRepository implements ConversionReposit
 
     public function findPending(\DateTimeInterface $since = null): array
     {
-        return $this->createQueryBuilder('o')
+        $res = $this->createQueryBuilder('o')
             ->andWhere('o.state = :state')
             ->andWhere('o.createdAt >= :since')
             ->setParameter('state', ConversionInterface::STATE_PENDING)
@@ -36,5 +37,10 @@ class ConversionRepository extends EntityRepository implements ConversionReposit
             ->getQuery()
             ->getResult()
         ;
+
+        Assert::isArray($res);
+        Assert::allIsInstanceOf($res, ConversionInterface::class);
+
+        return $res;
     }
 }

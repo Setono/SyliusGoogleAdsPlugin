@@ -1,4 +1,0 @@
-suites:
-    main:
-        namespace: Setono\SyliusGoogleAdsPlugin
-        psr4_prefix: Setono\SyliusGoogleAdsPlugin

@@ -1,19 +1,26 @@
 <?xml version="1.0"?>
 <psalm
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    errorLevel="1"
-    resolveFromConfigFile="true"
+    totallyTyped="true"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
 >
     <projectFiles>
         <directory name="src"/>
+        <directory name="tests"/>
         <ignoreFiles>
-            <file name="src/DependencyInjection/Configuration.php"/>
-            <file name="src/DependencyInjection/SetonoSyliusGoogleAdsExtension.php"/>
-
-            <directory name="src/Doctrine/ORM"/>
+            <directory name="tests/Application"/>
             <directory name="vendor"/>
         </ignoreFiles>
     </projectFiles>
+    <plugins>
+        <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin">
+            <containerXml>tests/Application/var/cache/test/ApplicationTests_Setono_SyliusGoogleAdsPlugin_Application_KernelTestDebugContainer.xml</containerXml>
+        </pluginClass>
+        <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
+        <pluginClass class="Weirdan\DoctrinePsalmPlugin\Plugin"/>
+    </plugins>
+    <issueHandlers>
+        <PluginIssue name="QueryBuilderSetParameter" errorLevel="info" />
+    </issueHandlers>
 </psalm>
