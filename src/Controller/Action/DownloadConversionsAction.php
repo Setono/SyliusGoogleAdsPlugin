@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Controller\Action;
 
-use function Safe\fopen;
-use function Safe\fputcsv;
-use function Safe\sprintf;
+use function fopen;
+use function fputcsv;
 use Setono\SyliusGoogleAdsPlugin\KeyGenerator\KeyGeneratorInterface;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConversionRepositoryInterface;
+use function sprintf;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Channel\Model\ChannelInterface;
 use Symfony\Component\HttpFoundation\HeaderUtils;
