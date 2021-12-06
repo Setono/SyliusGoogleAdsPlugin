@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\OrderProcessor;
 
+use Setono\SyliusGoogleAdsPlugin\Exception\WrongOrderTypeException;
 use Setono\SyliusGoogleAdsPlugin\Model\OrderInterface;
 use Sylius\Component\Order\Model\OrderInterface as BaseOrderInterface;
 use Sylius\Component\Order\Processor\OrderProcessorInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Webmozart\Assert\Assert;
 
 final class SetGoogleClickIdOrderProcessor implements OrderProcessorInterface
 {
@@ -27,10 +27,7 @@ final class SetGoogleClickIdOrderProcessor implements OrderProcessorInterface
      */
     public function process(BaseOrderInterface $order): void
     {
-        Assert::isInstanceOf($order, OrderInterface::class, sprintf(
-            'You must implement the %s in your Sylius application. Read the readme here: https://github.com/Setono/SyliusGoogleAdsPlugin',
-            OrderInterface::class
-        ));
+        WrongOrderTypeException::assert($order);
 
         $request = $this->requestStack->getMasterRequest();
         if (null === $request) {

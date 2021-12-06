@@ -5,68 +5,86 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin\EventListener;
 
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\Persistence\ObjectManager;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Setono\DoctrineObjectManagerTrait\ORM\ORMManagerTrait;
 use Setono\SyliusGoogleAdsPlugin\ConsentChecker\ConsentCheckerInterface;
 use Setono\SyliusGoogleAdsPlugin\Event\PrePersistConversionFromOrderEvent;
+use Setono\SyliusGoogleAdsPlugin\Exception\WrongOrderTypeException;
 use Setono\SyliusGoogleAdsPlugin\Factory\ConversionFactoryInterface;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionActionInterface;
-use Setono\SyliusGoogleAdsPlugin\Model\OrderInterface;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConversionActionRepositoryInterface;
-use function sprintf;
-use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
+use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
 use Webmozart\Assert\Assert;
 
 final class PurchaseSubscriber implements EventSubscriberInterface
 {
-    /** @var ObjectManager[] */
-    private array $managers = [];
+    use ORMManagerTrait;
 
     private ConversionActionRepositoryInterface $conversionActionRepository;
 
     private ConversionFactoryInterface $conversionFactory;
 
-    private ManagerRegistry $managerRegistry;
-
     private ConsentCheckerInterface $consentChecker;
 
     private EventDispatcherInterface $eventDispatcher;
+
+    private OrderRepositoryInterface $orderRepository;
 
     public function __construct(
         ConversionActionRepositoryInterface $conversionActionRepository,
         ConversionFactoryInterface $conversionFactory,
         ManagerRegistry $managerRegistry,
         ConsentCheckerInterface $consentChecker,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        OrderRepositoryInterface $orderRepository
     ) {
         $this->conversionActionRepository = $conversionActionRepository;
         $this->conversionFactory = $conversionFactory;
         $this->managerRegistry = $managerRegistry;
         $this->consentChecker = $consentChecker;
         $this->eventDispatcher = $eventDispatcher;
+        $this->orderRepository = $orderRepository;
     }
 
     public static function getSubscribedEvents(): array
     {
         return [
-            'sylius.order.post_complete' => 'track',
+            KernelEvents::REQUEST => 'track',
         ];
     }
 
-    public function track(ResourceControllerEvent $event): void
+    public function track(RequestEvent $requestEvent): void
     {
-        /** @var OrderInterface|mixed $order */
-        $order = $event->getSubject();
-        Assert::isInstanceOf($order, OrderInterface::class, sprintf(
-            'You must implement the %s in your Sylius application. Read the readme here: https://github.com/Setono/SyliusGoogleAdsPlugin',
-            OrderInterface::class
-        ));
+        $request = $requestEvent->getRequest();
 
-        $channel = $order->getChannel();
-        if (null === $channel) {
+        if (!$requestEvent->isMasterRequest()) {
             return;
         }
+
+        if (!$request->attributes->has('_route')) {
+            return;
+        }
+
+        $route = $request->attributes->get('_route');
+        if ('sylius_shop_order_thank_you' !== $route) {
+            return;
+        }
+
+        /** @var mixed $orderId */
+        $orderId = $request->getSession()->get('sylius_order_id');
+
+        if (!is_scalar($orderId)) {
+            return;
+        }
+
+        $order = $this->orderRepository->find($orderId);
+        WrongOrderTypeException::assert($order);
+
+        $channel = $order->getChannel();
+        Assert::notNull($channel);
 
         if (!$this->consentChecker->hasConsent()) {
             return;
@@ -95,20 +113,5 @@ final class PurchaseSubscriber implements EventSubscriberInterface
         if (null !== $manager) {
             $manager->flush();
         }
-    }
-
-    private function getManager(object $obj): ObjectManager
-    {
-        $cls = get_class($obj);
-        if (!isset($this->managers[$cls])) {
-            $manager = $this->managerRegistry->getManagerForClass($cls);
-            if (null === $manager) {
-                throw new \InvalidArgumentException(sprintf('No object manager registered for class %s', $cls));
-            }
-
-            $this->managers[$cls] = $manager;
-        }
-
-        return $this->managers[$cls];
     }
 }
