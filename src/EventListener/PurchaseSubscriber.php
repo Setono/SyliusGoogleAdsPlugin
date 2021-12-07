@@ -12,7 +12,9 @@ use Setono\SyliusGoogleAdsPlugin\Event\PrePersistConversionFromOrderEvent;
 use Setono\SyliusGoogleAdsPlugin\Exception\WrongOrderTypeException;
 use Setono\SyliusGoogleAdsPlugin\Factory\ConversionFactoryInterface;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionActionInterface;
+use Setono\SyliusGoogleAdsPlugin\Model\OrderInterface;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConversionActionRepositoryInterface;
+use Sylius\Component\Core\Model\OrderInterface as BaseOrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -80,8 +82,13 @@ final class PurchaseSubscriber implements EventSubscriberInterface
             return;
         }
 
+        /** @var OrderInterface|BaseOrderInterface $order */
         $order = $this->orderRepository->find($orderId);
         WrongOrderTypeException::assert($order);
+
+        if ($order->getGoogleClickId() === null) {
+            return;
+        }
 
         $channel = $order->getChannel();
         Assert::notNull($channel);
