@@ -8,7 +8,7 @@
         "sylius-plugin"
     ],
     "require": {
-        "php": "^7.4",
+        "php": ">=7.4",
         "ext-hash": "*",
         "ext-mbstring": "*",
         "doctrine/collections": "^1.6",
