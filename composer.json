@@ -42,7 +42,7 @@
         "sylius/sylius": "~1.10.5",
         "symfony/debug-bundle": "^4.4 || ^5.0",
         "symfony/dotenv": "^4.4 || ^5.0",
-        "symfony/intl": "^4.4 || ^5.0",
+        "symfony/intl": "^5.4.2",
         "symfony/web-profiler-bundle": "^4.4 || ^5.0",
         "symfony/webpack-encore-bundle": "^1.13",
         "weirdan/doctrine-psalm-plugin": "^2.0"
