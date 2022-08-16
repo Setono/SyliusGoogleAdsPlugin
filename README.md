@@ -1,7 +1,6 @@
 # Sylius plugin for Google Ads
 
 [![Latest Version][ico-version]][link-packagist]
-[![Latest Unstable Version][ico-unstable-version]][link-packagist]
 [![Software License][ico-license]](LICENSE)
 [![Build Status][ico-github-actions]][link-github-actions]
 
@@ -75,7 +74,7 @@ find the URL you need to give to Google. It will look something like: `https://y
 
 ## Advanced usage
 Conversions have a state property, which is `ready` by default. This means that purchase conversions will be downloaded
-by Google when a customer has completed an order. This is not always the intended behavior. Some times it's more likely
+by Google when a customer has completed an order. This is not always the intended behavior. Sometimes it's more likely
 that the conversion should first be counted when the order is paid. To fix this, edit the configuration:
 
 ```yaml
@@ -92,7 +91,6 @@ $ php bin/console setono:sylius-google-ads:process-pending-conversions
 ```
 
 [ico-version]: https://poser.pugx.org/setono/sylius-google-ads-plugin/v/stable
-[ico-unstable-version]: https://poser.pugx.org/setono/sylius-google-ads-plugin/v/unstable
 [ico-license]: https://poser.pugx.org/setono/sylius-google-ads-plugin/license
 [ico-github-actions]: https://github.com/Setono/SyliusGoogleAdsPlugin/workflows/build/badge.svg
 
