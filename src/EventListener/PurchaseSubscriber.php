@@ -7,6 +7,7 @@ namespace Setono\SyliusGoogleAdsPlugin\EventListener;
 use Doctrine\Persistence\ManagerRegistry;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Setono\DoctrineObjectManagerTrait\ORM\ORMManagerTrait;
+use Setono\MainRequestTrait\MainRequestTrait;
 use Setono\SyliusGoogleAdsPlugin\ConsentChecker\ConsentCheckerInterface;
 use Setono\SyliusGoogleAdsPlugin\Event\PrePersistConversionFromOrderEvent;
 use Setono\SyliusGoogleAdsPlugin\Exception\WrongOrderTypeException;
@@ -23,6 +24,8 @@ use Webmozart\Assert\Assert;
 
 final class PurchaseSubscriber implements EventSubscriberInterface
 {
+    use MainRequestTrait;
+
     use ORMManagerTrait;
 
     private ConversionActionRepositoryInterface $conversionActionRepository;
@@ -62,7 +65,7 @@ final class PurchaseSubscriber implements EventSubscriberInterface
     {
         $request = $requestEvent->getRequest();
 
-        if (!$requestEvent->isMasterRequest()) {
+        if (!$this->isMainRequest($requestEvent)) {
             return;
         }
 

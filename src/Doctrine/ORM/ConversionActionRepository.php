@@ -24,7 +24,6 @@ class ConversionActionRepository extends EntityRepository implements ConversionA
             ->getResult()
         ;
 
-        Assert::isArray($res);
         Assert::allIsInstanceOf($res, ConversionActionInterface::class);
 
         return $res;

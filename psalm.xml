@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 <psalm
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    totallyTyped="true"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    phpVersion="8.1"
+    errorLevel="1"
 >
     <projectFiles>
         <directory name="src"/>
@@ -26,11 +27,5 @@
     </plugins>
     <issueHandlers>
         <PluginIssue name="QueryBuilderSetParameter" errorLevel="info" />
-        <DeprecatedMethod>
-            <errorLevel type="suppress">
-                <referencedMethod name="Symfony\Component\HttpFoundation\RequestStack::getMasterRequest"/>
-                <referencedMethod name="Symfony\Component\HttpKernel\Event\KernelEvent::isMasterRequest"/>
-            </errorLevel>
-        </DeprecatedMethod>
     </issueHandlers>
 </psalm>
