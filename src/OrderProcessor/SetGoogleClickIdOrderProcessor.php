@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\OrderProcessor;
 
-use Setono\MainRequestTrait\MainRequestTrait;
 use Setono\SyliusGoogleAdsPlugin\Exception\WrongOrderTypeException;
 use Setono\SyliusGoogleAdsPlugin\Model\OrderInterface;
 use Sylius\Component\Order\Model\OrderInterface as BaseOrderInterface;
@@ -13,8 +12,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 final class SetGoogleClickIdOrderProcessor implements OrderProcessorInterface
 {
-    use MainRequestTrait;
-
     private RequestStack $requestStack;
 
     private string $cookieName;
@@ -32,7 +29,7 @@ final class SetGoogleClickIdOrderProcessor implements OrderProcessorInterface
     {
         WrongOrderTypeException::assert($order);
 
-        $request = $this->getMainRequestFromRequestStack($this->requestStack);
+        $request = $this->requestStack->getMainRequest();
         if (null === $request) {
             return;
         }

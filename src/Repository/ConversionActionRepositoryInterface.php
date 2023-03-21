@@ -8,6 +8,9 @@ use Setono\SyliusGoogleAdsPlugin\Model\ConversionActionInterface;
 use Sylius\Component\Channel\Model\ChannelInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
+/**
+ * @extends RepositoryInterface<ConversionActionInterface>
+ */
 interface ConversionActionRepositoryInterface extends RepositoryInterface
 {
     /**

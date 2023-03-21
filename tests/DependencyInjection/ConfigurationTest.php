@@ -7,7 +7,15 @@ namespace Tests\Setono\SyliusGoogleAdsPlugin\DependencyInjection;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit\Framework\TestCase;
 use Setono\SyliusGoogleAdsPlugin\DependencyInjection\Configuration;
+use Setono\SyliusGoogleAdsPlugin\Doctrine\ORM\ConversionActionRepository;
+use Setono\SyliusGoogleAdsPlugin\Doctrine\ORM\ConversionRepository;
+use Setono\SyliusGoogleAdsPlugin\Form\Type\ConversionActionType;
+use Setono\SyliusGoogleAdsPlugin\Model\Conversion;
+use Setono\SyliusGoogleAdsPlugin\Model\ConversionAction;
+use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
+use Sylius\Bundle\ResourceBundle\Form\Type\DefaultResourceType;
 use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
+use Sylius\Component\Resource\Factory\Factory;
 
 /**
  * See examples of tests and configuration options here: https://github.com/SymfonyTest/SymfonyConfigTest
@@ -35,20 +43,20 @@ final class ConfigurationTest extends TestCase
                 'resources' => [
                     'conversion' => [
                         'classes' => [
-                            'model' => 'Setono\SyliusGoogleAdsPlugin\Model\Conversion',
-                            'controller' => 'Sylius\Bundle\ResourceBundle\Controller\ResourceController',
-                            'repository' => 'Setono\SyliusGoogleAdsPlugin\Doctrine\ORM\ConversionRepository',
-                            'factory' => 'Sylius\Component\Resource\Factory\Factory',
-                            'form' => 'Sylius\Bundle\ResourceBundle\Form\Type\DefaultResourceType',
+                            'model' => Conversion::class,
+                            'controller' => ResourceController::class,
+                            'repository' => ConversionRepository::class,
+                            'factory' => Factory::class,
+                            'form' => DefaultResourceType::class,
                         ],
                     ],
                     'conversion_action' => [
                         'classes' => [
-                            'model' => 'Setono\SyliusGoogleAdsPlugin\Model\ConversionAction',
-                            'controller' => 'Sylius\Bundle\ResourceBundle\Controller\ResourceController',
-                            'repository' => 'Setono\SyliusGoogleAdsPlugin\Doctrine\ORM\ConversionActionRepository',
-                            'factory' => 'Sylius\Component\Resource\Factory\Factory',
-                            'form' => 'Setono\SyliusGoogleAdsPlugin\Form\Type\ConversionActionType',
+                            'model' => ConversionAction::class,
+                            'controller' => ResourceController::class,
+                            'repository' => ConversionActionRepository::class,
+                            'factory' => Factory::class,
+                            'form' => ConversionActionType::class,
                         ],
                     ],
                 ],
@@ -68,7 +76,7 @@ final class ConfigurationTest extends TestCase
                     'submit_lead_form' => 'ready',
                     'subscribe' => 'ready',
                 ],
-            ]
+            ],
         );
     }
 }
