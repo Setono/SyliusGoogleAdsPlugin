@@ -8,6 +8,9 @@ use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
 use Setono\SyliusGoogleAdsPlugin\Model\OrderInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 
+/**
+ * @extends FactoryInterface<ConversionInterface>
+ */
 interface ConversionFactoryInterface extends FactoryInterface
 {
     public function createNew(string $category = null): ConversionInterface;

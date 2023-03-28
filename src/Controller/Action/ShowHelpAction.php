@@ -17,7 +17,7 @@ final class ShowHelpAction
 
     public function __construct(
         Environment $twig,
-        ConversionActionRepositoryInterface $conversionRepository
+        ConversionActionRepositoryInterface $conversionRepository,
     ) {
         $this->twig = $twig;
         $this->conversionRepository = $conversionRepository;

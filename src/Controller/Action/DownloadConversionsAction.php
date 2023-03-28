@@ -29,7 +29,7 @@ final class DownloadConversionsAction
     public function __construct(
         ChannelContextInterface $channelContext,
         ConversionRepositoryInterface $conversionRepository,
-        KeyGeneratorInterface $keyGenerator
+        KeyGeneratorInterface $keyGenerator,
     ) {
         $this->channelContext = $channelContext;
         $this->conversionRepository = $conversionRepository;
@@ -48,6 +48,7 @@ final class DownloadConversionsAction
 
         /**
          * @var array<array-key, array<array-key, ConversionInterface>> $iterableResult
+         *
          * @psalm-suppress DeprecatedMethod,DeprecatedClass
          */
         $iterableResult = $qb->getQuery()->iterate();
@@ -68,7 +69,7 @@ final class DownloadConversionsAction
                 if (null === $createdAt) {
                     throw new \LogicException(sprintf(
                         'The created at timestamp on the conversion with id %s is null. This should not be possible.',
-                        (int) $conversion->getId()
+                        (int) $conversion->getId(),
                     ));
                 }
 
@@ -91,7 +92,7 @@ final class DownloadConversionsAction
 
         $disposition = HeaderUtils::makeDisposition(
             HeaderUtils::DISPOSITION_INLINE,
-            self::generateFilename($channel)
+            self::generateFilename($channel),
         );
 
         $response->headers->set('Content-Disposition', $disposition);

@@ -7,6 +7,7 @@ namespace Setono\SyliusGoogleAdsPlugin\Factory;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
 use Setono\SyliusGoogleAdsPlugin\Model\OrderInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
+use Webmozart\Assert\Assert;
 
 final class ConversionFactory implements ConversionFactoryInterface
 {
@@ -26,8 +27,9 @@ final class ConversionFactory implements ConversionFactoryInterface
 
     public function createNew(string $category = null): ConversionInterface
     {
-        /** @var ConversionInterface $conversion */
+        /** @var ConversionInterface|object $conversion */
         $conversion = $this->decorated->createNew();
+        Assert::isInstanceOf($conversion, ConversionInterface::class);
 
         if (null !== $category) {
             $conversion->setCategory($category);

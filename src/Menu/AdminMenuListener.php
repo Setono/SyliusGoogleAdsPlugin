@@ -29,6 +29,7 @@ final class AdminMenuListener
                 'route' => 'setono_sylius_google_ads_admin_conversion_action_index',
             ])
             ->setLabel('setono_sylius_google_ads.ui.google_ads')
-            ->setLabelAttribute('icon', 'money bill alternate outline');
+            ->setLabelAttribute('icon', 'money bill alternate outline')
+        ;
     }
 }
