@@ -3,11 +3,21 @@
 <container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://symfony.com/schema/dic/services"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <parameters>
+        <parameter key="setono_sylius_google_ads.form_type.connection.validation_groups" type="collection">
+            <parameter>setono_sylius_google_ads</parameter>
+        </parameter>
         <parameter key="setono_sylius_google_ads.form_type.conversion.validation_groups" type="collection">
             <parameter>setono_sylius_google_ads</parameter>
         </parameter>
     </parameters>
     <services>
+        <service id="setono_sylius_google_ads.form_type.connection"
+                 class="Setono\SyliusGoogleAdsPlugin\Form\Type\ConnectionType">
+            <argument>%setono_sylius_google_ads.model.connection.class%</argument>
+            <argument>%setono_sylius_google_ads.form_type.connection.validation_groups%</argument>
+            <tag name="form.type"/>
+        </service>
+
         <service id="setono_sylius_google_ads.form_type.conversion"
                  class="Setono\SyliusGoogleAdsPlugin\Form\Type\ConversionActionType">
             <argument>%setono_sylius_google_ads.model.conversion_action.class%</argument>

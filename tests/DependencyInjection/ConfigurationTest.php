@@ -9,7 +9,9 @@ use PHPUnit\Framework\TestCase;
 use Setono\SyliusGoogleAdsPlugin\DependencyInjection\Configuration;
 use Setono\SyliusGoogleAdsPlugin\Doctrine\ORM\ConversionActionRepository;
 use Setono\SyliusGoogleAdsPlugin\Doctrine\ORM\ConversionRepository;
+use Setono\SyliusGoogleAdsPlugin\Form\Type\ConnectionType;
 use Setono\SyliusGoogleAdsPlugin\Form\Type\ConversionActionType;
+use Setono\SyliusGoogleAdsPlugin\Model\Connection;
 use Setono\SyliusGoogleAdsPlugin\Model\Conversion;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionAction;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
@@ -41,6 +43,14 @@ final class ConfigurationTest extends TestCase
             [
                 'driver' => SyliusResourceBundle::DRIVER_DOCTRINE_ORM,
                 'resources' => [
+                    'connection' => [
+                        'classes' => [
+                            'model' => Connection::class,
+                            'controller' => ResourceController::class,
+                            'factory' => Factory::class,
+                            'form' => ConnectionType::class,
+                        ],
+                    ],
                     'conversion' => [
                         'classes' => [
                             'model' => Conversion::class,

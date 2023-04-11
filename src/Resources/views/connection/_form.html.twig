@@ -1,0 +1,33 @@
+{{ form_errors(form) }}
+<div class="ui two column stackable grid">
+    <div class="ten wide column">
+        <div class="ui segment">
+            <div class="ui two column grid">
+                <div class="column">
+                    {{ form_row(form.name) }}
+                    <h4 class="ui dividing header">{{ 'setono_sylius_google_ads.form.connection.header.api'|trans }}</h4>
+                    <div class="two fields">
+                        {{ form_row(form.developerToken) }}
+                        {{ form_row(form.clientId) }}
+                    </div>
+                    <div class="two fields">
+                        {{ form_row(form.clientSecret) }}
+                        {{ form_row(form.refreshToken) }}
+                    </div>
+                </div>
+                <div class="column">
+                    <h4 class="ui dividing header">{{ 'setono_sylius_google_ads.form.connection.header.eligibility'|trans }}</h4>
+                    {{ form_row(form.enabled) }}
+                    {{ form_row(form.channels) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="six wide column">
+        <div class="ui segment">
+            {# todo #}
+            <h4 class="ui dividing header">TODO</h4>
+            <p>Here we want a help text explaining how to obtain the API credentials and set up a connection</p>
+        </div>
+    </div>
+</div>
