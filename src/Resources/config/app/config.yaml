@@ -1,5 +1,6 @@
 imports:
     - "@SetonoSyliusGoogleAdsPlugin/Resources/config/grids/setono_sylius_google_ads_admin_conversion_action.yaml"
+    - "@SetonoSyliusGoogleAdsPlugin/Resources/config/grids/setono_sylius_google_ads_admin_connection.yaml"
 
 sylius_ui:
     events:

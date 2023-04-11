@@ -26,7 +26,7 @@ final class AdminMenuListener
     {
         $item
             ->addChild('google_ads', [
-                'route' => 'setono_sylius_google_ads_admin_conversion_action_index',
+                'route' => 'setono_sylius_google_ads_admin_connection_index',
             ])
             ->setLabel('setono_sylius_google_ads.ui.google_ads')
             ->setLabelAttribute('icon', 'money bill alternate outline')

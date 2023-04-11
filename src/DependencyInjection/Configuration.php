@@ -6,7 +6,9 @@ namespace Setono\SyliusGoogleAdsPlugin\DependencyInjection;
 
 use Setono\SyliusGoogleAdsPlugin\Doctrine\ORM\ConversionActionRepository;
 use Setono\SyliusGoogleAdsPlugin\Doctrine\ORM\ConversionRepository;
+use Setono\SyliusGoogleAdsPlugin\Form\Type\ConnectionType;
 use Setono\SyliusGoogleAdsPlugin\Form\Type\ConversionActionType;
+use Setono\SyliusGoogleAdsPlugin\Model\Connection;
 use Setono\SyliusGoogleAdsPlugin\Model\Conversion;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionAction;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionActionInterface;
@@ -27,7 +29,7 @@ final class Configuration implements ConfigurationInterface
 
         $rootNode = $treeBuilder->getRootNode();
 
-        /** @psalm-suppress MixedMethodCall,PossiblyNullReference,PossiblyUndefinedMethod */
+        /** @psalm-suppress MixedMethodCall,PossiblyNullReference,PossiblyUndefinedMethod,UndefinedInterfaceMethod */
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
@@ -96,7 +98,7 @@ final class Configuration implements ConfigurationInterface
 
     private function addResourcesSection(ArrayNodeDefinition $node): void
     {
-        /** @psalm-suppress MixedMethodCall,PossiblyNullReference,PossiblyUndefinedMethod */
+        /** @psalm-suppress MixedMethodCall,PossiblyNullReference,PossiblyUndefinedMethod,UndefinedInterfaceMethod */
         $node
             ->children()
                 ->arrayNode('resources')
@@ -130,6 +132,22 @@ final class Configuration implements ConfigurationInterface
                                         ->scalarNode('repository')->defaultValue(ConversionActionRepository::class)->cannotBeEmpty()->end()
                                         ->scalarNode('factory')->defaultValue(Factory::class)->end()
                                         ->scalarNode('form')->defaultValue(ConversionActionType::class)->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('connection')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode('options')->end()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(Connection::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('repository')->cannotBeEmpty()->end()
+                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
+                                        ->scalarNode('form')->defaultValue(ConnectionType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()
