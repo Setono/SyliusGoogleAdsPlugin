@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusGoogleAdsPlugin\EventListener;
+namespace Setono\SyliusGoogleAdsPlugin\EventSubscriber;
 
 use Doctrine\Persistence\ManagerRegistry;
 use Psr\EventDispatcher\EventDispatcherInterface;
