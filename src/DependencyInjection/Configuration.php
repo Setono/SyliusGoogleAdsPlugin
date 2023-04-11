@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\DependencyInjection;
 
-use Setono\SyliusGoogleAdsPlugin\Doctrine\ORM\ConversionRepository;
 use Setono\SyliusGoogleAdsPlugin\Form\Type\ConnectionType;
 use Setono\SyliusGoogleAdsPlugin\Model\Connection;
 use Setono\SyliusGoogleAdsPlugin\Model\Conversion;
+use Setono\SyliusGoogleAdsPlugin\Repository\ConversionRepository;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Sylius\Bundle\ResourceBundle\Form\Type\DefaultResourceType;
 use Sylius\Component\Resource\Factory\Factory;

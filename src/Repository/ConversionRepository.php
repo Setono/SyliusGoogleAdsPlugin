@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusGoogleAdsPlugin\Doctrine\ORM;
+namespace Setono\SyliusGoogleAdsPlugin\Repository;
 
 use DateTimeImmutable;
 use Doctrine\ORM\QueryBuilder;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
-use Setono\SyliusGoogleAdsPlugin\Repository\ConversionRepositoryInterface;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Component\Channel\Model\ChannelInterface;
 use Webmozart\Assert\Assert;
