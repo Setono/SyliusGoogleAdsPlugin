@@ -1,9 +1,3 @@
 setono_sylius_google_ads_admin:
     resource: "@SetonoSyliusGoogleAdsPlugin/Resources/config/routes/admin.yaml"
     prefix: /admin/google-ads
-
-setono_sylius_google_ads_shop:
-    resource: "@SetonoSyliusGoogleAdsPlugin/Resources/config/routes/shop.yaml"
-    prefix: /{_locale}
-    requirements:
-        _locale: ^[A-Za-z]{2,4}(_([A-Za-z]{4}|[0-9]{3}))?(_([A-Za-z]{2}|[0-9]{3}))?$

@@ -7,7 +7,6 @@
                  class="Setono\SyliusGoogleAdsPlugin\Factory\ConversionFactory"
                  decorates="setono_sylius_google_ads.factory.conversion" decoration-priority="128">
             <argument type="service" id="setono_sylius_google_ads.custom_factory.conversion.inner"/>
-            <argument>%setono_sylius_google_ads.default_conversion_states%</argument>
         </service>
     </services>
 </container>

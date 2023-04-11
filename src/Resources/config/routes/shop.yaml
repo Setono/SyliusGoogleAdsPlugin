@@ -1,4 +1,0 @@
-setono_sylius_google_ads_shop_download_conversions:
-    path: /google-ads/conversions/{key}
-    controller: setono_sylius_google_ads.controller.action.download_conversions
-    methods: GET

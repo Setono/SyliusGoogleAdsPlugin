@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Event;
 
-use Setono\SyliusGoogleAdsPlugin\Model\ConversionActionInterface;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 
@@ -15,22 +14,9 @@ use Sylius\Component\Core\Model\OrderInterface;
  */
 final class PrePersistConversionFromOrderEvent
 {
-    /** @psalm-readonly */
-    public ConversionInterface $conversion;
-
-    /** @psalm-readonly */
-    public ConversionActionInterface $conversionAction;
-
-    /** @psalm-readonly */
-    public OrderInterface $order;
-
     public function __construct(
-        ConversionInterface $conversion,
-        ConversionActionInterface $conversionAction,
-        OrderInterface $order,
+        public readonly ConversionInterface $conversion,
+        public readonly OrderInterface $order,
     ) {
-        $this->conversion = $conversion;
-        $this->conversionAction = $conversionAction;
-        $this->order = $order;
     }
 }
