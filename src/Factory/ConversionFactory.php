@@ -13,35 +13,23 @@ final class ConversionFactory implements ConversionFactoryInterface
 {
     private FactoryInterface $decorated;
 
-    /** @var array<string, string> */
-    private array $defaultStates;
-
-    /**
-     * @param array<string, string> $defaultStates
-     */
-    public function __construct(FactoryInterface $decorated, array $defaultStates)
+    public function __construct(FactoryInterface $decorated)
     {
         $this->decorated = $decorated;
-        $this->defaultStates = $defaultStates;
     }
 
-    public function createNew(string $category = null): ConversionInterface
+    public function createNew(): ConversionInterface
     {
         /** @var ConversionInterface|object $conversion */
         $conversion = $this->decorated->createNew();
         Assert::isInstanceOf($conversion, ConversionInterface::class);
 
-        if (null !== $category) {
-            $conversion->setCategory($category);
-            $conversion->setState($this->defaultStates[$category] ?? ConversionInterface::STATE_READY);
-        }
-
         return $conversion;
     }
 
-    public function createFromOrder(OrderInterface $order, string $category): ConversionInterface
+    public function createFromOrder(OrderInterface $order): ConversionInterface
     {
-        $conversion = $this->createNew($category);
+        $conversion = $this->createNew();
         $conversion->setValue($order->getTotal());
         $conversion->setCurrencyCode((string) $order->getCurrencyCode());
         $conversion->setOrder($order);

@@ -13,7 +13,7 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
  */
 interface ConversionFactoryInterface extends FactoryInterface
 {
-    public function createNew(string $category = null): ConversionInterface;
+    public function createNew(): ConversionInterface;
 
-    public function createFromOrder(OrderInterface $order, string $category): ConversionInterface;
+    public function createFromOrder(OrderInterface $order): ConversionInterface;
 }
