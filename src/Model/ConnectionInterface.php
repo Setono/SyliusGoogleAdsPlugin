@@ -28,7 +28,12 @@ interface ConnectionInterface extends ResourceInterface, ToggleableInterface, Ch
 
     public function setClientSecret(?string $clientSecret): void;
 
-    public function getRefreshToken(): ?string;
+    public function getAccessToken(): ?string;
 
-    public function setRefreshToken(?string $refreshToken): void;
+    public function setAccessToken(?string $accessToken): void;
+
+    /**
+     * Returns true if this connection is able to authorize with Google (i.e. the required properties has been set)
+     */
+    public function canAuthorize(): bool;
 }

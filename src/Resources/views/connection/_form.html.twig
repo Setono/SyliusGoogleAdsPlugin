@@ -1,3 +1,4 @@
+{# @var resource \Setono\SyliusGoogleAdsPlugin\Model\ConnectionInterface #}
 {{ form_errors(form) }}
 <div class="ui two column stackable grid">
     <div class="ten wide column">
@@ -12,7 +13,7 @@
                     </div>
                     <div class="two fields">
                         {{ form_row(form.clientSecret) }}
-                        {{ form_row(form.refreshToken) }}
+                        {{ form_row(form.accessToken) }}
                     </div>
                 </div>
                 <div class="column">
@@ -24,6 +25,13 @@
         </div>
     </div>
     <div class="six wide column">
+        {% if resource.canAuthorize %}
+            <div class="ui segment">
+                <a class="ui large primary button" style="display: block" href="{{ path('setono_sylius_google_ads_admin_oauth', {'connectionId': resource.id}) }}">
+                    {{ 'setono_sylius_google_ads.ui.authorize_with_google'|trans }}
+                </a>
+            </div>
+        {% endif %}
         <div class="ui segment">
             {# todo #}
             <h4 class="ui dividing header">TODO</h4>

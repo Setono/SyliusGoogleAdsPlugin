@@ -1,9 +1,12 @@
 # todo remove
-setono_sylius_google_ads_admin_oauth_test:
-    path: /oauth
+setono_sylius_google_ads_admin_oauth:
+    path: /oauth/{connectionId}
     methods: [GET]
+    requirements:
+        connectionId: '\d+'
     defaults:
-        _controller: setono_sylius_google_ads.controller.action.oauth_test
+        _controller: setono_sylius_google_ads.controller.action.oauth
+        connectionId: null
 
 setono_sylius_google_ads_admin_connection:
     resource: |

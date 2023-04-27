@@ -23,7 +23,7 @@ class Connection implements ConnectionInterface
 
     protected ?string $clientSecret = null;
 
-    protected ?string $refreshToken = null;
+    protected ?string $accessToken = null;
 
     /**
      * @var Collection|BaseChannelInterface[]
@@ -82,14 +82,14 @@ class Connection implements ConnectionInterface
         $this->clientSecret = $clientSecret;
     }
 
-    public function getRefreshToken(): ?string
+    public function getAccessToken(): ?string
     {
-        return $this->refreshToken;
+        return $this->accessToken;
     }
 
-    public function setRefreshToken(?string $refreshToken): void
+    public function setAccessToken(?string $accessToken): void
     {
-        $this->refreshToken = $refreshToken;
+        $this->accessToken = $accessToken;
     }
 
     public function getChannels(): Collection
@@ -114,5 +114,10 @@ class Connection implements ConnectionInterface
     public function hasChannel(BaseChannelInterface $channel): bool
     {
         return $this->channels->contains($channel);
+    }
+
+    public function canAuthorize(): bool
+    {
+        return null !== $this->clientId && null !== $this->clientSecret && null !== $this->developerToken;
     }
 }

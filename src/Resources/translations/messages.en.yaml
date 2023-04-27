@@ -6,7 +6,8 @@ setono_sylius_google_ads:
             developer_token: Developer token
             name: Name
             name_placeholder: Use the name as a reference for this connection
-            refresh_token: Refresh token
+            access_token: Access token
+            access_token_help: The access token will be automatically filled when you authorize with Google
             header:
                 api: API credentials
                 eligibility: Eligibility
@@ -28,6 +29,7 @@ setono_sylius_google_ads:
                 subscribe: Subscribe
             name: Name
     ui:
+        authorize_with_google: Authorize with Google
         connections: Connections
         conversion_action: Google Ads conversion action
         conversion_action_explainer: |
