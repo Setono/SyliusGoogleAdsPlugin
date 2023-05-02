@@ -29,6 +29,7 @@ setono_sylius_google_ads:
                 subscribe: Subscribe
             name: Name
     ui:
+        access_token_updated: The access token was updated
         authorize_with_google: Authorize with Google
         connections: Connections
         conversion_action: Google Ads conversion action
@@ -52,3 +53,4 @@ setono_sylius_google_ads:
         new_connection: New connection
         new_conversion_action: New conversion action
         no_channels: No channels
+        reauthorize_with_google: Reauthorize with Google

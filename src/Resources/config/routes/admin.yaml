@@ -1,12 +1,16 @@
-# todo remove
-setono_sylius_google_ads_admin_oauth:
-    path: /oauth/{connectionId}
+setono_sylius_google_ads_admin_oauth_request:
+    path: /oauth/request/{connectionId}
     methods: [GET]
     requirements:
         connectionId: '\d+'
     defaults:
-        _controller: setono_sylius_google_ads.controller.action.oauth
-        connectionId: null
+        _controller: setono_sylius_google_ads.controller.action.oauth_request
+        
+setono_sylius_google_ads_admin_oauth_response:
+    path: /oauth/response
+    methods: [GET]
+    defaults:
+        _controller: setono_sylius_google_ads.controller.action.oauth_response
 
 setono_sylius_google_ads_admin_connection:
     resource: |
