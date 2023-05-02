@@ -17,6 +17,8 @@ final class ProcessPendingConversionsCommand extends Command
 {
     protected static $defaultName = 'setono:sylius-google-ads:process-pending-conversions';
 
+    protected static $defaultDescription = 'Processes all pending conversions where an order is related';
+
     private ConversionRepositoryInterface $conversionRepository;
 
     private StateResolverInterface $stateResolver;
@@ -33,11 +35,6 @@ final class ProcessPendingConversionsCommand extends Command
         $this->conversionRepository = $conversionRepository;
         $this->stateResolver = $stateResolver;
         $this->manager = $manager;
-    }
-
-    protected function configure(): void
-    {
-        $this->setDescription('Processes all pending conversions where an order is related');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
