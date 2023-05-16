@@ -11,6 +11,8 @@ setono_sylius_google_ads:
             header:
                 api: API credentials
                 eligibility: Eligibility
+        connection_mapping:
+            customer_id: Customer id
         conversion_action:
             category: Category
             category_choices:
@@ -54,3 +56,17 @@ setono_sylius_google_ads:
         new_conversion_action: New conversion action
         no_channels: No channels
         reauthorize_with_google: Reauthorize with Google
+        setup:
+            authorize:
+                header: "Setup connection: %name%"
+                subheader: Authorize with Google to start the setup process
+                intro: |
+                    <p>The first step is to authorize with Google. Click the button below to start the authorization process.</p>
+                    <p>The easiest is to authorize with an account that has access to all the relevant Google Ads accounts</p>
+                authorization_not_possible: It is not possible to authorize with Google at this point. Did you forget to fill out one of client id, client secret or developer token when you created the connection?
+            map:
+                header: "Map connection: %name%"
+                subheader: Map your channels to a Google Ads customer id
+                intro: |
+                    <p>This step is where you map your channels to a Google Ads account (customer id).</p>
+                    <p>Start by selecting a channel and then select the Google Ads account where conversions should be pushed to.</p>

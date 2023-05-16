@@ -1,3 +1,21 @@
+# Setup related routes
+setono_sylius_google_ads_admin_setup_authorize:
+    path: /connections/{connectionId}/setup/authorize
+    methods: [GET]
+    requirements:
+        connectionId: '\d+'
+    defaults:
+        _controller: setono_sylius_google_ads.controller.action.setup_authorize
+        
+setono_sylius_google_ads_admin_setup_map:
+    path: /connections/{connectionId}/setup/map
+    methods: [GET,POST]
+    requirements:
+        connectionId: '\d+'
+    defaults:
+        _controller: setono_sylius_google_ads.controller.action.setup_map
+        
+# OAuth related routes
 setono_sylius_google_ads_admin_oauth_request:
     path: /oauth/request/{connectionId}
     methods: [GET]
@@ -12,6 +30,7 @@ setono_sylius_google_ads_admin_oauth_response:
     defaults:
         _controller: setono_sylius_google_ads.controller.action.oauth_response
 
+# Connection resource routes
 setono_sylius_google_ads_admin_connection:
     resource: |
         section: admin

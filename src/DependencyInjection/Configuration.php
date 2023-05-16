@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\DependencyInjection;
 
+use Setono\SyliusGoogleAdsPlugin\Form\Type\ConnectionMappingType;
 use Setono\SyliusGoogleAdsPlugin\Form\Type\ConnectionType;
 use Setono\SyliusGoogleAdsPlugin\Model\Connection;
+use Setono\SyliusGoogleAdsPlugin\Model\ConnectionMapping;
 use Setono\SyliusGoogleAdsPlugin\Model\Conversion;
+use Setono\SyliusGoogleAdsPlugin\Repository\ConnectionRepository;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConversionRepository;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Sylius\Bundle\ResourceBundle\Form\Type\DefaultResourceType;
@@ -45,9 +48,25 @@ final class Configuration implements ConfigurationInterface
                                     ->children()
                                         ->scalarNode('model')->defaultValue(Connection::class)->cannotBeEmpty()->end()
                                         ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
-                                        ->scalarNode('repository')->cannotBeEmpty()->end()
+                                        ->scalarNode('repository')->defaultValue(ConnectionRepository::class)->cannotBeEmpty()->end()
                                         ->scalarNode('factory')->defaultValue(Factory::class)->end()
                                         ->scalarNode('form')->defaultValue(ConnectionType::class)->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('connection_mapping')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode('options')->end()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(ConnectionMapping::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('repository')->cannotBeEmpty()->end()
+                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
+                                        ->scalarNode('form')->defaultValue(ConnectionMappingType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()

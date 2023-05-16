@@ -3,6 +3,23 @@
 <container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://symfony.com/schema/dic/services"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
+        <!-- Setup related controllers -->
+        <service id="setono_sylius_google_ads.controller.action.setup_authorize"
+                 class="Setono\SyliusGoogleAdsPlugin\Controller\Action\SetupAuthorizeAction" public="true">
+            <argument type="service" id="twig"/>
+            <argument type="service" id="setono_sylius_google_ads.repository.connection"/>
+        </service>
+
+        <service id="setono_sylius_google_ads.controller.action.setup_map"
+                 class="Setono\SyliusGoogleAdsPlugin\Controller\Action\SetupMapAction" public="true">
+            <argument type="service" id="twig"/>
+            <argument type="service" id="setono_sylius_google_ads.repository.connection"/>
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="doctrine"/>
+        </service>
+
+
+        <!-- OAuth related controllers -->
         <service id="setono_sylius_google_ads.controller.action.oauth_request"
                  class="Setono\SyliusGoogleAdsPlugin\Controller\Action\OAuthRequestAction" public="true">
             <argument type="service" id="router"/>

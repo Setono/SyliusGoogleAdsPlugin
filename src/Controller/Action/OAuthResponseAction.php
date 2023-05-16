@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Webmozart\Assert\Assert;
 
-final class OAuthResponseAction extends OAuthAction
+final class OAuthResponseAction extends AbstractOAuthAction
 {
     use ORMManagerTrait;
 

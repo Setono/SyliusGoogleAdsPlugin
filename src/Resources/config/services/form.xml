@@ -6,12 +6,35 @@
         <parameter key="setono_sylius_google_ads.form_type.connection.validation_groups" type="collection">
             <parameter>setono_sylius_google_ads</parameter>
         </parameter>
+        <parameter key="setono_sylius_google_ads.form_type.connection_mapping.validation_groups" type="collection">
+            <parameter>setono_sylius_google_ads</parameter>
+        </parameter>
     </parameters>
     <services>
         <service id="setono_sylius_google_ads.form_type.connection"
                  class="Setono\SyliusGoogleAdsPlugin\Form\Type\ConnectionType">
             <argument>%setono_sylius_google_ads.model.connection.class%</argument>
             <argument>%setono_sylius_google_ads.form_type.connection.validation_groups%</argument>
+            <tag name="form.type"/>
+        </service>
+
+        <service id="setono_sylius_google_ads.form_type.map_connection"
+                 class="Setono\SyliusGoogleAdsPlugin\Form\Type\MapConnectionType">
+            <argument>%setono_sylius_google_ads.model.connection.class%</argument>
+            <argument>%setono_sylius_google_ads.form_type.connection.validation_groups%</argument>
+            <tag name="form.type"/>
+        </service>
+
+        <service id="setono_sylius_google_ads.form_type.connection_mapping"
+                 class="Setono\SyliusGoogleAdsPlugin\Form\Type\ConnectionMappingType">
+            <argument>%setono_sylius_google_ads.model.connection_mapping.class%</argument>
+            <argument>%setono_sylius_google_ads.form_type.connection_mapping.validation_groups%</argument>
+            <tag name="form.type"/>
+        </service>
+
+        <service id="setono_sylius_google_ads.form_type.customer_id_choice"
+                 class="Setono\SyliusGoogleAdsPlugin\Form\Type\CustomerIdChoiceType">
+            <argument type="service" id="setono_sylius_google_ads.resolver.customer_ids"/>
             <tag name="form.type"/>
         </service>
     </services>

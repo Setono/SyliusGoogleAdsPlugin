@@ -3,6 +3,7 @@
 <container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://symfony.com/schema/dic/services"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <imports>
+        <import resource="services/builder.xml"/>
         <import resource="services/command.xml"/>
         <import resource="services/consent_checker.xml"/>
         <import resource="services/controller.xml"/>
@@ -11,6 +12,7 @@
         <import resource="services/form.xml"/>
         <import resource="services/menu.xml"/>
         <import resource="services/order_processor.xml"/>
+        <import resource="services/resolver.xml"/>
         <import resource="services/state_resolver.xml"/>
     </imports>
 </container>

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\FlashBagAwareSessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-abstract class OAuthAction
+abstract class AbstractOAuthAction
 {
     protected const SESSION_STATE_NAME = 'ssga_state';
 

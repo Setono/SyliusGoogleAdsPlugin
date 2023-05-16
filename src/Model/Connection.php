@@ -26,15 +26,21 @@ class Connection implements ConnectionInterface
     protected ?string $accessToken = null;
 
     /**
+     * todo remove this
+     *
      * @var Collection|BaseChannelInterface[]
      *
      * @psalm-var Collection<array-key, BaseChannelInterface>
      */
     protected Collection $channels;
 
+    /** @var Collection<int, ConnectionMappingInterface> */
+    protected Collection $connectionMappings;
+
     public function __construct()
     {
         $this->channels = new ArrayCollection();
+        $this->connectionMappings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -119,5 +125,37 @@ class Connection implements ConnectionInterface
     public function canAuthorize(): bool
     {
         return null !== $this->clientId && null !== $this->clientSecret && null !== $this->developerToken;
+    }
+
+    // todo remove
+    public function getGoogleAdsCustomerId(BaseChannelInterface $channel): ?int
+    {
+        return 1;
+    }
+
+    public function getConnectionMappings(): Collection
+    {
+        return $this->connectionMappings;
+    }
+
+    public function addConnectionMapping(ConnectionMappingInterface $connectionMapping): void
+    {
+        if (!$this->hasConnectionMapping($connectionMapping)) {
+            $this->connectionMappings->add($connectionMapping);
+            $connectionMapping->setConnection($this);
+        }
+    }
+
+    public function removeConnectionMapping(ConnectionMappingInterface $connectionMapping): void
+    {
+        if ($this->hasConnectionMapping($connectionMapping)) {
+            $this->connectionMappings->removeElement($connectionMapping);
+            $connectionMapping->setConnection(null);
+        }
+    }
+
+    public function hasConnectionMapping(ConnectionMappingInterface $connectionMapping): bool
+    {
+        return $this->connectionMappings->contains($connectionMapping);
     }
 }

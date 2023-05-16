@@ -27,5 +27,11 @@
                 </inverse-join-columns>
             </join-table>
         </many-to-many>
+
+        <one-to-many field="connectionMappings" target-entity="Setono\SyliusGoogleAdsPlugin\Model\ConnectionMappingInterface" mapped-by="connection">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
     </entity>
 </doctrine-mapping>

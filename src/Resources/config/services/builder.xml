@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://symfony.com/schema/dic/services"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="setono_sylius_google_ads.builder.oauth2_token"
+                 class="Google\Ads\GoogleAds\Lib\OAuth2TokenBuilder" shared="false"/>
+
+        <service id="setono_sylius_google_ads.custom_builder.oauth2_token"
+                 class="Setono\SyliusGoogleAdsPlugin\Builder\OAuth2TokenBuilder"
+                 decorates="setono_sylius_google_ads.builder.oauth2_token" decoration-priority="128">
+            <argument type="service" id="setono_sylius_google_ads.custom_builder.oauth2_token.inner"/>
+        </service>
+
+        <service id="setono_sylius_google_ads.builder.google_ads_client"
+                 class="Google\Ads\GoogleAds\Lib\V13\GoogleAdsClientBuilder" shared="false"/>
+
+        <service id="setono_sylius_google_ads.custom_builder.google_ads_client"
+                 class="Setono\SyliusGoogleAdsPlugin\Builder\GoogleAdsClientBuilder"
+                 decorates="setono_sylius_google_ads.builder.google_ads_client" decoration-priority="128">
+            <argument type="service" id="setono_sylius_google_ads.custom_builder.google_ads_client.inner"/>
+        </service>
+    </services>
+</container>

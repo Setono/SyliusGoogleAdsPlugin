@@ -1,0 +1,29 @@
+{# @var connection \Setono\SyliusGoogleAdsPlugin\Model\ConnectionInterface #}
+{% extends '@SyliusAdmin/layout.html.twig' %}
+
+{% import '@SyliusUi/Macro/headers.html.twig' as headers %}
+
+{% set header = 'setono_sylius_google_ads.ui.setup.authorize.header'|trans({'%name%' : connection.name}) %}
+
+{% block title %}{{ header }} {{ parent() }}{% endblock %}
+
+{% block content %}
+    <div class="ui stackable two column grid">
+        <div class="column">
+            {{ headers.default(header, 'cog', 'setono_sylius_google_ads.ui.setup.authorize.subheader'|trans) }}
+        </div>
+    </div>
+
+    <div class="ui segment">
+        {{ 'setono_sylius_google_ads.ui.setup.authorize.intro'|trans|raw }}
+
+        {% if connection.canAuthorize %}
+            <a class="ui right labeled icon large primary button" href="{{ path('setono_sylius_google_ads_admin_oauth_request', {'connectionId': connection.id}) }}">
+                <i class="right arrow icon"></i>
+                {{ (connection.accessToken is not null ? 'setono_sylius_google_ads.ui.reauthorize_with_google' : 'setono_sylius_google_ads.ui.authorize_with_google')|trans }}
+            </a>
+        {% else %}
+            <div class="ui negative message">{{ 'setono_sylius_google_ads.ui.setup.authorize.authorization_not_possible'|trans }}</div>
+        {% endif %}
+    </div>
+{% endblock %}
