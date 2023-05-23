@@ -8,5 +8,8 @@
                  decorates="setono_sylius_google_ads.factory.conversion" decoration-priority="128">
             <argument type="service" id="setono_sylius_google_ads.custom_factory.conversion.inner"/>
         </service>
+
+        <service id="setono_sylius_google_ads.factory.google_ads_client"
+                 class="Setono\SyliusGoogleAdsPlugin\Factory\GoogleAdsClientFactory"/>
     </services>
 </container>

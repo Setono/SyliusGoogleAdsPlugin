@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin\Model;
 
 use Doctrine\Common\Collections\Collection;
-use Sylius\Component\Channel\Model\ChannelInterface;
 use Sylius\Component\Channel\Model\ChannelsAwareInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\ToggleableInterface;
@@ -38,11 +37,6 @@ interface ConnectionInterface extends ResourceInterface, ToggleableInterface, Ch
      * Returns true if this connection is able to authorize with Google (i.e. the required properties has been set)
      */
     public function canAuthorize(): bool;
-
-    /**
-     * Based on the channel, this method will return a Google Ads customer id, which has been mapped by the user
-     */
-    public function getGoogleAdsCustomerId(ChannelInterface $channel): ?int;
 
     /**
      * @return Collection<int, ConnectionMappingInterface>

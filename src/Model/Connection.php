@@ -29,7 +29,6 @@ class Connection implements ConnectionInterface
      * todo remove this
      *
      * @var Collection|BaseChannelInterface[]
-     *
      * @psalm-var Collection<array-key, BaseChannelInterface>
      */
     protected Collection $channels;
@@ -125,12 +124,6 @@ class Connection implements ConnectionInterface
     public function canAuthorize(): bool
     {
         return null !== $this->clientId && null !== $this->clientSecret && null !== $this->developerToken;
-    }
-
-    // todo remove
-    public function getGoogleAdsCustomerId(BaseChannelInterface $channel): ?int
-    {
-        return 1;
     }
 
     public function getConnectionMappings(): Collection

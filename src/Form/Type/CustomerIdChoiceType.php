@@ -11,7 +11,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Webmozart\Assert\Assert;
 
+/**
+ * @extends AbstractType<int>
+ */
 final class CustomerIdChoiceType extends AbstractType
 {
     public function __construct(private readonly CustomerIdsResolverInterface $customerIdsResolver)
@@ -24,17 +28,18 @@ final class CustomerIdChoiceType extends AbstractType
             ->setRequired('connection')
             ->setAllowedTypes('connection', ConnectionInterface::class)
             ->setDefaults([
-                'choices' => fn (Options $options): array => $this->customerIdsResolver->getCustomerIdsFromConnection($options['connection']),
-                'choice_value' => static function ($customerId): ?int {
-                    if(null === $customerId) {
-                        return null;
-                    }
+                'choices' => function (Options $options): array {
+                    $connection = $options->offsetGet('connection');
+                    Assert::isInstanceOf($connection, ConnectionInterface::class);
 
-                    if(is_int($customerId)) {
-                        return $customerId;
-                    }
-
-                    return $customerId->customerId;
+                    return $this->customerIdsResolver->getCustomerIdsFromConnection($connection);
+                },
+                'choice_value' => static function (mixed $customerId): ?int {
+                    return match (true) {
+                        null === $customerId || is_int($customerId) => $customerId,
+                        $customerId instanceof CustomerId => $customerId->customerId,
+                        default => throw new \RuntimeException('Invalid input')
+                    };
                 },
                 'choice_label' => static function (CustomerId $customerId): string {
                     return sprintf('%s (%d)', $customerId->label, $customerId->customerId);

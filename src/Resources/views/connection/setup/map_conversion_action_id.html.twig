@@ -1,0 +1,57 @@
+{# @var connection \Setono\SyliusGoogleAdsPlugin\Model\ConnectionInterface #}
+{% extends '@SyliusAdmin/layout.html.twig' %}
+
+{% import '@SyliusUi/Macro/headers.html.twig' as headers %}
+
+{% set header = 'setono_sylius_google_ads.ui.setup.map_conversion_action_id.header'|trans({'%name%' : connection.name}) %}
+
+{% block title %}{{ header }} {{ parent() }}{% endblock %}
+
+{% form_theme form '@SyliusAdmin/Form/theme.html.twig' %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        div[data-form-collection="list"] {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5em 1.5em;
+            margin-bottom: 1.5em;
+        }
+
+        .field + .field {
+            margin-top: 1.5em;
+        }
+
+        div[data-form-collection="item"] {
+            box-shadow: 0 2px 4px 0 rgba(34, 36, 38, 0.03);
+            border: 1px solid rgba(34, 36, 38, 0.1);
+            padding: 1.5em;
+            border-radius: 0.25em;
+        }
+
+        div[data-form-collection="item"] label {
+            display: block;
+            margin-bottom: 0.5em;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="ui stackable two column grid">
+        <div class="column">
+            {{ headers.default(header, 'cog', 'setono_sylius_google_ads.ui.setup.map_conversion_action_id.subheader'|trans) }}
+        </div>
+    </div>
+
+    <div class="ui segment">
+        {{ 'setono_sylius_google_ads.ui.setup.map_conversion_action_id.intro'|trans|raw }}
+
+        {{ form_start(form) }}
+            {{ form_row(form.connectionMappings) }}
+
+            <button class="ui primary button" type="submit">{{ 'sylius.ui.next'|trans }}</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

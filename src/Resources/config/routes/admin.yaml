@@ -7,13 +7,21 @@ setono_sylius_google_ads_admin_setup_authorize:
     defaults:
         _controller: setono_sylius_google_ads.controller.action.setup_authorize
         
-setono_sylius_google_ads_admin_setup_map:
-    path: /connections/{connectionId}/setup/map
+setono_sylius_google_ads_admin_setup_map_customer_id:
+    path: /connections/{connectionId}/setup/map-customer-id
     methods: [GET,POST]
     requirements:
         connectionId: '\d+'
     defaults:
-        _controller: setono_sylius_google_ads.controller.action.setup_map
+        _controller: setono_sylius_google_ads.controller.action.setup_map_customer_id
+        
+setono_sylius_google_ads_admin_setup_map_conversion_action_id:
+    path: /connections/{connectionId}/setup/map-conversion-action-id
+    methods: [GET,POST]
+    requirements:
+        connectionId: '\d+'
+    defaults:
+        _controller: setono_sylius_google_ads.controller.action.setup_map_conversion_action_id
         
 # OAuth related routes
 setono_sylius_google_ads_admin_oauth_request:

@@ -6,7 +6,7 @@ namespace Setono\SyliusGoogleAdsPlugin\Resolver;
 
 final class ConversionActionId
 {
-    public function __construct(public readonly string $label, public readonly string $id)
+    public function __construct(public readonly string $label, public readonly int $id)
     {
     }
 }

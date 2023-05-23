@@ -7,13 +7,15 @@ namespace Setono\SyliusGoogleAdsPlugin\Controller\Action;
 use Setono\SyliusGoogleAdsPlugin\Model\ConnectionInterface;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConnectionRepositoryInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Environment;
 
-abstract class AbstractAuthorizeAction
+abstract class AbstractSetupAction
 {
     public function __construct(
         protected readonly Environment $twig,
         protected readonly ConnectionRepositoryInterface $connectionRepository,
+        protected readonly UrlGeneratorInterface $urlGenerator,
     ) {
     }
 

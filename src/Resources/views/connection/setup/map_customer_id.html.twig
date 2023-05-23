@@ -3,7 +3,7 @@
 
 {% import '@SyliusUi/Macro/headers.html.twig' as headers %}
 
-{% set header = 'setono_sylius_google_ads.ui.setup.map.header'|trans({'%name%' : connection.name}) %}
+{% set header = 'setono_sylius_google_ads.ui.setup.map_customer_id.header'|trans({'%name%' : connection.name}) %}
 
 {% block title %}{{ header }} {{ parent() }}{% endblock %}
 
@@ -16,6 +16,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 1.5em 1.5em;
+            margin-bottom: 1.5em;
         }
 
         .field + .field {
@@ -35,7 +36,7 @@
         }
 
         a[data-form-collection="add"] {
-            margin-top: 1em !important;
+            margin-bottom: 1em !important;
         }
 
         a[data-form-collection="delete"] {
@@ -47,12 +48,12 @@
 {% block content %}
     <div class="ui stackable two column grid">
         <div class="column">
-            {{ headers.default(header, 'cog', 'setono_sylius_google_ads.ui.setup.map.subheader'|trans) }}
+            {{ headers.default(header, 'cog', 'setono_sylius_google_ads.ui.setup.map_customer_id.subheader'|trans) }}
         </div>
     </div>
 
     <div class="ui segment">
-        {{ 'setono_sylius_google_ads.ui.setup.map.intro'|trans|raw }}
+        {{ 'setono_sylius_google_ads.ui.setup.map_customer_id.intro'|trans|raw }}
 
         {{ form_start(form) }}
             {{ form_row(form.connectionMappings) }}

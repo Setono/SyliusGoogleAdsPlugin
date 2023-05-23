@@ -7,9 +7,13 @@ namespace Tests\Setono\SyliusGoogleAdsPlugin\DependencyInjection;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit\Framework\TestCase;
 use Setono\SyliusGoogleAdsPlugin\DependencyInjection\Configuration;
+use Setono\SyliusGoogleAdsPlugin\Form\Type\ConnectionMappingType;
 use Setono\SyliusGoogleAdsPlugin\Form\Type\ConnectionType;
 use Setono\SyliusGoogleAdsPlugin\Model\Connection;
+use Setono\SyliusGoogleAdsPlugin\Model\ConnectionMapping;
 use Setono\SyliusGoogleAdsPlugin\Model\Conversion;
+use Setono\SyliusGoogleAdsPlugin\Repository\ConnectionMappingRepository;
+use Setono\SyliusGoogleAdsPlugin\Repository\ConnectionRepository;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConversionRepository;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Sylius\Bundle\ResourceBundle\Form\Type\DefaultResourceType;
@@ -42,8 +46,18 @@ final class ConfigurationTest extends TestCase
                         'classes' => [
                             'model' => Connection::class,
                             'controller' => ResourceController::class,
+                            'repository' => ConnectionRepository::class,
                             'factory' => Factory::class,
                             'form' => ConnectionType::class,
+                        ],
+                    ],
+                    'connection_mapping' => [
+                        'classes' => [
+                            'model' => ConnectionMapping::class,
+                            'controller' => ResourceController::class,
+                            'repository' => ConnectionMappingRepository::class,
+                            'factory' => Factory::class,
+                            'form' => ConnectionMappingType::class,
                         ],
                     ],
                     'conversion' => [

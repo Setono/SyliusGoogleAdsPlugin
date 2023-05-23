@@ -11,8 +11,10 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Webmozart\Assert\Assert;
 
-final class MapConnectionType extends AbstractResourceType
+final class MapConversionActionIdType extends AbstractResourceType
 {
+    public const STEP = 'map_conversion_action_id';
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, static function (FormEvent $event) {
@@ -22,6 +24,7 @@ final class MapConnectionType extends AbstractResourceType
             $event->getForm()->add('connectionMappings', ConnectionMappingCollectionType::class, [
                 'connection' => $connection,
                 'label' => false,
+                'step' => self::STEP,
             ]);
         });
     }

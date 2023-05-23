@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Model;
 
+use Setono\SyliusGoogleAdsPlugin\Resolver\ConversionActionId;
 use Setono\SyliusGoogleAdsPlugin\Resolver\CustomerId;
 use Sylius\Component\Channel\Model\ChannelInterface;
 
@@ -14,6 +15,8 @@ final class ConnectionMapping implements ConnectionMappingInterface
     private ?ConnectionInterface $connection = null;
 
     private ?ChannelInterface $channel = null;
+
+    private ?int $managerId = null;
 
     private ?int $customerId = null;
 
@@ -44,6 +47,16 @@ final class ConnectionMapping implements ConnectionMappingInterface
         $this->channel = $channel;
     }
 
+    public function getManagerId(): ?int
+    {
+        return $this->managerId;
+    }
+
+    public function setManagerId(?int $managerId): void
+    {
+        $this->managerId = $managerId;
+    }
+
     public function getCustomerId(): ?int
     {
         return $this->customerId;
@@ -52,6 +65,7 @@ final class ConnectionMapping implements ConnectionMappingInterface
     public function setCustomerId(null|int|CustomerId $customerId): void
     {
         if ($customerId instanceof CustomerId) {
+            $this->setManagerId($customerId->managerId);
             $customerId = $customerId->customerId;
         }
 
@@ -63,8 +77,12 @@ final class ConnectionMapping implements ConnectionMappingInterface
         return $this->conversionActionId;
     }
 
-    public function setConversionActionId(?int $conversionActionId): void
+    public function setConversionActionId(null|int|ConversionActionId $conversionActionId): void
     {
+        if ($conversionActionId instanceof ConversionActionId) {
+            $conversionActionId = $conversionActionId->id;
+        }
+
         $this->conversionActionId = $conversionActionId;
     }
 }

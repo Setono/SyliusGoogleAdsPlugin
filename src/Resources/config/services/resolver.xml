@@ -5,8 +5,12 @@
     <services>
         <service id="setono_sylius_google_ads.resolver.customer_ids"
                  class="Setono\SyliusGoogleAdsPlugin\Resolver\CustomerIdsResolver">
-            <argument type="service" id="setono_sylius_google_ads.custom_builder.oauth2_token"/>
-            <argument type="service" id="setono_sylius_google_ads.builder.google_ads_client"/>
+            <argument type="service" id="setono_sylius_google_ads.factory.google_ads_client"/>
+        </service>
+
+        <service id="setono_sylius_google_ads.resolver.conversion_action_ids"
+                 class="Setono\SyliusGoogleAdsPlugin\Resolver\ConversionActionIdsResolver">
+            <argument type="service" id="setono_sylius_google_ads.factory.google_ads_client"/>
         </service>
     </services>
 </container>

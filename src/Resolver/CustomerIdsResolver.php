@@ -5,53 +5,37 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin\Resolver;
 
 use Google\Ads\GoogleAds\Lib\V13\GoogleAdsServerStreamDecorator;
-use Google\Ads\GoogleAds\V13\Resources\CustomerClient;
 use Google\Ads\GoogleAds\V13\Services\CustomerServiceClient;
 use Google\Ads\GoogleAds\V13\Services\GoogleAdsRow;
-use Setono\SyliusGoogleAdsPlugin\Builder\GoogleAdsClientBuilder;
-use Setono\SyliusGoogleAdsPlugin\Builder\OAuth2TokenBuilder;
+use Setono\SyliusGoogleAdsPlugin\Factory\GoogleAdsClientFactoryInterface;
 use Setono\SyliusGoogleAdsPlugin\Model\ConnectionInterface;
 use function Symfony\Component\String\u;
+use Webmozart\Assert\Assert;
 
 final class CustomerIdsResolver implements CustomerIdsResolverInterface
 {
-    public function __construct(
-        private readonly OAuth2TokenBuilder $oauth2TokenBuilder,
-        private readonly GoogleAdsClientBuilder $googleAdsClientBuilder,
-    ) {
+    public function __construct(private readonly GoogleAdsClientFactoryInterface $googleAdsClientFactory)
+    {
     }
 
     public function getCustomerIdsFromConnection(ConnectionInterface $connection): array
     {
-        $oauthCredentials = $this->oauth2TokenBuilder->fromConnection($connection)->build();
-        $client = $this->googleAdsClientBuilder->fromConnectionAndOAuthCredentials($connection, $oauthCredentials)->build();
+        $client = $this->googleAdsClientFactory->createFromConnection($connection);
 
         $rootCustomerIds = [];
         $customersResponse = $client->getCustomerServiceClient()->listAccessibleCustomers();
 
         foreach ($customersResponse->getResourceNames() as $customerResourceName) {
+            Assert::string($customerResourceName);
             $rootCustomerIds[] = (int) CustomerServiceClient::parseName($customerResourceName)['customer_id'];
         }
 
-        $hierarchies = [];
-
-        // Constructs a map of account hierarchies.
-        foreach ($rootCustomerIds as $rootCustomerId) {
-            $customerClientToHierarchy = $this->createCustomerClientToHierarchy($rootCustomerId, $connection);
-            if (null !== $customerClientToHierarchy) {
-                $hierarchies += $customerClientToHierarchy;
-            }
-        }
-
-        /** @var list<CustomerClient> $customerClients */
-        $customerClients = self::flatten($hierarchies);
-
-        /** @var list<CustomerId> $customerIds */
         $customerIds = [];
 
-        foreach ($customerClients as $customerClient) {
-            $id = $customerClient->getId();
-            $customerIds[$id] = new CustomerId($customerClient->getDescriptiveName(), $id);
+        foreach ($rootCustomerIds as $rootCustomerId) {
+            foreach ($this->getChildAccounts($rootCustomerId, $connection) as $customerId) {
+                $customerIds[$customerId->customerId] = $customerId;
+            }
         }
 
         $customerIds = array_values($customerIds);
@@ -64,35 +48,15 @@ final class CustomerIdsResolver implements CustomerIdsResolverInterface
     }
 
     /**
-     * Creates a map between a customer client and each of its managers' mappings.
-     *
-     * @param int $rootCustomerId the ID of the customer at the root of the tree
-     *
-     * @return array|null a map between a customer client and each of its managers' mappings if the
-     *     account hierarchy can be retrieved. If the account hierarchy cannot be retrieved, returns
-     *     null
+     * @return \Generator<array-key, CustomerId>
      */
-    private function createCustomerClientToHierarchy(int $rootCustomerId, ConnectionInterface $connection): ?array
+    private function getChildAccounts(int $rootCustomerId, ConnectionInterface $connection): \Generator
     {
-        // Creates a GoogleAdsClient with the specified login customer ID. See
-        // https://developers.google.com/google-ads/api/docs/concepts/call-structure#cid for more
-        // information.
-        // Generate a refreshable OAuth2 credential for authentication.
-        $oauthCredentials = $this->oauth2TokenBuilder->fromConnection($connection)->build();
-        // Construct a Google Ads client configured from a properties file and the
-        // OAuth2 credentials above.
-        $client = $this->googleAdsClientBuilder->fromConnectionAndOAuthCredentials($connection, $oauthCredentials)->withLoginCustomerId($rootCustomerId)->build();
+        $client = $this->googleAdsClientFactory->createFromConnection($connection, $rootCustomerId);
 
-        // Creates the Google Ads Service client.
         $googleAdsServiceClient = $client->getGoogleAdsServiceClient();
-        // Creates a query that retrieves all child accounts of the manager specified in search
-        // calls below.
-        $query = 'SELECT customer_client.client_customer, customer_client.level,'
-            . ' customer_client.manager, customer_client.descriptive_name,'
-            . ' customer_client.currency_code, customer_client.time_zone,'
-            . ' customer_client.id FROM customer_client WHERE customer_client.level <= 1';
+        $query = 'SELECT customer_client.client_customer, customer_client.descriptive_name, customer_client.id FROM customer_client WHERE customer_client.hidden = FALSE AND customer_client.test_account = FALSE';
 
-        $rootCustomerClient = null;
         // Adds the root customer ID to the list of IDs to be processed.
         $managerCustomerIdsToSearch = [$rootCustomerId];
 
@@ -102,15 +66,11 @@ final class CustomerIdsResolver implements CustomerIdsResolverInterface
 
         while (!empty($managerCustomerIdsToSearch)) {
             $customerIdToSearch = array_shift($managerCustomerIdsToSearch);
-            // Issues a search request by specifying page size.
-            /** @var GoogleAdsServerStreamDecorator $stream */
-            $stream = $googleAdsServiceClient->searchStream(
-                $customerIdToSearch,
-                $query,
-            );
+            Assert::integer($customerIdToSearch);
 
-            // Iterates over all elements to get all customer clients under the specified customer's
-            // hierarchy.
+            /** @var GoogleAdsServerStreamDecorator $stream */
+            $stream = $googleAdsServiceClient->searchStream((string) $customerIdToSearch, $query);
+
             /** @var GoogleAdsRow $googleAdsRow */
             foreach ($stream->iterateAllElements() as $googleAdsRow) {
                 $customerClient = $googleAdsRow->getCustomerClient();
@@ -118,10 +78,7 @@ final class CustomerIdsResolver implements CustomerIdsResolverInterface
                     continue;
                 }
 
-                // Gets the CustomerClient object for the root customer in the tree.
-                if ($customerClient->getId() === $rootCustomerId) {
-                    $rootCustomerClient = $customerClient;
-                }
+                yield new CustomerId($customerClient->getDescriptiveName(), $rootCustomerId, (int) $customerClient->getId());
 
                 // The steps below map parent and children accounts. Continue here so that managers
                 // accounts exclude themselves from the list of their children accounts.
@@ -149,17 +106,5 @@ final class CustomerIdsResolver implements CustomerIdsResolverInterface
                 }
             }
         }
-
-        return null === $rootCustomerClient ? null
-            : [$rootCustomerClient->getId() => $customerIdsToChildAccounts];
-    }
-
-    private static function flatten(array $array): array
-    {
-        $return = [];
-
-        array_walk_recursive($array, static function ($a) use (&$return) { $return[] = $a; });
-
-        return $return;
     }
 }

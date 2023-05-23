@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/8.0/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          colors="true"
          bootstrap="tests/Application/config/bootstrap.php">
     <testsuites>
@@ -11,5 +11,14 @@
     <php>
         <env name="APP_ENV" value="test"/>
         <env name="SHELL_VERBOSITY" value="-1"/>
+
+        <!-- Variables related to live testing -->
+        <env name="GOOGLE_ADS_LIVE" value="0"/> <!-- Set to 1 to enable live testing. Remember to fill out the details below also -->
+        <env name="GOOGLE_ADS_CLIENT_ID" value=""/>
+        <env name="GOOGLE_ADS_CLIENT_SECRET" value=""/>
+        <env name="GOOGLE_ADS_REFRESH_TOKEN" value=""/>
+        <env name="GOOGLE_ADS_DEVELOPER_TOKEN" value=""/>
+        <env name="GOOGLE_ADS_MANAGER_ID" value=""/>
+        <env name="GOOGLE_ADS_CUSTOMER_ID" value=""/>
     </php>
 </phpunit>

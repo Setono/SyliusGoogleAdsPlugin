@@ -9,6 +9,7 @@ use Setono\SyliusGoogleAdsPlugin\Form\Type\ConnectionType;
 use Setono\SyliusGoogleAdsPlugin\Model\Connection;
 use Setono\SyliusGoogleAdsPlugin\Model\ConnectionMapping;
 use Setono\SyliusGoogleAdsPlugin\Model\Conversion;
+use Setono\SyliusGoogleAdsPlugin\Repository\ConnectionMappingRepository;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConnectionRepository;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConversionRepository;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
@@ -64,7 +65,7 @@ final class Configuration implements ConfigurationInterface
                                     ->children()
                                         ->scalarNode('model')->defaultValue(ConnectionMapping::class)->cannotBeEmpty()->end()
                                         ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
-                                        ->scalarNode('repository')->cannotBeEmpty()->end()
+                                        ->scalarNode('repository')->defaultValue(ConnectionMappingRepository::class)->cannotBeEmpty()->end()
                                         ->scalarNode('factory')->defaultValue(Factory::class)->end()
                                         ->scalarNode('form')->defaultValue(ConnectionMappingType::class)->cannotBeEmpty()->end()
                                     ->end()

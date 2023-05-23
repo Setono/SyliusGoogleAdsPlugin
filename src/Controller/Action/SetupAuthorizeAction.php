@@ -7,7 +7,7 @@ namespace Setono\SyliusGoogleAdsPlugin\Controller\Action;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class SetupAuthorizeAction extends AbstractAuthorizeAction
+final class SetupAuthorizeAction extends AbstractSetupAction
 {
     public function __invoke(Request $request, int $connectionId): Response
     {
