@@ -19,22 +19,12 @@ final class ProcessPendingConversionsCommand extends Command
 
     protected static $defaultDescription = 'Processes all pending conversions where an order is related';
 
-    private ConversionRepositoryInterface $conversionRepository;
-
-    private StateResolverInterface $stateResolver;
-
-    private ObjectManager $manager;
-
     public function __construct(
-        ConversionRepositoryInterface $conversionRepository,
-        StateResolverInterface $stateResolver,
-        ObjectManager $manager,
+        private readonly ConversionRepositoryInterface $conversionRepository,
+        private readonly StateResolverInterface $stateResolver,
+        private readonly ObjectManager $manager,
     ) {
         parent::__construct();
-
-        $this->conversionRepository = $conversionRepository;
-        $this->stateResolver = $stateResolver;
-        $this->manager = $manager;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

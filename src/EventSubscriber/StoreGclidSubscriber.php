@@ -15,11 +15,8 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 final class StoreGclidSubscriber implements EventSubscriberInterface
 {
-    private string $cookieName;
-
-    public function __construct(string $cookieName)
+    public function __construct(private readonly string $cookieName)
     {
-        $this->cookieName = $cookieName;
     }
 
     public static function getSubscribedEvents(): array

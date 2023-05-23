@@ -11,11 +11,8 @@ use Webmozart\Assert\Assert;
 
 final class ConversionFactory implements ConversionFactoryInterface
 {
-    private FactoryInterface $decorated;
-
-    public function __construct(FactoryInterface $decorated)
+    public function __construct(private readonly FactoryInterface $decorated)
     {
-        $this->decorated = $decorated;
     }
 
     public function createNew(): ConversionInterface

@@ -34,16 +34,12 @@ final class CustomerIdChoiceType extends AbstractType
 
                     return $this->customerIdsResolver->getCustomerIdsFromConnection($connection);
                 },
-                'choice_value' => static function (mixed $customerId): ?int {
-                    return match (true) {
-                        null === $customerId || is_int($customerId) => $customerId,
-                        $customerId instanceof CustomerId => $customerId->customerId,
-                        default => throw new \RuntimeException('Invalid input')
-                    };
+                'choice_value' => static fn (mixed $customerId): ?int => match (true) {
+                    null === $customerId || is_int($customerId) => $customerId,
+                    $customerId instanceof CustomerId => $customerId->customerId,
+                    default => throw new \RuntimeException('Invalid input')
                 },
-                'choice_label' => static function (CustomerId $customerId): string {
-                    return sprintf('%s (%d)', $customerId->label, $customerId->customerId);
-                },
+                'choice_label' => static fn (CustomerId $customerId): string => sprintf('%s (%d)', $customerId->label, $customerId->customerId),
                 'choice_translation_domain' => false,
         ])
         ;

@@ -40,9 +40,7 @@ final class CustomerIdsResolver implements CustomerIdsResolverInterface
 
         $customerIds = array_values($customerIds);
 
-        usort($customerIds, static function (CustomerId $customerId1, CustomerId $customerId2): int {
-            return u($customerId1->label)->lower() <=> u($customerId2->label)->lower();
-        });
+        usort($customerIds, static fn (CustomerId $customerId1, CustomerId $customerId2): int => u($customerId1->label)->lower() <=> u($customerId2->label)->lower());
 
         return $customerIds;
     }

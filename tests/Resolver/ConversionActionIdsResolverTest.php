@@ -22,6 +22,10 @@ final class ConversionActionIdsResolverTest extends TestCase
      */
     public function it_resolves(): void
     {
+        if (!self::isLive()) {
+            $this->markTestSkipped('This is a live test and skipped because we are not running live tests');
+        }
+
         $resolver = new ConversionActionIdsResolver(new GoogleAdsClientFactory());
         $conversionActionIds = $resolver->getConversionActionIdsFromConnectionMapping(self::createConnectionMapping());
 

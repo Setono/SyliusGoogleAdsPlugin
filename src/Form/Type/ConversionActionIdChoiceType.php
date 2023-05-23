@@ -34,16 +34,12 @@ final class ConversionActionIdChoiceType extends AbstractType
 
                     return $this->conversionActionIdsResolver->getConversionActionIdsFromConnectionMapping($connectionMapping);
                 },
-                'choice_value' => static function (mixed $conversionActionId): ?int {
-                    return match (true) {
-                        null === $conversionActionId || is_int($conversionActionId) => $conversionActionId,
-                        $conversionActionId instanceof ConversionActionId => $conversionActionId->id,
-                        default => throw new \RuntimeException('Invalid input')
-                    };
+                'choice_value' => static fn (mixed $conversionActionId): ?int => match (true) {
+                    null === $conversionActionId || is_int($conversionActionId) => $conversionActionId,
+                    $conversionActionId instanceof ConversionActionId => $conversionActionId->id,
+                    default => throw new \RuntimeException('Invalid input')
                 },
-                'choice_label' => static function (ConversionActionId $conversionActionId): string {
-                    return sprintf('%s (%d)', $conversionActionId->label, $conversionActionId->id);
-                },
+                'choice_label' => static fn (ConversionActionId $conversionActionId): string => sprintf('%s (%d)', $conversionActionId->label, $conversionActionId->id),
                 'choice_translation_domain' => false,
         ])
         ;

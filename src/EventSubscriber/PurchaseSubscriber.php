@@ -23,26 +23,14 @@ final class PurchaseSubscriber implements EventSubscriberInterface
 {
     use ORMManagerTrait;
 
-    private ConversionFactoryInterface $conversionFactory;
-
-    private ConsentCheckerInterface $consentChecker;
-
-    private EventDispatcherInterface $eventDispatcher;
-
-    private OrderRepositoryInterface $orderRepository;
-
     public function __construct(
-        ConversionFactoryInterface $conversionFactory,
+        private readonly ConversionFactoryInterface $conversionFactory,
         ManagerRegistry $managerRegistry,
-        ConsentCheckerInterface $consentChecker,
-        EventDispatcherInterface $eventDispatcher,
-        OrderRepositoryInterface $orderRepository,
+        private readonly ConsentCheckerInterface $consentChecker,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly OrderRepositoryInterface $orderRepository,
     ) {
-        $this->conversionFactory = $conversionFactory;
         $this->managerRegistry = $managerRegistry;
-        $this->consentChecker = $consentChecker;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->orderRepository = $orderRepository;
     }
 
     public static function getSubscribedEvents(): array

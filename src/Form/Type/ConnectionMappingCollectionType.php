@@ -24,21 +24,15 @@ final class ConnectionMappingCollectionType extends AbstractType
             ->setRequired('connection')
             ->setAllowedTypes('connection', ConnectionInterface::class)
             ->setDefaults([
-                'allow_add' => static function (Options $options): bool {
-                    return MapConversionActionIdType::STEP !== $options['step'];
-                },
-                'allow_delete' => static function (Options $options): bool {
-                    return MapConversionActionIdType::STEP !== $options['step'];
-                },
+                'allow_add' => static fn (Options $options): bool => MapConversionActionIdType::STEP !== $options['step'],
+                'allow_delete' => static fn (Options $options): bool => MapConversionActionIdType::STEP !== $options['step'],
                 'by_reference' => false,
                 'error_bubbling' => false,
                 'entry_type' => ConnectionMappingType::class,
-                'entry_options' => static function (Options $options): array {
-                    return [
-                        'connection' => $options['connection'],
-                        'step' => $options['step'],
-                    ];
-                },
+                'entry_options' => static fn (Options $options): array => [
+                    'connection' => $options['connection'],
+                    'step' => $options['step'],
+                ],
             ])
         ;
     }

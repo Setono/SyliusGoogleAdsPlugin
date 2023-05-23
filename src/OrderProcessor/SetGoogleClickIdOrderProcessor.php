@@ -12,14 +12,11 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 final class SetGoogleClickIdOrderProcessor implements OrderProcessorInterface
 {
-    private RequestStack $requestStack;
-
-    private string $cookieName;
-
-    public function __construct(RequestStack $requestStack, string $cookieName)
+    public function __construct(
+        private readonly RequestStack $requestStack,
+        private readonly string $cookieName,
+    )
     {
-        $this->requestStack = $requestStack;
-        $this->cookieName = $cookieName;
     }
 
     /**
