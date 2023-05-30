@@ -45,7 +45,6 @@ final class ConversionProcessor implements ConversionProcessorInterface
 
             $client = $this->googleAdsClientFactory->createFromConnection($connection, $managerId);
 
-            // Creates a click conversion by specifying currency as USD.
             $clickConversion = new ClickConversion([
                 'conversion_action' => ResourceNames::forConversionAction(
                     (string) $customerId,
