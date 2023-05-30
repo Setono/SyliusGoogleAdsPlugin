@@ -9,7 +9,7 @@ use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
 final class ProcessConversion
 {
     /**
-     * This is the conversion id
+     * The conversion id
      */
     public int $conversion;
 

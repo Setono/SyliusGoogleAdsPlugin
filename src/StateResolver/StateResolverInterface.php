@@ -13,9 +13,9 @@ interface StateResolverInterface
      *
      * Returns one of pending, ready, cancelled.
      *
-     * Ready means it will be downloaded by Google
+     * Ready means it will be pushed to Google
      * Pending means it will be tried to be resolved
-     * Cancelled means it will never be downloaded by Google
+     * Cancelled means it will never be pushed to Google
      */
     public function resolve(ConversionInterface $conversion): string;
 }

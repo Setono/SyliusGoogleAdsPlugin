@@ -13,15 +13,13 @@ use Webmozart\Assert\Assert;
 
 class ConversionRepository extends EntityRepository implements ConversionRepositoryInterface
 {
-    public function findReadyByChannelQueryBuilder(ChannelInterface $channel, \DateTimeInterface $since = null): QueryBuilder
+    public function createReadyByChannelQueryBuilder(ChannelInterface $channel): QueryBuilder
     {
         return $this->createQueryBuilder('o')
             ->andWhere('o.state = :state')
             ->andWhere('o.channel = :channel')
-            ->andWhere('o.createdAt >= :since')
             ->setParameter('state', ConversionInterface::STATE_READY)
             ->setParameter('channel', $channel)
-            ->setParameter('since', $since ?? new DateTimeImmutable('-3 days'))
         ;
     }
 
