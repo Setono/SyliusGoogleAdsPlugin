@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin\Model;
 
 use Doctrine\Common\Collections\Collection;
-use Sylius\Component\Channel\Model\ChannelsAwareInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\ToggleableInterface;
 
-interface ConnectionInterface extends ResourceInterface, ToggleableInterface, ChannelsAwareInterface
+interface ConnectionInterface extends ResourceInterface, ToggleableInterface
 {
     public function getId(): ?int;
 

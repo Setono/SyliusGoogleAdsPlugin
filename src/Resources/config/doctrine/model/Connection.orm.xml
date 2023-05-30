@@ -17,17 +17,6 @@
         <field name="accessToken" type="string" nullable="true"/>
         <field name="enabled" type="boolean"/>
 
-        <many-to-many field="channels" target-entity="Sylius\Component\Channel\Model\ChannelInterface">
-            <join-table name="setono_sylius_google_ads__connection_channels">
-                <join-columns>
-                    <join-column name="connection_id" referenced-column-name="id" nullable="false" on-delete="CASCADE"/>
-                </join-columns>
-                <inverse-join-columns>
-                    <join-column name="channel_id" referenced-column-name="id" nullable="false" on-delete="CASCADE"/>
-                </inverse-join-columns>
-            </join-table>
-        </many-to-many>
-
         <one-to-many field="connectionMappings" target-entity="Setono\SyliusGoogleAdsPlugin\Model\ConnectionMappingInterface" mapped-by="connection">
             <cascade>
                 <cascade-all/>

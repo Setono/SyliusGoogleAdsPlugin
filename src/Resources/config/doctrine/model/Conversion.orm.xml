@@ -15,12 +15,14 @@
             <generator strategy="AUTO"/>
         </id>
 
-        <field name="name" type="string"/>
         <field name="googleClickId" type="string"/>
-        <field name="category" type="string"/>
         <field name="value" type="integer"/>
         <field name="currencyCode" type="string"/>
         <field name="state" type="string"/>
+        <field name="lastCheckedAt" type="datetime_immutable" nullable="true"/>
+        <field name="nextCheckAt" type="datetime_immutable" nullable="true"/>
+        <field name="checks" type="integer"/>
+        <field name="processIdentifier" type="string" nullable="true"/>
 
         <field name="createdAt" column="created_at" type="datetime">
             <gedmo:timestampable on="create"/>

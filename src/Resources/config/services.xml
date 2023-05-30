@@ -10,7 +10,9 @@
         <import resource="services/factory.xml"/>
         <import resource="services/form.xml"/>
         <import resource="services/menu.xml"/>
+        <import resource="services/message.xml"/>
         <import resource="services/order_processor.xml"/>
+        <import resource="services/processor.xml"/>
         <import resource="services/resolver.xml"/>
         <import resource="services/state_resolver.xml"/>
     </imports>

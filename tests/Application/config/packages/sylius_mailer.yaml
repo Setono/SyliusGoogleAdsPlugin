@@ -1,2 +1,2 @@
 sylius_mailer:
-    sender_adapter: sylius.email_sender.adapter.default
+    sender_adapter: Tests\Setono\SyliusGoogleAdsPlugin\Application\Mailer\DefaultAdapter

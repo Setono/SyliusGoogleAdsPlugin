@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Processor;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Google\Ads\GoogleAds\Util\V13\ResourceNames;
 use Google\Ads\GoogleAds\V13\Services\ClickConversion;
 use Google\Ads\GoogleAds\V13\Services\ClickConversionResult;
+use Setono\DoctrineObjectManagerTrait\ORM\ORMManagerTrait;
 use Setono\SyliusGoogleAdsPlugin\Factory\GoogleAdsClientFactoryInterface;
 use Setono\SyliusGoogleAdsPlugin\Model\ConnectionMappingInterface;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
@@ -16,10 +18,14 @@ use Webmozart\Assert\Assert;
 
 final class ConversionProcessor implements ConversionProcessorInterface
 {
+    use ORMManagerTrait;
+
     public function __construct(
         private readonly GoogleAdsClientFactoryInterface $googleAdsClientFactory,
         private readonly ConnectionMappingRepositoryInterface $connectionMappingRepository,
+        ManagerRegistry $managerRegistry,
     ) {
+        $this->managerRegistry = $managerRegistry;
     }
 
     public function process(ConversionInterface $conversion): void
@@ -31,10 +37,13 @@ final class ConversionProcessor implements ConversionProcessorInterface
             $connection = $connectionMapping->getConnection();
             Assert::notNull($connection);
 
+            $managerId = $connectionMapping->getManagerId();
+            Assert::notNull($managerId);
+
             $customerId = $connectionMapping->getCustomerId();
             Assert::notNull($customerId);
 
-            $client = $this->googleAdsClientFactory->createFromConnection($connection);
+            $client = $this->googleAdsClientFactory->createFromConnection($connection, $managerId);
 
             // Creates a click conversion by specifying currency as USD.
             $clickConversion = new ClickConversion([
@@ -63,6 +72,9 @@ final class ConversionProcessor implements ConversionProcessorInterface
             if ($response->hasPartialFailureError()) {
                 printf("Partial failures occurred: '%s'.\n", (string) $response->getPartialFailureError()?->getMessage());
             } else {
+                $conversion->setState(ConversionInterface::STATE_DELIVERED);
+                $this->getManager($conversion)->flush();
+
                 /** @var ClickConversionResult $uploadedClickConversion */
                 $uploadedClickConversion = $response->getResults()[0];
                 printf(

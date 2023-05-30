@@ -17,19 +17,15 @@ interface ConversionInterface extends ResourceInterface, TimestampableInterface
 
     public const STATE_CANCELLED = 'cancelled';
 
+    public const STATE_PROCESSING = 'processing';
+
+    public const STATE_DELIVERED = 'delivered';
+
     public function getId(): ?int;
-
-    public function getName(): ?string;
-
-    public function setName(string $name): void;
 
     public function getGoogleClickId(): ?string;
 
     public function setGoogleClickId(string $googleClickId): void;
-
-    public function getCategory(): ?string;
-
-    public function setCategory(string $category): void;
 
     public function getValue(): ?int;
 
@@ -43,15 +39,43 @@ interface ConversionInterface extends ResourceInterface, TimestampableInterface
 
     public function setState(string $state): void;
 
+    /**
+     * The last time a conversion was checked for state.
+     * If null it means that the conversion hasn't been checked yet
+     */
+    public function getLastCheckedAt(): ?\DateTimeImmutable;
+
+    /**
+     * Sets the last time a conversion was checked for state
+     */
+    public function setLastCheckedAt(\DateTimeImmutable $lastCheckedAt): void;
+
+    /**
+     * The next time a conversion should be checked for state.
+     */
+    public function getNextCheckAt(): \DateTimeImmutable;
+
+    /**
+     * Sets the next time a conversion should be checked for state
+     */
+    public function setNextCheckAt(\DateTimeImmutable $nextCheck): void;
+
+    /**
+     * Returns the number of times a conversion has been checked for state
+     */
+    public function getChecks(): int;
+
+    public function setChecks(int $checks): void;
+
+    public function incrementChecks(int $increment = 1): void;
+
+    public function getProcessIdentifier(): ?string;
+
     public function getChannel(): ?ChannelInterface;
 
     public function setChannel(ChannelInterface $channel): void;
 
-    /**
-     * Returns an associated order if it exists, else it returns null. An order is associated if the conversion
-     * was a purchase for example
-     */
     public function getOrder(): ?OrderInterface;
 
-    public function setOrder(?OrderInterface $order): void;
+    public function setOrder(OrderInterface $order): void;
 }

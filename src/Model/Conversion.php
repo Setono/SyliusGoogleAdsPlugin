@@ -14,35 +14,34 @@ class Conversion implements ConversionInterface
 
     protected ?int $id = null;
 
-    protected ?string $name = null;
-
     protected ?string $googleClickId = null;
-
-    protected ?string $category = null;
 
     protected ?int $value = null;
 
     protected ?string $currencyCode = null;
 
-    protected string $state = ConversionInterface::STATE_READY;
+    protected string $state = ConversionInterface::STATE_PENDING;
+
+    protected ?\DateTimeImmutable $lastCheckedAt = null;
+
+    protected \DateTimeImmutable $nextCheckAt;
+
+    protected int $checks = 0;
+
+    protected ?string $processIdentifier = null;
 
     protected ?ChannelInterface $channel = null;
 
     protected ?OrderInterface $order = null;
 
+    public function __construct()
+    {
+        $this->nextCheckAt = new \DateTimeImmutable();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): void
-    {
-        $this->name = $name;
     }
 
     public function getGoogleClickId(): ?string
@@ -53,16 +52,6 @@ class Conversion implements ConversionInterface
     public function setGoogleClickId(string $googleClickId): void
     {
         $this->googleClickId = $googleClickId;
-    }
-
-    public function getCategory(): ?string
-    {
-        return $this->category;
-    }
-
-    public function setCategory(string $category): void
-    {
-        $this->category = $category;
     }
 
     public function getValue(): ?int
@@ -95,6 +84,46 @@ class Conversion implements ConversionInterface
         $this->state = $state;
     }
 
+    public function getLastCheckedAt(): ?\DateTimeImmutable
+    {
+        return $this->lastCheckedAt;
+    }
+
+    public function setLastCheckedAt(\DateTimeImmutable $lastCheckedAt): void
+    {
+        $this->lastCheckedAt = $lastCheckedAt;
+    }
+
+    public function getNextCheckAt(): \DateTimeImmutable
+    {
+        return $this->nextCheckAt;
+    }
+
+    public function setNextCheckAt(\DateTimeImmutable $nextCheck): void
+    {
+        $this->nextCheckAt = $nextCheck;
+    }
+
+    public function getChecks(): int
+    {
+        return $this->checks;
+    }
+
+    public function setChecks(int $checks): void
+    {
+        $this->checks = $checks;
+    }
+
+    public function incrementChecks(int $increment = 1): void
+    {
+        $this->checks += $increment;
+    }
+
+    public function getProcessIdentifier(): ?string
+    {
+        return $this->processIdentifier;
+    }
+
     public function getChannel(): ?ChannelInterface
     {
         return $this->channel;
@@ -110,7 +139,7 @@ class Conversion implements ConversionInterface
         return $this->order;
     }
 
-    public function setOrder(?OrderInterface $order): void
+    public function setOrder(OrderInterface $order): void
     {
         $this->order = $order;
     }

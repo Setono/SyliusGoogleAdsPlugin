@@ -6,7 +6,6 @@ namespace Setono\SyliusGoogleAdsPlugin\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Sylius\Component\Channel\Model\ChannelInterface as BaseChannelInterface;
 use Sylius\Component\Resource\Model\ToggleableTrait;
 
 class Connection implements ConnectionInterface
@@ -25,20 +24,11 @@ class Connection implements ConnectionInterface
 
     protected ?string $accessToken = null;
 
-    /**
-     * todo remove this
-     *
-     * @var Collection|BaseChannelInterface[]
-     * @psalm-var Collection<array-key, BaseChannelInterface>
-     */
-    protected Collection $channels;
-
     /** @var Collection<int, ConnectionMappingInterface> */
     protected Collection $connectionMappings;
 
     public function __construct()
     {
-        $this->channels = new ArrayCollection();
         $this->connectionMappings = new ArrayCollection();
     }
 
@@ -95,30 +85,6 @@ class Connection implements ConnectionInterface
     public function setAccessToken(?string $accessToken): void
     {
         $this->accessToken = $accessToken;
-    }
-
-    public function getChannels(): Collection
-    {
-        return $this->channels;
-    }
-
-    public function addChannel(BaseChannelInterface $channel): void
-    {
-        if (!$this->hasChannel($channel)) {
-            $this->channels->add($channel);
-        }
-    }
-
-    public function removeChannel(BaseChannelInterface $channel): void
-    {
-        if ($this->hasChannel($channel)) {
-            $this->channels->removeElement($channel);
-        }
-    }
-
-    public function hasChannel(BaseChannelInterface $channel): bool
-    {
-        return $this->channels->contains($channel);
     }
 
     public function canAuthorize(): bool
