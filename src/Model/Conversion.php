@@ -30,6 +30,8 @@ class Conversion implements ConversionInterface
 
     protected ?string $processIdentifier = null;
 
+    protected ?string $error = null;
+
     protected ?ChannelInterface $channel = null;
 
     protected ?OrderInterface $order = null;
@@ -122,6 +124,20 @@ class Conversion implements ConversionInterface
     public function getProcessIdentifier(): ?string
     {
         return $this->processIdentifier;
+    }
+
+    public function getError(): ?string
+    {
+        return $this->error;
+    }
+
+    public function setError(?string $error): void
+    {
+        if ('' === $error) {
+            $error = null;
+        }
+
+        $this->error = $error;
     }
 
     public function getChannel(): ?ChannelInterface

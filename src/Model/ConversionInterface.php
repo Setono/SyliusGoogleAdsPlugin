@@ -17,7 +17,7 @@ interface ConversionInterface extends ResourceInterface, TimestampableInterface
 
     public const STATE_CANCELLED = 'cancelled';
 
-    public const STATE_PROCESSING = 'processing';
+    public const STATE_FAILED = 'failed';
 
     public const STATE_DELIVERED = 'delivered';
 
@@ -70,6 +70,10 @@ interface ConversionInterface extends ResourceInterface, TimestampableInterface
     public function incrementChecks(int $increment = 1): void;
 
     public function getProcessIdentifier(): ?string;
+
+    public function getError(): ?string;
+
+    public function setError(?string $error): void;
 
     public function getChannel(): ?ChannelInterface;
 

@@ -66,14 +66,14 @@ final class ConversionProcessor implements ConversionProcessorInterface
                 true, // notice that we only add one operation so in practice it's not a partial error, but just an error
             );
 
-            // Prints the status message if any partial failure error is returned.
-            // Note: The details of each partial failure error are not printed here, you can refer to
-            // the example HandlePartialFailure.php to learn more.
             if ($response->hasPartialFailureError()) {
+                $conversion->setState(ConversionInterface::STATE_FAILED);
+                $conversion->setError((string) $response->getPartialFailureError()?->getMessage());
+
                 printf("Partial failures occurred: '%s'.\n", (string) $response->getPartialFailureError()?->getMessage());
             } else {
                 $conversion->setState(ConversionInterface::STATE_DELIVERED);
-                $this->getManager($conversion)->flush();
+                $conversion->setError(null);
 
                 /** @var ClickConversionResult $uploadedClickConversion */
                 $uploadedClickConversion = $response->getResults()[0];
@@ -84,6 +84,8 @@ final class ConversionProcessor implements ConversionProcessorInterface
                     $uploadedClickConversion->getConversionAction(),
                 );
             }
+
+            $this->getManager($conversion)->flush();
         }
     }
 
