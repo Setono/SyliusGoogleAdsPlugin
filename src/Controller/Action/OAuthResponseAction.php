@@ -62,11 +62,11 @@ final class OAuthResponseAction extends AbstractOAuthAction
         $oauth2 = $this->buildOAuth($connection, $expectedState);
         $oauth2->setCode($code);
         $credentials = $oauth2->fetchAuthToken();
-        if (!isset($credentials['access_token']) || !is_string($credentials['access_token'])) {
+        if (!isset($credentials['refresh_token']) || !is_string($credentials['refresh_token'])) {
             throw new \InvalidArgumentException('The access token is not valid');
         }
 
-        $connection->setAccessToken($credentials['access_token']);
+        $connection->setAccessToken($credentials['refresh_token']);
 
         $this->getManager($connection)->flush();
 

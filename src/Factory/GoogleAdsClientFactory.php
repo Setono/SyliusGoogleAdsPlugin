@@ -11,20 +11,23 @@ use Setono\SyliusGoogleAdsPlugin\Model\ConnectionInterface;
 
 final class GoogleAdsClientFactory implements GoogleAdsClientFactoryInterface
 {
-    public function create(string $clientId, string $clientSecret, string $refreshToken, string $developerToken, int $managerId = null): GoogleAdsClient
-    {
+    public function create(
+        string $clientId,
+        string $clientSecret,
+        string $refreshToken,
+        string $developerToken,
+        int $managerId = null,
+    ): GoogleAdsClient {
         $tokenBuilder = (new OAuth2TokenBuilder())
             ->withClientId($clientId)
             ->withClientSecret($clientSecret)
-            ->withRefreshToken($refreshToken)
-        ;
+            ->withRefreshToken($refreshToken);
 
         return (new GoogleAdsClientBuilder())
             ->withDeveloperToken($developerToken)
             ->withOAuth2Credential($tokenBuilder->build())
             ->withLoginCustomerId($managerId)
-            ->build()
-        ;
+            ->build();
     }
 
     public function createFromConnection(ConnectionInterface $connection, int $managerId = null): GoogleAdsClient
