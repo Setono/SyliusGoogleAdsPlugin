@@ -15,8 +15,7 @@ final class SetGoogleClickIdOrderProcessor implements OrderProcessorInterface
     public function __construct(
         private readonly RequestStack $requestStack,
         private readonly string $cookieName,
-    )
-    {
+    ) {
     }
 
     /**
@@ -26,15 +25,11 @@ final class SetGoogleClickIdOrderProcessor implements OrderProcessorInterface
     {
         WrongOrderTypeException::assert($order);
 
-        $request = $this->requestStack->getMainRequest();
-        if (null === $request) {
+        $cookieValue = (string) $this->requestStack->getMainRequest()?->cookies->get($this->cookieName);
+        if ('' === $cookieValue) {
             return;
         }
 
-        if (!$request->cookies->has($this->cookieName)) {
-            return;
-        }
-
-        $order->setGoogleClickId((string) $request->cookies->get($this->cookieName));
+        $order->setGoogleClickId($cookieValue);
     }
 }
