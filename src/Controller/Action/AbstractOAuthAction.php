@@ -9,7 +9,7 @@ use Google\Auth\OAuth2;
 use Setono\SyliusGoogleAdsPlugin\Model\ConnectionInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\FlashBagAwareSessionInterface;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 abstract class AbstractOAuthAction
@@ -42,8 +42,12 @@ abstract class AbstractOAuthAction
     protected function addFlashAndRedirect(Request $request, string $flash, string $url, string $type = 'error'): RedirectResponse
     {
         $session = $request->getSession();
-        if ($session instanceof FlashBagAwareSessionInterface) {
-            $session->getFlashBag()->add($type, $flash);
+        if (method_exists($session, 'getFlashBag')) {
+            /** @var mixed $flashBag */
+            $flashBag = $session->getFlashBag();
+            if ($flashBag instanceof FlashBagInterface) {
+                $flashBag->add($type, $flash);
+            }
         }
 
         return new RedirectResponse($url);
