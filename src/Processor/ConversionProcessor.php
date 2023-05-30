@@ -66,6 +66,7 @@ final class ConversionProcessor implements ConversionProcessorInterface
                 true, // notice that we only add one operation so in practice it's not a partial error, but just an error
             );
 
+            // todo
             if ($response->hasPartialFailureError()) {
                 $conversion->setState(ConversionInterface::STATE_FAILED);
                 $conversion->setError((string) $response->getPartialFailureError()?->getMessage());
