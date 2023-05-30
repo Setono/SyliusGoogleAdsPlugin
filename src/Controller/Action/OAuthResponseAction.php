@@ -66,13 +66,13 @@ final class OAuthResponseAction extends AbstractOAuthAction
             throw new \InvalidArgumentException('The access token is not valid');
         }
 
-        $connection->setAccessToken($credentials['refresh_token']);
+        $connection->setRefreshToken($credentials['refresh_token']);
 
         $this->getManager($connection)->flush();
 
         return $this->addFlashAndRedirect(
             $request,
-            'setono_sylius_google_ads.access_token_updated',
+            'setono_sylius_google_ads.refresh_token_updated',
             $this->urlGenerator->generate('setono_sylius_google_ads_admin_connection_update', ['id' => $connection->getId()]),
             'success',
         );

@@ -35,7 +35,7 @@ final class GoogleAdsClientFactory implements GoogleAdsClientFactoryInterface
         return $this->create(
             (string) $connection->getClientId(),
             (string) $connection->getClientSecret(),
-            (string) $connection->getAccessToken(),
+            (string) $connection->getRefreshToken(),
             (string) $connection->getDeveloperToken(),
             $managerId,
         );

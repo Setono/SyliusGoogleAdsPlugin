@@ -52,7 +52,7 @@ trait LiveTestTrait
         $connection = new Connection();
         $connection->setClientId($clientId);
         $connection->setClientSecret($clientSecret);
-        $connection->setAccessToken($refreshToken);
+        $connection->setRefreshToken($refreshToken);
         $connection->setDeveloperToken($developerToken);
 
         return $connection;

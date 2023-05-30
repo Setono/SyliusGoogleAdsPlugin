@@ -20,7 +20,7 @@
         {% if connection.canAuthorize %}
             <a class="ui right labeled icon large primary button" href="{{ path('setono_sylius_google_ads_admin_oauth_request', {'connectionId': connection.id}) }}">
                 <i class="right arrow icon"></i>
-                {{ (connection.accessToken is not null ? 'setono_sylius_google_ads.ui.reauthorize_with_google' : 'setono_sylius_google_ads.ui.authorize_with_google')|trans }}
+                {{ (connection.refreshToken is not null ? 'setono_sylius_google_ads.ui.reauthorize_with_google' : 'setono_sylius_google_ads.ui.authorize_with_google')|trans }}
             </a>
         {% else %}
             <div class="ui negative message">{{ 'setono_sylius_google_ads.ui.setup.authorize.authorization_not_possible'|trans }}</div>

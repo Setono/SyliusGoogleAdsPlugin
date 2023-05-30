@@ -29,11 +29,11 @@ final class ConnectionType extends AbstractResourceType
             ->add('clientSecret', TextType::class, [
                 'label' => 'setono_sylius_google_ads.form.connection.client_secret',
             ])
-            ->add('accessToken', TextType::class, [
-                'label' => 'setono_sylius_google_ads.form.connection.access_token',
+            ->add('refreshToken', TextType::class, [
+                'label' => 'setono_sylius_google_ads.form.connection.refresh_token',
                 'disabled' => true,
                 'required' => false,
-                'help' => 'setono_sylius_google_ads.form.connection.access_token_help',
+                'help' => 'setono_sylius_google_ads.form.connection.refresh_token_help',
             ])
             ->add('enabled', CheckboxType::class, [
                 'required' => false,

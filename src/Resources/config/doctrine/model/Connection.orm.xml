@@ -14,7 +14,7 @@
         <field name="developerToken" type="string" nullable="true"/>
         <field name="clientId" type="string" nullable="true"/>
         <field name="clientSecret" type="string" nullable="true"/>
-        <field name="accessToken" type="string" nullable="true"/>
+        <field name="refreshToken" type="string" nullable="true"/>
         <field name="enabled" type="boolean"/>
 
         <one-to-many field="connectionMappings" target-entity="Setono\SyliusGoogleAdsPlugin\Model\ConnectionMappingInterface" mapped-by="connection">

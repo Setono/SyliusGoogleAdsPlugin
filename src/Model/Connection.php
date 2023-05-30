@@ -22,7 +22,7 @@ class Connection implements ConnectionInterface
 
     protected ?string $clientSecret = null;
 
-    protected ?string $accessToken = null;
+    protected ?string $refreshToken = null;
 
     /** @var Collection<int, ConnectionMappingInterface> */
     protected Collection $connectionMappings;
@@ -77,14 +77,14 @@ class Connection implements ConnectionInterface
         $this->clientSecret = $clientSecret;
     }
 
-    public function getAccessToken(): ?string
+    public function getRefreshToken(): ?string
     {
-        return $this->accessToken;
+        return $this->refreshToken;
     }
 
-    public function setAccessToken(?string $accessToken): void
+    public function setRefreshToken(?string $refreshToken): void
     {
-        $this->accessToken = $accessToken;
+        $this->refreshToken = $refreshToken;
     }
 
     public function canAuthorize(): bool
