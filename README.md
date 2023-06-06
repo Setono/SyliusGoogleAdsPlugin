@@ -4,18 +4,20 @@
 [![Software License][ico-license]](LICENSE)
 [![Build Status][ico-github-actions]][link-github-actions]
 
-This plugin tracks conversions in your Sylius store. It's done with [offline conversion tracking](https://support.google.com/google-ads/answer/2998031?hl=en)
+This plugin tracks conversions in your Sylius store. It's done with the [Google Ads API](https://developers.google.com/google-ads/api/docs/start)
 instead of the default javascript tracking. It has a few benefits to do this:
 - Easier to control the consent status for a given user
-- Easier to change the value of a given order after the fact
+- Easier to change the value of an order after the fact
 - No javascripts on your page to track Google Ads, which means faster page load
+- You decide the ttl on your cookies, not Apple and their ITP
+- No risk of losing tracking because of ad blockers
 
 ## Installation
 
 ### Step 1: Install and enable plugin
 
 ```bash
-$ composer require setono/sylius-google-ads-plugin
+composer require setono/sylius-google-ads-plugin
 ```
 
 Add the bundle to your `config/bundles.php` before the `SyliusGridBundle`:
