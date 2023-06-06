@@ -26,15 +26,20 @@
     <div class="six wide column">
         {% if resource.canAuthorize %}
             <div class="ui segment">
-                <a class="ui large primary button" style="display: block" href="{{ path('setono_sylius_google_ads_admin_oauth_request', {'connectionId': resource.id}) }}">
-                    {{ (resource.refreshToken is not null ? 'setono_sylius_google_ads.ui.reauthorize_with_google' : 'setono_sylius_google_ads.ui.authorize_with_google')|trans }}
-                </a>
+                {% if resource.refreshToken is null %}
+                    <a class="ui large primary button" style="display: block" href="{{ path('setono_sylius_google_ads_admin_setup_authorize', {'connectionId': resource.id}) }}">
+                        {{ 'setono_sylius_google_ads.ui.setup_connection_with_google_ads'|trans }}
+                    </a>
+                {% else %}
+                    <a class="ui large primary button" style="display: block" href="{{ path('setono_sylius_google_ads_admin_setup_map_customer_id', {'connectionId': resource.id}) }}">
+                        {{ 'setono_sylius_google_ads.ui.setup_connection_with_google_ads'|trans }}
+                    </a>
+                {% endif %}
             </div>
         {% endif %}
         <div class="ui segment">
-            {# todo #}
-            <h4 class="ui dividing header">TODO</h4>
-            <p>Here we want a help text explaining how to obtain the API credentials and set up a connection</p>
+            <h4 class="ui dividing header">{{ 'setono_sylius_google_ads.ui.setup_help.heading'|trans }}</h4>
+            {{ 'setono_sylius_google_ads.ui.setup_help.body'|trans|raw }}
         </div>
     </div>
 </div>

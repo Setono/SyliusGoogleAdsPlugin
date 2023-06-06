@@ -7,7 +7,7 @@ setono_sylius_google_ads:
             name: Name
             name_placeholder: Use the name as a reference for this connection
             refresh_token: Refresh token
-            refresh_token_help: The refresh token will be automatically filled when you authorize with Google
+            refresh_token_help: The refresh token will be automatically filled when you complete the connection setup
             header:
                 api: API credentials
                 eligibility: Eligibility
@@ -16,7 +16,6 @@ setono_sylius_google_ads:
             conversion_action_id: Conversion action id
     ui:
         refresh_token_updated: The access token was updated
-        authorize_with_google: Authorize with Google
         connections: Connections
         edit_connection: Edit connection
         enabled: Enabled
@@ -24,7 +23,7 @@ setono_sylius_google_ads:
         manage_connections: Manage Google Ads API connections
         new_connection: New connection
         no_channels: No channels
-        reauthorize_with_google: Reauthorize with Google
+        setup_connection_with_google_ads: Setup connection with Google Ads
         setup:
             authorize:
                 header: "Setup connection: %name%"
@@ -43,3 +42,19 @@ setono_sylius_google_ads:
                 header: "Map connection: %name%"
                 subheader: Map to a conversion action
                 intro: <p>Lastly, map your channel and customer id to a conversion action. If there's no relevant conversion action, go to the Google Ads interface and create a new conversion action first. Then come back here and hit refresh.</p>
+        setup_help:
+            heading: How to setup your connection
+            body: |
+                <p>Before you start with any setup you need a Google Ads Manager account (also known as an MCC account):</p>
+                <p>» <a href="https://ads.google.com/intl/en/home/tools/manager-accounts/" target="_blank">Create MCC account</a></p>
+                <p>After that, start by obtaining your developer token (which is a token related to your MCC account). Follow the instructions here:</p>
+                <p>» <a href="https://developers.google.com/google-ads/api/docs/first-call/dev-token" target="_blank">Obtain developer token</a></p>
+                <p>Now to obtain the client id and client secret you need to follow these steps:</p>
+                <p>
+                    <ol>
+                        <li><a href="https://developers.google.com/google-ads/api/docs/first-call/oauth-cloud-project" target="_blank">Create a project</a> in the Google API console and enable the Google Ads API inside the project.</li>
+                        <li>Configure the consent screen by following the guide provided by Google</li>
+                        <li>Create new credentials and follow the guide provided by Google</li>
+                        <li>When these steps are completed you will be able to see your client id and client secret on the credentials page</li>
+                    </ol>
+                </p>
