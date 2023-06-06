@@ -6,7 +6,7 @@
         <service id="setono_sylius_google_ads.message.handler.process_conversion"
                  class="Setono\SyliusGoogleAdsPlugin\Message\Handler\ProcessConversionHandler">
             <argument type="service" id="setono_sylius_google_ads.repository.conversion"/>
-            <argument type="service" id="setono_sylius_google_ads.processor.conversion"/>
+            <argument type="service" id="setono_sylius_google_ads.conversion_processor.composite"/>
 
             <tag name="messenger.message_handler"/>
         </service>

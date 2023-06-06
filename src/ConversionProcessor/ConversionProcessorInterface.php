@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusGoogleAdsPlugin\Processor;
+namespace Setono\SyliusGoogleAdsPlugin\ConversionProcessor;
 
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
 

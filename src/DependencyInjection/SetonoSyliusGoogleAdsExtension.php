@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\DependencyInjection;
 
+use Setono\SyliusGoogleAdsPlugin\Workflow\ConversionWorkflow;
 use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-final class SetonoSyliusGoogleAdsExtension extends AbstractResourceExtension
+final class SetonoSyliusGoogleAdsExtension extends AbstractResourceExtension implements PrependExtensionInterface
 {
     public function load(array $configs, ContainerBuilder $container): void
     {
@@ -30,5 +32,12 @@ final class SetonoSyliusGoogleAdsExtension extends AbstractResourceExtension
             $config['resources'],
             $container,
         );
+    }
+
+    public function prepend(ContainerBuilder $container): void
+    {
+        $container->prependExtensionConfig('framework', [
+            'workflows' => ConversionWorkflow::getConfig(),
+        ]);
     }
 }

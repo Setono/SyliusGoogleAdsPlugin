@@ -25,7 +25,10 @@ final class SetGclidAndUserAgentOrderProcessor implements OrderProcessorInterfac
     {
         WrongOrderTypeException::assert($order);
 
-        $order->setUserAgent($this->requestStack->getMainRequest()?->headers->get('User-Agent'));
+        $userAgent = (string) $this->requestStack->getMainRequest()?->headers->get('User-Agent');
+        if ('' !== $userAgent) {
+            $order->setUserAgent($userAgent);
+        }
 
         $cookieValue = (string) $this->requestStack->getMainRequest()?->cookies->get($this->cookieName);
         if ('' === $cookieValue) {

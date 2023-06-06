@@ -16,6 +16,7 @@
         "googleads/google-ads-php": "^19.0",
         "knplabs/knp-menu": "^3.1",
         "psr/event-dispatcher": "^1.0",
+        "setono/composite-compiler-pass": "^1.1",
         "setono/doctrine-object-manager-trait": "^1.0",
         "sylius/resource-bundle": "^1.6",
         "symfony/config": "^5.4 || ^6.0",
@@ -29,6 +30,7 @@
         "symfony/options-resolver": "^5.4 || ^6.0",
         "symfony/routing": "^5.4 || ^6.0",
         "symfony/string": "^5.4 || ^6.0",
+        "symfony/workflow": "^5.4 || ^6.0",
         "twig/twig": "^2.15 || ^3.4",
         "webmozart/assert": "^1.11"
     },

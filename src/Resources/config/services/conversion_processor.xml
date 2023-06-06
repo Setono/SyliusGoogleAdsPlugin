@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://symfony.com/schema/dic/services"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="setono_sylius_google_ads.conversion_processor.composite"
+                 class="Setono\SyliusGoogleAdsPlugin\ConversionProcessor\CompositeConversionProcessor">
+            <argument type="service" id="doctrine"/>
+            <argument type="service" id="state_machine.setono_sylius_google_ads__conversion"/>
+            <argument type="service" id="validator"/>
+        </service>
+
+        <service id="setono_sylius_google_ads.conversion_processor.abstract"
+                 class="Setono\SyliusGoogleAdsPlugin\ConversionProcessor\AbstractConversionProcessor" abstract="true">
+            <argument type="service" id="state_machine.setono_sylius_google_ads__conversion"/>
+            <argument type="service" id="setono_sylius_google_ads.factory.google_ads_client"/>
+            <argument type="service" id="setono_sylius_google_ads.repository.connection_mapping"/>
+        </service>
+
+        <service id="setono_sylius_google_ads.conversion_processor.conversion"
+                 class="Setono\SyliusGoogleAdsPlugin\ConversionProcessor\ConversionProcessor"
+                 parent="setono_sylius_google_ads.conversion_processor.abstract">
+            <tag name="setono_sylius_google_ads.conversion_processor"/>
+        </service>
+
+        <service id="setono_sylius_google_ads.conversion_processor.enhanced_conversion"
+                 class="Setono\SyliusGoogleAdsPlugin\ConversionProcessor\EnhancedConversionProcessor"
+                 parent="setono_sylius_google_ads.conversion_processor.abstract">
+            <tag name="setono_sylius_google_ads.conversion_processor"/>
+        </service>
+    </services>
+</container>

@@ -6,13 +6,13 @@
         <import resource="services/command.xml"/>
         <import resource="services/consent_checker.xml"/>
         <import resource="services/controller.xml"/>
+        <import resource="services/conversion_processor.xml"/>
         <import resource="services/event_subscriber.xml"/>
         <import resource="services/factory.xml"/>
         <import resource="services/form.xml"/>
         <import resource="services/menu.xml"/>
         <import resource="services/message.xml"/>
         <import resource="services/order_processor.xml"/>
-        <import resource="services/processor.xml"/>
         <import resource="services/resolver.xml"/>
         <import resource="services/state_resolver.xml"/>
     </imports>

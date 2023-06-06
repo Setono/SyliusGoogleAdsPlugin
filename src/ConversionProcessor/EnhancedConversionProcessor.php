@@ -2,39 +2,29 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusGoogleAdsPlugin\Processor;
+namespace Setono\SyliusGoogleAdsPlugin\ConversionProcessor;
 
-use Doctrine\Persistence\ManagerRegistry;
 use Google\Ads\GoogleAds\Util\V13\ResourceNames;
 use Google\Ads\GoogleAds\V13\Common\OfflineUserAddressInfo;
 use Google\Ads\GoogleAds\V13\Common\UserIdentifier;
 use Google\Ads\GoogleAds\V13\Enums\ConversionAdjustmentTypeEnum\ConversionAdjustmentType;
 use Google\Ads\GoogleAds\V13\Enums\UserIdentifierSourceEnum\UserIdentifierSource;
-use Google\Ads\GoogleAds\V13\Services\ClickConversion;
 use Google\Ads\GoogleAds\V13\Services\ConversionAdjustment;
 use Google\Ads\GoogleAds\V13\Services\GclidDateTimePair;
-use Setono\DoctrineObjectManagerTrait\ORM\ORMManagerTrait;
 use Setono\SyliusGoogleAdsPlugin\Exception\WrongOrderTypeException;
-use Setono\SyliusGoogleAdsPlugin\Factory\GoogleAdsClientFactoryInterface;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
 use Setono\SyliusGoogleAdsPlugin\Model\OrderInterface;
-use Setono\SyliusGoogleAdsPlugin\Repository\ConnectionMappingRepositoryInterface;
+use Setono\SyliusGoogleAdsPlugin\Workflow\ConversionWorkflow;
 use Webmozart\Assert\Assert;
 
-final class ConversionProcessor implements ConversionProcessorInterface
+final class EnhancedConversionProcessor extends AbstractConversionProcessor
 {
-    use ORMManagerTrait;
-
-    public function __construct(
-        private readonly GoogleAdsClientFactoryInterface $googleAdsClientFactory,
-        private readonly ConnectionMappingRepositoryInterface $connectionMappingRepository,
-        ManagerRegistry $managerRegistry,
-    ) {
-        $this->managerRegistry = $managerRegistry;
-    }
-
     public function process(ConversionInterface $conversion): void
     {
+        if (!$this->workflow->can($conversion, ConversionWorkflow::TRANSITION_UPLOAD_ENHANCED_CONVERSION)) {
+            throw new \RuntimeException(sprintf('Cannot complete the transition "%s"', ConversionWorkflow::TRANSITION_UPLOAD_ENHANCED_CONVERSION));
+        }
+
         $channel = $conversion->getChannel();
         Assert::notNull($channel);
 
@@ -58,34 +48,6 @@ final class ConversionProcessor implements ConversionProcessorInterface
         Assert::notNull($billingAddress);
 
         $client = $this->googleAdsClientFactory->createFromConnection($connection, $managerId);
-
-        $clickConversion = new ClickConversion([
-            'conversion_action' => ResourceNames::forConversionAction(
-                (string) $customerId,
-                (string) $connectionMapping->getConversionActionId(),
-            ),
-            'conversion_value' => round((int) $conversion->getValue() / 100, 2),
-            'conversion_date_time' => $conversion->getCreatedAt()?->format('Y-m-d H:i:sP'),
-            'currency_code' => $conversion->getCurrencyCode(),
-            'order_id' => $order->getId(),
-            'gclid' => $conversion->getGoogleClickId(),
-        ]);
-
-        $conversionUploadServiceClient = $client->getConversionUploadServiceClient();
-
-        $response = $conversionUploadServiceClient->uploadClickConversions(
-            (string) $customerId,
-            [$clickConversion],
-            true, // notice that we only add one operation so in practice it's not a partial error, but just an error
-        );
-
-        if ($response->hasPartialFailureError()) {
-            $conversion->setState(ConversionInterface::STATE_FAILED);
-            $conversion->setError((string) $response->getPartialFailureError()?->getMessage());
-            $this->getManager($conversion)->flush();
-
-            return;
-        }
 
         $conversionAdjustment = new ConversionAdjustment([
             'conversion_action' => ResourceNames::forConversionAction(
@@ -115,11 +77,11 @@ final class ConversionProcessor implements ConversionProcessorInterface
 
         $conversionAdjustment->setUserIdentifiers([$addressIdentifier, $emailIdentifier]);
 
-        $checkoutCompletedAt = $order->getCheckoutCompletedAt();
+        $createdAt = $conversion->getCreatedAt();
 
-        if (null !== $checkoutCompletedAt) {
+        if (null !== $createdAt) {
             $conversionAdjustment->setGclidDateTimePair(new GclidDateTimePair([
-                'conversion_date_time' => $checkoutCompletedAt->format('Y-m-d H:i:sP'),
+                'conversion_date_time' => $createdAt->format('Y-m-d H:i:sP'),
             ]));
         }
 
@@ -135,18 +97,14 @@ final class ConversionProcessor implements ConversionProcessorInterface
             true,
         );
 
-        // Prints the status message if any partial failure error is returned.
-        // Note: The details of each partial failure error are not printed here, you can refer to
-        // the example HandlePartialFailure.php to learn more.
         if ($response->hasPartialFailureError()) {
-            $conversion->setState(ConversionInterface::STATE_FAILED);
-            $conversion->setError((string) $response->getPartialFailureError()?->getMessage());
-        } else {
-            $conversion->setState(ConversionInterface::STATE_DELIVERED);
-            $conversion->setError(null);
+            throw new \RuntimeException(sprintf(
+                'Uploading the enhanced conversion failed: %s',
+                (string) $response->getPartialFailureError()?->getMessage(),
+            ));
         }
 
-        $this->getManager($conversion)->flush();
+        $this->workflow->apply($conversion, ConversionWorkflow::TRANSITION_UPLOAD_ENHANCED_CONVERSION);
     }
 
     private static function normalizeAndHash(?string $value): string

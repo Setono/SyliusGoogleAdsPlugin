@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Message\Handler;
 
+use Setono\SyliusGoogleAdsPlugin\ConversionProcessor\ConversionProcessorInterface;
 use Setono\SyliusGoogleAdsPlugin\Message\Command\ProcessConversion;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
-use Setono\SyliusGoogleAdsPlugin\Processor\ConversionProcessorInterface;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConversionRepositoryInterface;
 use Symfony\Component\Messenger\Exception\UnrecoverableMessageHandlingException;
 
