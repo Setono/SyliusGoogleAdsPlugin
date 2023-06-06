@@ -7,7 +7,12 @@ namespace Setono\SyliusGoogleAdsPlugin\ConsentChecker;
 interface ConsentCheckerInterface
 {
     /**
-     * Returns true if the user has consented to sending data to Google
+     * Returns true if the user has consented to uploading conversions to Google
      */
-    public function hasConsent(): bool;
+    public function hasUploadConversionConsent(): bool;
+
+    /**
+     * Returns true if the user has consented to uploading enhanced conversions to Google
+     */
+    public function hasUploadEnhancedConversionConsent(): bool;
 }

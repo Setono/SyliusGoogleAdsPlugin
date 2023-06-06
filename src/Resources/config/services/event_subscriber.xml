@@ -15,7 +15,6 @@
                  class="Setono\SyliusGoogleAdsPlugin\EventSubscriber\PurchaseSubscriber">
             <argument type="service" id="setono_sylius_google_ads.factory.conversion"/>
             <argument type="service" id="doctrine"/>
-            <argument type="service" id="setono_sylius_google_ads.consent_checker.always_given"/>
             <argument type="service" id="event_dispatcher"/>
             <argument type="service" id="sylius.repository.order"/>
 

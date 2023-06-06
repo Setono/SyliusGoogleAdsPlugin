@@ -7,7 +7,6 @@ namespace Setono\SyliusGoogleAdsPlugin\EventSubscriber;
 use Doctrine\Persistence\ManagerRegistry;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Setono\DoctrineObjectManagerTrait\ORM\ORMManagerTrait;
-use Setono\SyliusGoogleAdsPlugin\ConsentChecker\ConsentCheckerInterface;
 use Setono\SyliusGoogleAdsPlugin\Event\PrePersistConversionFromOrderEvent;
 use Setono\SyliusGoogleAdsPlugin\Exception\WrongOrderTypeException;
 use Setono\SyliusGoogleAdsPlugin\Factory\ConversionFactoryInterface;
@@ -26,7 +25,6 @@ final class PurchaseSubscriber implements EventSubscriberInterface
     public function __construct(
         private readonly ConversionFactoryInterface $conversionFactory,
         ManagerRegistry $managerRegistry,
-        private readonly ConsentCheckerInterface $consentChecker,
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly OrderRepositoryInterface $orderRepository,
     ) {
@@ -74,10 +72,6 @@ final class PurchaseSubscriber implements EventSubscriberInterface
 
         $channel = $order->getChannel();
         Assert::notNull($channel);
-
-        if (!$this->consentChecker->hasConsent()) {
-            return;
-        }
 
         $conversion = $this->conversionFactory->createFromOrder($order);
         $conversion->setChannel($channel);
