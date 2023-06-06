@@ -14,4 +14,11 @@ interface OrderInterface extends BaseOrderInterface
     public function getGoogleClickId(): ?string;
 
     public function setGoogleClickId(?string $googleClickId): void;
+
+    /**
+     * The user agent of the user completing the order
+     */
+    public function getUserAgent(): ?string;
+
+    public function setUserAgent(?string $userAgent): void;
 }

@@ -11,20 +11,20 @@ use Webmozart\Assert\Assert;
 
 class ConnectionMappingRepository extends EntityRepository implements ConnectionMappingRepositoryInterface
 {
-    public function findEnabledByChannel(ChannelInterface $channel): array
+    public function findOneEnabledByChannel(ChannelInterface $channel): ?ConnectionMappingInterface
     {
-        $res = $this->createQueryBuilder('o')
+        $obj = $this->createQueryBuilder('o')
             ->select('o, c')
             ->join('o.connection', 'c')
             ->andWhere('o.channel = :channel')
             ->andWhere('c.enabled = true')
             ->setParameter('channel', $channel)
             ->getQuery()
-            ->getResult()
+            ->getOneOrNullResult()
         ;
 
-        Assert::allIsInstanceOf($res, ConnectionMappingInterface::class);
+        Assert::nullOrIsInstanceOf($obj, ConnectionMappingInterface::class);
 
-        return $res;
+        return $obj;
     }
 }

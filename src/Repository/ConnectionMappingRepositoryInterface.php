@@ -13,8 +13,5 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
  */
 interface ConnectionMappingRepositoryInterface extends RepositoryInterface
 {
-    /**
-     * @return array<array-key, ConnectionMappingInterface>
-     */
-    public function findEnabledByChannel(ChannelInterface $channel): array;
+    public function findOneEnabledByChannel(ChannelInterface $channel): ?ConnectionMappingInterface;
 }

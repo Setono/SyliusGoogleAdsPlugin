@@ -3,8 +3,8 @@
 <container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://symfony.com/schema/dic/services"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="setono_sylius_google_ads.order_processor.set_google_click_id"
-                 class="Setono\SyliusGoogleAdsPlugin\OrderProcessor\SetGoogleClickIdOrderProcessor">
+        <service id="setono_sylius_google_ads.order_processor.set_gclid_and_user_agent"
+                 class="Setono\SyliusGoogleAdsPlugin\OrderProcessor\SetGclidAndUserAgentOrderProcessor">
             <argument type="service" id="request_stack"/>
             <argument>%setono_sylius_google_ads.gclid_cookie_name%</argument>
 

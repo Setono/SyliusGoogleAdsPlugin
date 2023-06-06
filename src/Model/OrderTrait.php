@@ -11,6 +11,9 @@ trait OrderTrait
     /** @ORM\Column(type="string", nullable=true) */
     protected ?string $googleClickId = null;
 
+    /** @ORM\Column(type="text", nullable=true) */
+    protected ?string $userAgent = null;
+
     public function getGoogleClickId(): ?string
     {
         return $this->googleClickId;
@@ -19,5 +22,15 @@ trait OrderTrait
     public function setGoogleClickId(?string $googleClickId): void
     {
         $this->googleClickId = $googleClickId;
+    }
+
+    public function getUserAgent(): ?string
+    {
+        return $this->userAgent;
+    }
+
+    public function setUserAgent(?string $userAgent): void
+    {
+        $this->userAgent = $userAgent;
     }
 }

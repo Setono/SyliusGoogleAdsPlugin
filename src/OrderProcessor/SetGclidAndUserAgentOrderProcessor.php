@@ -10,7 +10,7 @@ use Sylius\Component\Order\Model\OrderInterface as BaseOrderInterface;
 use Sylius\Component\Order\Processor\OrderProcessorInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-final class SetGoogleClickIdOrderProcessor implements OrderProcessorInterface
+final class SetGclidAndUserAgentOrderProcessor implements OrderProcessorInterface
 {
     public function __construct(
         private readonly RequestStack $requestStack,
@@ -24,6 +24,8 @@ final class SetGoogleClickIdOrderProcessor implements OrderProcessorInterface
     public function process(BaseOrderInterface $order): void
     {
         WrongOrderTypeException::assert($order);
+
+        $order->setUserAgent($this->requestStack->getMainRequest()?->headers->get('User-Agent'));
 
         $cookieValue = (string) $this->requestStack->getMainRequest()?->cookies->get($this->cookieName);
         if ('' === $cookieValue) {
