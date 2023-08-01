@@ -19,6 +19,7 @@
         "setono/composite-compiler-pass": "^1.1",
         "setono/doctrine-object-manager-trait": "^1.0",
         "sylius/resource-bundle": "^1.6",
+        "sylius/order": "^1.0",
         "symfony/config": "^5.4 || ^6.0",
         "symfony/console": "^5.4 || ^6.0",
         "symfony/dependency-injection": "^5.4 || ^6.0",

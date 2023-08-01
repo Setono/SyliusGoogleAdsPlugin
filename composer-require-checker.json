@@ -24,8 +24,6 @@
         "Sylius\\Component\\Channel\\Model\\ChannelsAwareInterface",
         "Sylius\\Component\\Core\\Model\\OrderInterface",
         "Sylius\\Component\\Core\\OrderPaymentStates",
-        "Sylius\\Component\\Core\\Repository\\OrderRepositoryInterface",
-        "Sylius\\Component\\Order\\Model\\OrderInterface",
-        "Sylius\\Component\\Order\\Processor\\OrderProcessorInterface"
+        "Sylius\\Component\\Core\\Repository\\OrderRepositoryInterface"
     ]
 }
