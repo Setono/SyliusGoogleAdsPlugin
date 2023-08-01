@@ -7,7 +7,7 @@
                  class="Setono\SyliusGoogleAdsPlugin\ConversionProcessor\CompositeConversionProcessor">
             <argument type="service" id="doctrine"/>
             <argument type="service" id="state_machine.setono_sylius_google_ads__conversion"/>
-            <argument type="service" id="validator"/>
+            <argument type="service" id="event_dispatcher"/>
         </service>
 
         <service id="setono_sylius_google_ads.conversion_processor.abstract"
@@ -20,13 +20,22 @@
         <service id="setono_sylius_google_ads.conversion_processor.conversion"
                  class="Setono\SyliusGoogleAdsPlugin\ConversionProcessor\ConversionProcessor"
                  parent="setono_sylius_google_ads.conversion_processor.abstract">
-            <tag name="setono_sylius_google_ads.conversion_processor"/>
+
+            <tag name="setono_sylius_google_ads.conversion_processor" priority="90"/>
         </service>
 
         <service id="setono_sylius_google_ads.conversion_processor.enhanced_conversion"
                  class="Setono\SyliusGoogleAdsPlugin\ConversionProcessor\EnhancedConversionProcessor"
                  parent="setono_sylius_google_ads.conversion_processor.abstract">
-            <tag name="setono_sylius_google_ads.conversion_processor"/>
+
+            <tag name="setono_sylius_google_ads.conversion_processor" priority="80"/>
+        </service>
+
+        <service id="setono_sylius_google_ads.conversion_processor.qualification"
+                 class="Setono\SyliusGoogleAdsPlugin\ConversionProcessor\QualificationConversionProcessor"
+                 parent="setono_sylius_google_ads.conversion_processor.abstract">
+
+            <tag name="setono_sylius_google_ads.conversion_processor" priority="100"/>
         </service>
     </services>
 </container>

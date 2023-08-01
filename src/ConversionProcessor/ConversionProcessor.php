@@ -14,15 +14,14 @@ use Webmozart\Assert\Assert;
 
 final class ConversionProcessor extends AbstractConversionProcessor
 {
+    public function isEligible(ConversionInterface $conversion): bool
+    {
+        return $this->workflow->can($conversion, ConversionWorkflow::TRANSITION_UPLOAD_CONVERSION);
+    }
+
     public function process(ConversionInterface $conversion): void
     {
-        if (!$this->workflow->can($conversion, ConversionWorkflow::TRANSITION_UPLOAD_CONVERSION)) {
-            throw new \RuntimeException(sprintf(
-                'Cannot complete the transition "%s". State was: "%s"',
-                ConversionWorkflow::TRANSITION_UPLOAD_CONVERSION,
-                $conversion->getState(),
-            ));
-        }
+        Assert::true($this->isEligible($conversion));
 
         $channel = $conversion->getChannel();
         Assert::notNull($channel);
@@ -71,6 +70,10 @@ final class ConversionProcessor extends AbstractConversionProcessor
                 (string) $response->getPartialFailureError()?->getMessage(),
             ));
         }
+
+        // According to Google we must wait 24 hours before sending a conversion adjustment.
+        // See https://developers.google.com/google-ads/api/docs/conversions/upload-adjustments
+        $conversion->setNextProcessingAt((new \DateTimeImmutable())->add(new \DateInterval('PT24H')));
 
         $this->workflow->apply($conversion, ConversionWorkflow::TRANSITION_UPLOAD_CONVERSION);
     }

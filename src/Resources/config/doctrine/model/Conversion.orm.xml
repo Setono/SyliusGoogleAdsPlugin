@@ -15,15 +15,20 @@
             <generator strategy="AUTO"/>
         </id>
 
+        <field name="version" type="integer" version="true" />
+
         <field name="googleClickId" type="string"/>
         <field name="value" type="integer"/>
         <field name="currencyCode" type="string"/>
         <field name="state" type="string"/>
-        <field name="lastCheckedAt" type="datetime_immutable" nullable="true"/>
-        <field name="nextCheckAt" type="datetime_immutable" nullable="true"/>
-        <field name="checks" type="integer"/>
-        <field name="processIdentifier" type="string" nullable="true"/>
-        <field name="error" type="text" nullable="true"/>
+        <field name="previousState" type="string" nullable="true"/>
+        <field name="stateUpdatedAt" type="datetime_immutable" nullable="true"/>
+        <field name="processing" type="boolean"/>
+        <field name="lastProcessingStartedAt" type="datetime_immutable" nullable="true"/>
+        <field name="lastProcessingEndedAt" type="datetime_immutable" nullable="true"/>
+        <field name="nextProcessingAt" type="datetime_immutable" nullable="true"/>
+        <field name="processingCount" type="integer"/>
+        <field name="logMessages" type="json"/>
 
         <field name="createdAt" column="created_at" type="datetime">
             <gedmo:timestampable on="create"/>

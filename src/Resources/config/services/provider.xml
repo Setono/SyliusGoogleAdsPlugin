@@ -3,7 +3,9 @@
 <container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://symfony.com/schema/dic/services"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="setono_sylius_google_ads.state_resolver.conversion_with_order"
-                 class="Setono\SyliusGoogleAdsPlugin\StateResolver\ConversionWithOrderStateResolver"/>
+        <service id="setono_sylius_google_ads.provider.pre_qualified_conversion"
+                 class="Setono\SyliusGoogleAdsPlugin\Provider\PreQualifiedConversionIdProvider">
+            <argument type="service" id="setono_sylius_google_ads.repository.conversion"/>
+        </service>
     </services>
 </container>

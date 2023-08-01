@@ -4,17 +4,8 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service id="setono_sylius_google_ads.command.process_pending_conversions"
-                 class="Setono\SyliusGoogleAdsPlugin\Command\ProcessPendingConversionsCommand">
-            <argument type="service" id="setono_sylius_google_ads.repository.conversion"/>
-            <argument type="service" id="setono_sylius_google_ads.state_resolver.conversion_with_order"/>
-            <argument type="service" id="doctrine"/>
-
-            <tag name="console.command"/>
-        </service>
-
-        <service id="setono_sylius_google_ads.command.process_ready_conversions"
-                 class="Setono\SyliusGoogleAdsPlugin\Command\ProcessReadyConversionsCommand">
-            <argument type="service" id="setono_sylius_google_ads.repository.conversion"/>
+                 class="Setono\SyliusGoogleAdsPlugin\Command\ProcessConversionsCommand">
+            <argument type="service" id="setono_sylius_google_ads.provider.pre_qualified_conversion"/>
             <argument type="service" id="setono_sylius_google_ads.command_bus"/>
 
             <tag name="console.command"/>

@@ -25,5 +25,12 @@
     <issueHandlers>
         <PluginIssue name="QueryBuilderSetParameter" errorLevel="info" />
         <UnnecessaryVarAnnotation errorLevel="suppress"/> <!-- We use unnecessary var annotations to aid the IDE -->
+        <TooManyTemplateParams>
+            <errorLevel type="suppress">
+                <directory name="src/Factory"/> <!-- Sylius added @template annotations in later editions -->
+                <directory name="src/Repository"/> <!-- Sylius added @template annotations in later editions -->
+            </errorLevel>
+        </TooManyTemplateParams>
+        <RedundantConditionGivenDocblockType errorLevel="suppress"/>
     </issueHandlers>
 </psalm>

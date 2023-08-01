@@ -15,9 +15,11 @@ final class ConversionWorkflow
 {
     public const NAME = 'setono_sylius_google_ads__conversion';
 
-    public const TRANSITION_CANCEL = 'cancel';
+    public const TRANSITION_DISQUALIFY = 'disqualify';
 
-    public const TRANSITION_READY = 'ready';
+    public const TRANSITION_QUALIFY = 'qualify';
+
+    public const TRANSITION_PROCESS = 'process';
 
     public const TRANSITION_UPLOAD_CONVERSION = 'upload_conversion';
 
@@ -37,13 +39,13 @@ final class ConversionWorkflow
     public static function getStates(): array
     {
         return [
-            ConversionInterface::STATE_CANCELLED,
             ConversionInterface::STATE_CONVERSION_UPLOADED,
             ConversionInterface::STATE_DELIVERED,
             ConversionInterface::STATE_ENHANCED_CONVERSION_UPLOADED,
             ConversionInterface::STATE_FAILED,
+            ConversionInterface::STATE_DISQUALIFIED,
             ConversionInterface::STATE_PENDING,
-            ConversionInterface::STATE_READY,
+            ConversionInterface::STATE_QUALIFIED,
         ];
     }
 
@@ -91,18 +93,18 @@ final class ConversionWorkflow
     {
         return [
             new Transition(
-                self::TRANSITION_CANCEL,
+                self::TRANSITION_DISQUALIFY,
                 ConversionInterface::STATE_PENDING,
-                ConversionInterface::STATE_CANCELLED,
+                ConversionInterface::STATE_DISQUALIFIED,
             ),
             new Transition(
-                self::TRANSITION_READY,
+                self::TRANSITION_QUALIFY,
                 ConversionInterface::STATE_PENDING,
-                ConversionInterface::STATE_READY,
+                ConversionInterface::STATE_QUALIFIED,
             ),
             new Transition(
                 self::TRANSITION_UPLOAD_CONVERSION,
-                ConversionInterface::STATE_READY,
+                ConversionInterface::STATE_QUALIFIED,
                 ConversionInterface::STATE_CONVERSION_UPLOADED,
             ),
             new Transition(
@@ -117,7 +119,7 @@ final class ConversionWorkflow
             ),
             new Transition(
                 self::TRANSITION_FAIL,
-                [ConversionInterface::STATE_PENDING, ConversionInterface::STATE_READY, ConversionInterface::STATE_CONVERSION_UPLOADED, ConversionInterface::STATE_ENHANCED_CONVERSION_UPLOADED],
+                [ConversionInterface::STATE_PENDING, ConversionInterface::STATE_QUALIFIED, ConversionInterface::STATE_CONVERSION_UPLOADED, ConversionInterface::STATE_ENHANCED_CONVERSION_UPLOADED],
                 ConversionInterface::STATE_FAILED,
             ),
         ];

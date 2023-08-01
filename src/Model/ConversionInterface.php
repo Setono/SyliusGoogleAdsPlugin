@@ -8,14 +8,15 @@ use Sylius\Component\Channel\Model\ChannelInterface;
 use Sylius\Component\Order\Model\OrderInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\TimestampableInterface;
+use Sylius\Component\Resource\Model\VersionedInterface;
 
-interface ConversionInterface extends ResourceInterface, TimestampableInterface
+interface ConversionInterface extends ResourceInterface, TimestampableInterface, VersionedInterface
 {
     public const STATE_PENDING = 'pending';
 
-    public const STATE_READY = 'ready';
+    public const STATE_QUALIFIED = 'qualified';
 
-    public const STATE_CANCELLED = 'cancelled';
+    public const STATE_DISQUALIFIED = 'disqualified';
 
     public const STATE_FAILED = 'failed';
 
@@ -43,41 +44,74 @@ interface ConversionInterface extends ResourceInterface, TimestampableInterface
 
     public function setState(string $state): void;
 
-    /**
-     * The last time a conversion was checked for state.
-     * If null it means that the conversion hasn't been checked yet
-     */
-    public function getLastCheckedAt(): ?\DateTimeImmutable;
+    public function getPreviousState(): ?string;
+
+    public function setPreviousState(string $previousState): void;
 
     /**
-     * Sets the last time a conversion was checked for state
+     * Returns the last time the state was updated or null if it hasn't been updated yet
      */
-    public function setLastCheckedAt(\DateTimeImmutable $lastCheckedAt): void;
+    public function getStateUpdatedAt(): ?\DateTimeImmutable;
+
+    public function setStateUpdatedAt(\DateTimeImmutable $stateUpdatedAt): void;
 
     /**
-     * The next time a conversion should be checked for state.
+     * Returns true if the conversion is being processed
      */
-    public function getNextCheckAt(): \DateTimeImmutable;
+    public function isProcessing(): bool;
+
+    public function setProcessing(bool $processing): void;
 
     /**
-     * Sets the next time a conversion should be checked for state
+     * The last time a processing was started on this conversion.
+     * If null it means that the conversion hasn't been tried processed yet
      */
-    public function setNextCheckAt(\DateTimeImmutable $nextCheck): void;
+    public function getLastProcessingStartedAt(): ?\DateTimeImmutable;
+
+    public function setLastProcessingStartedAt(\DateTimeImmutable $lastProcessingStartedAt): void;
 
     /**
-     * Returns the number of times a conversion has been checked for state
+     * The last time a conversion was processed.
+     * If null it means that the conversion hasn't been processed yet
      */
-    public function getChecks(): int;
+    public function getLastProcessingEndedAt(): ?\DateTimeImmutable;
 
-    public function setChecks(int $checks): void;
+    /**
+     * Sets the last time a conversion was processed
+     */
+    public function setLastProcessingEndedAt(\DateTimeImmutable $lastProcessingEndedAt): void;
 
-    public function incrementChecks(int $increment = 1): void;
+    /**
+     * The next time a conversion should be processed or null if it should not be processed
+     */
+    public function getNextProcessingAt(): ?\DateTimeImmutable;
 
-    public function getProcessIdentifier(): ?string;
+    /**
+     * Sets the next time a conversion should be processed.
+     * If the conversion should not be processed again, set this value to null
+     */
+    public function setNextProcessingAt(?\DateTimeImmutable $nextProcessingAt): void;
 
-    public function getError(): ?string;
+    /**
+     * Returns the number of times a conversion has been processed
+     */
+    public function getProcessingCount(): int;
 
-    public function setError(?string $error): void;
+    public function setProcessingCount(int $processingCount): void;
+
+    public function incrementProcessingCount(int $increment = 1): void;
+
+    /**
+     * @return list<string>
+     */
+    public function getLogMessages(): array;
+
+    /**
+     * @param list<string> $logMessages
+     */
+    public function setLogMessages(array $logMessages): void;
+
+    public function addLogMessage(string $logMessage): void;
 
     public function getChannel(): ?ChannelInterface;
 

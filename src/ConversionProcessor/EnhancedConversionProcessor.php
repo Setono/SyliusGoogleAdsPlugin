@@ -19,11 +19,21 @@ use Webmozart\Assert\Assert;
 
 final class EnhancedConversionProcessor extends AbstractConversionProcessor
 {
+    public function isEligible(ConversionInterface $conversion): bool
+    {
+        $stateUpdatedAt = $conversion->getStateUpdatedAt();
+        if (null === $stateUpdatedAt) {
+            return false;
+        }
+
+        $lastUpdatedThreshold = (new \DateTimeImmutable())->sub(new \DateInterval('PT24H'));
+
+        return $stateUpdatedAt <= $lastUpdatedThreshold && $this->workflow->can($conversion, ConversionWorkflow::TRANSITION_UPLOAD_ENHANCED_CONVERSION);
+    }
+
     public function process(ConversionInterface $conversion): void
     {
-        if (!$this->workflow->can($conversion, ConversionWorkflow::TRANSITION_UPLOAD_ENHANCED_CONVERSION)) {
-            throw new \RuntimeException(sprintf('Cannot complete the transition "%s"', ConversionWorkflow::TRANSITION_UPLOAD_ENHANCED_CONVERSION));
-        }
+        Assert::true($this->isEligible($conversion));
 
         $channel = $conversion->getChannel();
         Assert::notNull($channel);
