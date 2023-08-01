@@ -18,6 +18,7 @@ use Sylius\Component\Resource\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Webmozart\Assert\Assert;
 
 final class Configuration implements ConfigurationInterface
 {
@@ -26,6 +27,7 @@ final class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('setono_sylius_google_ads');
 
         $rootNode = $treeBuilder->getRootNode();
+        Assert::isInstanceOf($rootNode, ArrayNodeDefinition::class);
 
         $this->addResourcesSection($rootNode);
 
@@ -34,7 +36,7 @@ final class Configuration implements ConfigurationInterface
 
     private function addResourcesSection(ArrayNodeDefinition $node): void
     {
-        /** @psalm-suppress MixedMethodCall,PossiblyNullReference,PossiblyUndefinedMethod,UndefinedInterfaceMethod */
+        /** @psalm-suppress MixedMethodCall,PossiblyNullReference,UndefinedInterfaceMethod */
         $node
             ->children()
                 ->arrayNode('resources')

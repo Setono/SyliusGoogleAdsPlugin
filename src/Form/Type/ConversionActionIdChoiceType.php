@@ -13,9 +13,6 @@ use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Webmozart\Assert\Assert;
 
-/**
- * @extends AbstractType<int>
- */
 final class ConversionActionIdChoiceType extends AbstractType
 {
     public function __construct(private readonly ConversionActionIdsResolverInterface $conversionActionIdsResolver)

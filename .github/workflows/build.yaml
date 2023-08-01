@@ -148,9 +148,6 @@ jobs:
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
 
-            -   name: "Cache warmup"
-                run: "(cd tests/Application && bin/console cache:warmup)"
-
             -   name: "Static analysis"
                 run: "vendor/bin/psalm --php-version=${{ matrix.php-version }}"
 

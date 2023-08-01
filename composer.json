@@ -49,7 +49,6 @@
         "matthiasnoback/symfony-config-test": "^4.3",
         "phpunit/phpunit": "^9.6",
         "psalm/plugin-phpunit": "^0.18",
-        "psalm/plugin-symfony": "^5.0",
         "setono/code-quality-pack": "^2.5",
         "sylius/sylius": "~1.12.8",
         "symfony/debug-bundle": "^5.4 || ^6.0",
@@ -82,12 +81,8 @@
         "sort-packages": true
     },
     "scripts": {
-        "analyse": [
-            "@ensure-test-container-exists",
-            "psalm"
-        ],
+        "analyse": "psalm",
         "check-style": "ecs check",
-        "ensure-test-container-exists": "[[ -f tests/Application/var/cache/test/Tests_Setono_SyliusGoogleAdsPlugin_Application_KernelTestDebugContainer.xml ]] || tests/Application/bin/console cache:warmup --env=test",
         "fix-style": "ecs check --fix",
         "phpunit": "phpunit"
     }

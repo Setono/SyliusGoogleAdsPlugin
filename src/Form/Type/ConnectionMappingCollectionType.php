@@ -5,15 +5,11 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin\Form\Type;
 
 use Setono\SyliusGoogleAdsPlugin\Model\ConnectionInterface;
-use Setono\SyliusGoogleAdsPlugin\Model\ConnectionMappingInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * @extends AbstractType<array<array-key, ConnectionMappingInterface>>
- */
 final class ConnectionMappingCollectionType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver): void

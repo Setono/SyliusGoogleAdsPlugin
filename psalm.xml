@@ -5,6 +5,10 @@
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
     phpVersion="8.1"
     errorLevel="1"
+    findUnusedBaselineEntry="true"
+    findUnusedPsalmSuppress="true"
+    findUnusedCode="false"
+    findUnusedVariablesAndParams="true"
 >
     <projectFiles>
         <directory name="src"/>
@@ -15,9 +19,6 @@
         </ignoreFiles>
     </projectFiles>
     <plugins>
-        <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin">
-            <containerXml>tests/Application/var/cache/test/Tests_Setono_SyliusGoogleAdsPlugin_Application_KernelTestDebugContainer.xml</containerXml>
-        </pluginClass>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
         <pluginClass class="Weirdan\DoctrinePsalmPlugin\Plugin"/>
     </plugins>
