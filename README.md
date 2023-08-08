@@ -49,48 +49,31 @@ setono_sylius_google_ads:
     resource: "@SetonoSyliusGoogleAdsPlugin/Resources/config/routes.yaml"
 ```
 
-That's it!
+### Step 3: Create migration file
+```shell
+php bin/console doctrine:migrations:diff
+php bin/console doctrine:migrations:migrate
+```
+
+### Step 4: Set up cronjobs
+
+The first cronjob will process Google Ads conversions. Run this cronjob regularly, e.g. every 5 minutes:
+
+```shell
+php bin/console setono:sylius-google-ads:process-conversions
+```
+
+The next cronjob will prune the conversions table. Run this job as often as you'd like, maybe daily:
+
+```shell
+php bin/console setono:sylius-google-ads:prune-conversions
+```
+
+Now the plugin is installed. Please read the next section to learn how to use it in your store.
 
 ## Usage
 
-Offline conversion tracking works like this:
-
-1. We collect the `gclid` query parameter when a user enters the store from clicking on an ad. We save this value in a cookie.
-2. When the same user completes a purchase, we will insert a new row into our `conversion` table.
-3. We then expose these conversions as CSV data on a URL that you grab in the backend. This URL is then used when setting
-up the conversion action inside the Google Ads interface.
-   
-### Step 1: Set up a new conversion action in Sylius
-1. Go to `/admin/conversion-actions/new` and create a new conversion action. There's a help text on the right explaining
-how to do it.
-   
-2. When you have created your conversion, you go to the conversion action index (`/admin/conversion-actions/`) where you
-find the URL you need to give to Google. It will look something like: `https://your-domain.com/en_US/google-ads/conversions/af5717388cb5a610b92c9da43914384cfa8a491e5999e4e9c4e9e0b32204b0dc`
-   
-### Step 2: Set up a matching conversion action in Google Ads
-1. Create a new conversion action inside the Google Ads interface.
-2. Name it the same as you did in Sylius. This is **important** since Google matches the name.
-3. Create a new upload of conversions. See the image below:
-
-![Upload conversions](docs/images/conversion-uploads.png)
-
-## Advanced usage
-Conversions have a state property, which is `ready` by default. This means that purchase conversions will be downloaded
-by Google when a customer has completed an order. This is not always the intended behavior. Sometimes it's more likely
-that the conversion should first be counted when the order is paid. To fix this, edit the configuration:
-
-```yaml
-# config/packages/setono_sylius_google_ads.yaml
-setono_sylius_google_ads:
-    default_conversion_states:
-        purchase: !php/const Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface::STATE_PENDING
-```
-
-and run this command periodically:
-
-```bash
-$ php bin/console setono:sylius-google-ads:process-pending-conversions
-```
+To start using the plugin, go to https://your-domain.com/admin/google-ads
 
 [ico-version]: https://poser.pugx.org/setono/sylius-google-ads-plugin/v/stable
 [ico-license]: https://poser.pugx.org/setono/sylius-google-ads-plugin/license
