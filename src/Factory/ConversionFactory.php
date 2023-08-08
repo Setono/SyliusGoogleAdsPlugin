@@ -21,6 +21,10 @@ final class ConversionFactory implements ConversionFactoryInterface
         $conversion = $this->decorated->createNew();
         Assert::isInstanceOf($conversion, ConversionInterface::class);
 
+        // There's no reason to process a conversion immediately after it has been saved to the database
+        // because in all likelihood the payment has not been processed yet
+        $conversion->setNextProcessingAt(new \DateTimeImmutable('+10 minutes'));
+
         return $conversion;
     }
 

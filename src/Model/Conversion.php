@@ -34,7 +34,7 @@ class Conversion implements ConversionInterface
 
     protected ?\DateTimeImmutable $lastProcessingEndedAt = null;
 
-    protected ?\DateTimeImmutable $nextProcessingAt;
+    protected ?\DateTimeImmutable $nextProcessingAt = null;
 
     protected int $processingCount = 0;
 
@@ -44,11 +44,6 @@ class Conversion implements ConversionInterface
     protected ?ChannelInterface $channel = null;
 
     protected ?OrderInterface $order = null;
-
-    public function __construct()
-    {
-        $this->nextProcessingAt = new \DateTimeImmutable();
-    }
 
     public function getId(): ?int
     {
