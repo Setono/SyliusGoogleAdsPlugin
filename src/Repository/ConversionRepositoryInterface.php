@@ -14,4 +14,11 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 interface ConversionRepositoryInterface extends RepositoryInterface
 {
     public function createPreQualifiedConversionQueryBuilder(string $alias = 'o'): QueryBuilder;
+
+    /**
+     * Use this method to prune the conversions table
+     *
+     * @return int the number of conversions pruned/removed
+     */
+    public function prune(): int;
 }
