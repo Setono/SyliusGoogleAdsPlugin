@@ -11,11 +11,9 @@ use Setono\SyliusGoogleAdsPlugin\Event\PrePersistConversionFromOrderEvent;
 use Setono\SyliusGoogleAdsPlugin\Exception\WrongOrderTypeException;
 use Setono\SyliusGoogleAdsPlugin\Factory\ConversionFactoryInterface;
 use Setono\SyliusGoogleAdsPlugin\Model\OrderInterface;
-use Sylius\Component\Core\Model\OrderInterface as BaseOrderInterface;
+use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\RequestEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
 use Webmozart\Assert\Assert;
 
 final class PurchaseSubscriber implements EventSubscriberInterface
@@ -34,36 +32,14 @@ final class PurchaseSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::REQUEST => 'track',
+            'sylius.order.post_complete' => 'track',
         ];
     }
 
-    public function track(RequestEvent $requestEvent): void
+    public function track(ResourceControllerEvent $event): void
     {
-        if (!$requestEvent->isMainRequest()) {
-            return;
-        }
-
-        $request = $requestEvent->getRequest();
-
-        if (!$request->attributes->has('_route')) {
-            return;
-        }
-
-        $route = $request->attributes->get('_route');
-        if ('sylius_shop_order_thank_you' !== $route) {
-            return;
-        }
-
-        /** @var mixed $orderId */
-        $orderId = $request->getSession()->get('sylius_order_id');
-
-        if (!is_scalar($orderId)) {
-            return;
-        }
-
-        /** @var OrderInterface|BaseOrderInterface $order */
-        $order = $this->orderRepository->find($orderId);
+        /** @var mixed|OrderInterface $order */
+        $order = $event->getSubject();
         WrongOrderTypeException::assert($order);
 
         if ($order->getGoogleClickId() === null) {
