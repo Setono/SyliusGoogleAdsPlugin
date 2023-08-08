@@ -11,9 +11,7 @@ use Google\Ads\GoogleAds\V13\Enums\ConversionAdjustmentTypeEnum\ConversionAdjust
 use Google\Ads\GoogleAds\V13\Enums\UserIdentifierSourceEnum\UserIdentifierSource;
 use Google\Ads\GoogleAds\V13\Services\ConversionAdjustment;
 use Google\Ads\GoogleAds\V13\Services\GclidDateTimePair;
-use Setono\SyliusGoogleAdsPlugin\Exception\WrongOrderTypeException;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
-use Setono\SyliusGoogleAdsPlugin\Model\OrderInterface;
 use Setono\SyliusGoogleAdsPlugin\Workflow\ConversionWorkflow;
 use Webmozart\Assert\Assert;
 
@@ -50,9 +48,8 @@ final class EnhancedConversionProcessor extends AbstractConversionProcessor
         $customerId = $connectionMapping->getCustomerId();
         Assert::notNull($customerId);
 
-        /** @var OrderInterface $order */
         $order = $conversion->getOrder();
-        WrongOrderTypeException::assert($order);
+        Assert::notNull($order);
 
         $billingAddress = $order->getBillingAddress();
         Assert::notNull($billingAddress);
@@ -97,7 +94,7 @@ final class EnhancedConversionProcessor extends AbstractConversionProcessor
             'conversion_date_time' => $createdAt->format('Y-m-d H:i:sP'),
         ]));
 
-        $userAgent = $order->getUserAgent();
+        $userAgent = $conversion->getUserAgent();
         if (null !== $userAgent) {
             $conversionAdjustment->setUserAgent($userAgent);
         }

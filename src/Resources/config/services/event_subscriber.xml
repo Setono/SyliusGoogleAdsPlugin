@@ -13,10 +13,11 @@
     <services>
         <service id="setono_sylius_google_ads.event_subscriber.purchase_subscriber"
                  class="Setono\SyliusGoogleAdsPlugin\EventSubscriber\PurchaseSubscriber">
-            <argument type="service" id="setono_sylius_google_ads.factory.conversion"/>
             <argument type="service" id="doctrine"/>
+            <argument type="service" id="setono_sylius_google_ads.factory.conversion"/>
             <argument type="service" id="event_dispatcher"/>
-            <argument type="service" id="sylius.repository.order"/>
+            <argument type="service" id="request_stack"/>
+            <argument>%setono_sylius_google_ads.gclid_cookie_name%</argument>
 
             <tag name="kernel.event_subscriber"/>
         </service>

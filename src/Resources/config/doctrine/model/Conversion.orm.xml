@@ -18,6 +18,7 @@
         <field name="version" type="integer" version="true" />
 
         <field name="googleClickId" type="string"/>
+        <field name="userAgent" type="text"/>
         <field name="value" type="integer"/>
         <field name="currencyCode" type="string"/>
         <field name="state" type="string"/>

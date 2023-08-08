@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin\Model;
 
 use Sylius\Component\Channel\Model\ChannelInterface;
-use Sylius\Component\Order\Model\OrderInterface;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Resource\Model\TimestampableTrait;
 
 class Conversion implements ConversionInterface
@@ -17,6 +17,8 @@ class Conversion implements ConversionInterface
     protected ?int $version = 1;
 
     protected ?string $googleClickId = null;
+
+    protected ?string $userAgent = null;
 
     protected ?int $value = null;
 
@@ -68,6 +70,16 @@ class Conversion implements ConversionInterface
     public function setGoogleClickId(string $googleClickId): void
     {
         $this->googleClickId = $googleClickId;
+    }
+
+    public function getUserAgent(): ?string
+    {
+        return $this->userAgent;
+    }
+
+    public function setUserAgent(?string $userAgent): void
+    {
+        $this->userAgent = $userAgent;
     }
 
     public function getValue(): ?int
@@ -204,7 +216,7 @@ class Conversion implements ConversionInterface
         return $this->channel;
     }
 
-    public function setChannel(ChannelInterface $channel): void
+    public function setChannel(?ChannelInterface $channel): void
     {
         $this->channel = $channel;
     }
