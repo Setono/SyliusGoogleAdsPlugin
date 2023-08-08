@@ -199,6 +199,11 @@ class Conversion implements ConversionInterface
         $this->logMessages[] = sprintf('[%s] %s', (new \DateTimeImmutable())->format('Y-m-d H:i:s'), $logMessage);
     }
 
+    public function hasLogMessages(): bool
+    {
+        return [] !== $this->logMessages;
+    }
+
     public function getChannel(): ?ChannelInterface
     {
         return $this->channel;

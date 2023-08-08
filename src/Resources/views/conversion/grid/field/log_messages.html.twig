@@ -1,0 +1,24 @@
+{# @var data \Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface #}
+
+{% if data.hasLogMessages %}
+    {# TODO: This javascript is ugly. Fix it at some point #}
+    <a href="javascript:void(0)" id="link-show-log-messages-{{ data.id }}">{{ 'sylius.ui.show'|trans }}</a>
+
+    <div class="ui modal" id="modal-{{ data.id }}">
+        <i class="close icon"></i>
+        <div class="header">{{ 'setono_sylius_google_ads.ui.log'|trans }}</div>
+        <div class="content">
+            {{ data.logMessages|join('<br>')|raw }}
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('#link-show-log-messages-{{ data.id }}').addEventListener('click', function() {
+                $('#modal-{{ data.id }}').modal('show');
+            });
+        });
+    </script>
+{% else %}
+    <span style="color: grey; font-style: italic">{{ 'setono_sylius_google_ads.ui.no_log_messages'|trans }}</span>
+{% endif %}

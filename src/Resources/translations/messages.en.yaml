@@ -15,15 +15,22 @@ setono_sylius_google_ads:
             customer_id: Customer id
             conversion_action_id: Conversion action id
     ui:
-        refresh_token_updated: The access token was updated
         connections: Connections
+        conversions: Conversions
         edit_connection: Edit connection
         enabled: Enabled
         google_ads: Google Ads
+        log: Log
         manage_connections: Manage Google Ads API connections
+        manage_conversions: A list of conversions with a Google Ads click identifier
         new_connection: New connection
+        next_processing_at: Next processing
         no_channels: No channels
+        no_log_messages: No log messages
+        no_value: No value
+        refresh_token_updated: The access token was updated
         setup_connection_with_google_ads: Setup connection with Google Ads
+        setup_connections: Setup connections
         setup:
             authorize:
                 header: "Setup connection: %name%"
@@ -58,3 +65,4 @@ setono_sylius_google_ads:
                         <li>When these steps are completed you will be able to see your client id and client secret on the credentials page</li>
                     </ol>
                 </p>
+        view_conversions: View conversions
