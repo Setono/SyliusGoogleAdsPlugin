@@ -17,6 +17,7 @@
         "knplabs/knp-menu": "^3.1",
         "ocramius/doctrine-batch-utils": "^2.4",
         "psr/event-dispatcher": "^1.0",
+        "psr/log": "^1.0 || ^2.0 || ^3.0",
         "setono/composite-compiler-pass": "^1.1",
         "setono/doctrine-object-manager-trait": "^1.0",
         "sylius/channel": "^1.0",

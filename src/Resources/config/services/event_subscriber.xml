@@ -19,6 +19,10 @@
             <argument type="service" id="request_stack"/>
             <argument>%setono_sylius_google_ads.gclid_cookie_name%</argument>
 
+            <call method="setLogger">
+                <argument type="service" id="logger"/>
+            </call>
+
             <tag name="kernel.event_subscriber"/>
         </service>
 
