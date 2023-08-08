@@ -34,7 +34,7 @@ sylius_grid:
                     label: sylius.ui.state
                     sortable: ~
                     options:
-                        template: "@SyliusUi/Grid/Field/state.html.twig"
+                        template: "@SetonoSyliusGoogleAdsPlugin/grid/field/state.html.twig"
                         vars:
                             labels: "@SetonoSyliusGoogleAdsPlugin/conversion/label/state"
                 createdAt:

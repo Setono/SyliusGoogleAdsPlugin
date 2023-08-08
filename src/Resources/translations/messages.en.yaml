@@ -16,9 +16,11 @@ setono_sylius_google_ads:
             conversion_action_id: Conversion action id
     ui:
         connections: Connections
+        conversion_uploaded: Conversion uploaded
         conversions: Conversions
         edit_connection: Edit connection
         enabled: Enabled
+        failed: Failed
         google_ads: Google Ads
         log: Log
         manage_connections: Manage Google Ads API connections
