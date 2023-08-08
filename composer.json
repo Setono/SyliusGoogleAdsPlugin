@@ -51,13 +51,13 @@
         "phpunit/phpunit": "^9.6",
         "psalm/plugin-phpunit": "^0.18",
         "setono/code-quality-pack": "^2.5",
-        "sylius/sylius": "~1.12.8",
+        "sylius/sylius": "~1.12.9",
         "symfony/debug-bundle": "^5.4 || ^6.0",
         "symfony/dotenv": "^5.4 || ^6.0",
         "symfony/intl": "^5.4 || ^6.0",
         "symfony/web-profiler-bundle": "^5.4 || ^6.0",
         "symfony/webpack-encore-bundle": "^1.17",
-        "weirdan/doctrine-psalm-plugin": "^2.8"
+        "weirdan/doctrine-psalm-plugin": "^2.9"
     },
     "prefer-stable": true,
     "autoload": {
