@@ -1,0 +1,4 @@
+{# @var data \Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface #}
+{% import "@SyliusAdmin/Common/Macro/money.html.twig" as money %}
+
+{{ money.format(data.value, data.currencyCode) }}

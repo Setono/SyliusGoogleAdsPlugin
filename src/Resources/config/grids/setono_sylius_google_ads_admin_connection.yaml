@@ -1,4 +1,7 @@
 sylius_grid:
+    templates:
+        action:
+            view_conversions: "@SetonoSyliusGoogleAdsPlugin/grid/action/view_conversions.html.twig"
     grids:
         setono_sylius_google_ads_admin_connection:
             driver:
@@ -18,6 +21,9 @@ sylius_grid:
                 main:
                     create:
                         type: create
+                    view_conversions:
+                        type: view_conversions
+                        label: setono_sylius_google_ads.ui.view_conversions
                 item:
                     update:
                         type: update

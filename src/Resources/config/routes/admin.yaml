@@ -1,3 +1,10 @@
+# Route responsible for redirecting the user to the 'correct' Google Ads page depending on the state of his/her setup
+setono_sylius_google_ads_admin_redirect_main_menu:
+    path: /
+    methods: [GET]
+    defaults:
+        _controller: setono_sylius_google_ads.controller.action.redirect_main_menu
+
 # Setup related routes
 setono_sylius_google_ads_admin_setup_authorize:
     path: /connections/{connectionId}/setup/authorize
@@ -52,6 +59,24 @@ setono_sylius_google_ads_admin_connection:
                 subheader: setono_sylius_google_ads.ui.manage_connections
                 templates:
                     form: "@SetonoSyliusGoogleAdsPlugin/connection/_form.html.twig"
+            index:
+                icon: 'linkify'
+    type: sylius.resource
+    
+# Conversion resource routes
+setono_sylius_google_ads_admin_conversion:
+    resource: |
+        section: admin
+        alias: setono_sylius_google_ads.conversion
+        permission: true
+        templates: '@SyliusAdmin\\Crud'
+        redirect: update
+        grid: setono_sylius_google_ads_admin_conversion
+        vars:
+            all:
+                subheader: setono_sylius_google_ads.ui.manage_conversions
+                templates:
+                    form: "@SetonoSyliusGoogleAdsPlugin/conversion/_form.html.twig"
             index:
                 icon: 'money bill alternate outline'
     type: sylius.resource

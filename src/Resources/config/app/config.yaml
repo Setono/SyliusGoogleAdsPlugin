@@ -1,5 +1,6 @@
 imports:
     - "@SetonoSyliusGoogleAdsPlugin/Resources/config/grids/setono_sylius_google_ads_admin_connection.yaml"
+    - "@SetonoSyliusGoogleAdsPlugin/Resources/config/grids/setono_sylius_google_ads_admin_conversion.yaml"
 
 framework:
     messenger:

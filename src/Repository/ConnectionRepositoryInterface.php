@@ -12,4 +12,8 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
  */
 interface ConnectionRepositoryInterface extends RepositoryInterface
 {
+    /**
+     * Returns true if there are 1 or more connections in the database
+     */
+    public function hasAny(): bool;
 }

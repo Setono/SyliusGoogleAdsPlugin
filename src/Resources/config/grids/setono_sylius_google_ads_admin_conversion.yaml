@@ -1,0 +1,62 @@
+sylius_grid:
+    templates:
+        action:
+            setup_connections: "@SetonoSyliusGoogleAdsPlugin/grid/action/setup_connections.html.twig"
+    grids:
+        setono_sylius_google_ads_admin_conversion:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%setono_sylius_google_ads.model.conversion.class%"
+            fields:
+                order:
+                    type: twig
+                    label: sylius.ui.order
+                    path: .
+                    sortable: order.number
+                    options:
+                        template: "@SetonoSyliusGoogleAdsPlugin/conversion/grid/field/order.html.twig"
+                channel:
+                    type: twig
+                    label: sylius.ui.channel
+                    sortable: channel.code
+                    options:
+                        template: "@SyliusAdmin/Order/Grid/Field/channel.html.twig"
+                value:
+                    type: twig
+                    label: sylius.ui.value
+                    path: .
+                    sortable: value
+                    options:
+                        template: "@SetonoSyliusGoogleAdsPlugin/conversion/grid/field/value.html.twig"
+                state:
+                    type: twig
+                    label: sylius.ui.state
+                    sortable: ~
+                    options:
+                        template: "@SyliusUi/Grid/Field/state.html.twig"
+                        vars:
+                            labels: "@SetonoSyliusGoogleAdsPlugin/conversion/label/state"
+                createdAt:
+                    type: datetime
+                    label: sylius.ui.created_at
+                    sortable: ~
+                    options:
+                        format: d-m-Y H:i
+                nextProcessingAt:
+                    type: twig
+                    label: setono_sylius_google_ads.ui.next_processing_at
+                    sortable: ~
+                    options:
+                        template: "@SetonoSyliusGoogleAdsPlugin/grid/field/date.html.twig"
+                logMessages:
+                    type: twig
+                    label: setono_sylius_google_ads.ui.log
+                    path: .
+                    options:
+                        template: "@SetonoSyliusGoogleAdsPlugin/conversion/grid/field/log_messages.html.twig"
+            actions:
+                main:
+                    setup_connections:
+                        type: setup_connections
+                        label: setono_sylius_google_ads.ui.setup_connections
