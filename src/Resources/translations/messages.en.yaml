@@ -18,6 +18,7 @@ setono_sylius_google_ads:
         connections: Connections
         conversion_uploaded: Conversion uploaded
         conversions: Conversions
+        delivered: Delivered
         edit_connection: Edit connection
         enabled: Enabled
         failed: Failed
@@ -30,6 +31,7 @@ setono_sylius_google_ads:
         no_channels: No channels
         no_log_messages: No log messages
         no_value: No value
+        pending: Pending
         refresh_token_updated: The access token was updated
         setup_connection_with_google_ads: Setup connection with Google Ads
         setup_connections: Setup connections
