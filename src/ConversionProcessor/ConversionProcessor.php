@@ -6,9 +6,7 @@ namespace Setono\SyliusGoogleAdsPlugin\ConversionProcessor;
 
 use Google\Ads\GoogleAds\Util\V13\ResourceNames;
 use Google\Ads\GoogleAds\V13\Services\ClickConversion;
-use Setono\SyliusGoogleAdsPlugin\Exception\WrongOrderTypeException;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
-use Setono\SyliusGoogleAdsPlugin\Model\OrderInterface;
 use Setono\SyliusGoogleAdsPlugin\Workflow\ConversionWorkflow;
 use Webmozart\Assert\Assert;
 
@@ -38,9 +36,8 @@ final class ConversionProcessor extends AbstractConversionProcessor
         $customerId = $connectionMapping->getCustomerId();
         Assert::notNull($customerId);
 
-        /** @var OrderInterface $order */
         $order = $conversion->getOrder();
-        WrongOrderTypeException::assert($order);
+        Assert::notNull($order);
 
         $client = $this->googleAdsClientFactory->createFromConnection($connection, $managerId);
 

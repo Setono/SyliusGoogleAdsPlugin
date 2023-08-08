@@ -8,12 +8,11 @@ use Doctrine\Persistence\ManagerRegistry;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Setono\DoctrineObjectManagerTrait\ORM\ORMManagerTrait;
 use Setono\SyliusGoogleAdsPlugin\Event\PrePersistConversionFromOrderEvent;
-use Setono\SyliusGoogleAdsPlugin\Exception\WrongOrderTypeException;
 use Setono\SyliusGoogleAdsPlugin\Factory\ConversionFactoryInterface;
-use Setono\SyliusGoogleAdsPlugin\Model\OrderInterface;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
-use Sylius\Component\Core\Repository\OrderRepositoryInterface;
+use Sylius\Component\Core\Model\OrderInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Webmozart\Assert\Assert;
 
 final class PurchaseSubscriber implements EventSubscriberInterface
@@ -21,10 +20,11 @@ final class PurchaseSubscriber implements EventSubscriberInterface
     use ORMManagerTrait;
 
     public function __construct(
-        private readonly ConversionFactoryInterface $conversionFactory,
         ManagerRegistry $managerRegistry,
+        private readonly ConversionFactoryInterface $conversionFactory,
         private readonly EventDispatcherInterface $eventDispatcher,
-        private readonly OrderRepositoryInterface $orderRepository,
+        private readonly RequestStack $requestStack,
+        private readonly string $cookieName,
     ) {
         $this->managerRegistry = $managerRegistry;
     }
@@ -32,7 +32,7 @@ final class PurchaseSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            'sylius.order.post_complete' => 'track',
+            'sylius.order.pre_complete' => 'track',
         ];
     }
 
@@ -40,23 +40,28 @@ final class PurchaseSubscriber implements EventSubscriberInterface
     {
         /** @var mixed|OrderInterface $order */
         $order = $event->getSubject();
-        WrongOrderTypeException::assert($order);
+        Assert::isInstanceOf($order, OrderInterface::class);
 
-        if ($order->getGoogleClickId() === null) {
+        $request = $this->requestStack->getMainRequest();
+        if (null === $request) {
             return;
         }
 
-        $channel = $order->getChannel();
-        Assert::notNull($channel);
+        $gclid = $request->cookies->get($this->cookieName);
+        if (!is_string($gclid) || '' === $gclid) {
+            return;
+        }
 
         $conversion = $this->conversionFactory->createFromOrder($order);
-        $conversion->setChannel($channel);
+        $conversion->setGoogleClickId($gclid);
+
+        $userAgent = $request->headers->get('User-Agent');
+        if (is_string($userAgent) && '' !== $userAgent) {
+            $conversion->setUserAgent($userAgent);
+        }
 
         $this->eventDispatcher->dispatch(new PrePersistConversionFromOrderEvent($conversion, $order));
 
-        $manager = $this->getManager($conversion);
-        $manager->persist($conversion);
-
-        $manager->flush();
+        $this->getManager($conversion)->persist($conversion);
     }
 }

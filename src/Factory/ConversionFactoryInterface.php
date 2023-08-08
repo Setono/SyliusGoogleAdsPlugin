@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin\Factory;
 
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
-use Setono\SyliusGoogleAdsPlugin\Model\OrderInterface;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 
 /**

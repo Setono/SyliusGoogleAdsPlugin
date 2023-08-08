@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin\Model;
 
 use Sylius\Component\Channel\Model\ChannelInterface;
-use Sylius\Component\Order\Model\OrderInterface;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\TimestampableInterface;
 use Sylius\Component\Resource\Model\VersionedInterface;
@@ -31,6 +31,13 @@ interface ConversionInterface extends ResourceInterface, TimestampableInterface,
     public function getGoogleClickId(): ?string;
 
     public function setGoogleClickId(string $googleClickId): void;
+
+    /**
+     * The user agent of the user completing the order
+     */
+    public function getUserAgent(): ?string;
+
+    public function setUserAgent(?string $userAgent): void;
 
     public function getValue(): ?int;
 
@@ -117,7 +124,7 @@ interface ConversionInterface extends ResourceInterface, TimestampableInterface,
 
     public function getChannel(): ?ChannelInterface;
 
-    public function setChannel(ChannelInterface $channel): void;
+    public function setChannel(?ChannelInterface $channel): void;
 
     public function getOrder(): ?OrderInterface;
 
