@@ -6,6 +6,7 @@ namespace Setono\SyliusGoogleAdsPlugin\Model;
 
 use Sylius\Component\Core\Model\OrderInterface as BaseOrderInterface;
 
+// todo: Do we really need this order interface? Why not put these values on the conversion instead?
 interface OrderInterface extends BaseOrderInterface
 {
     /**
