@@ -3,10 +3,17 @@
 <container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://symfony.com/schema/dic/services"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="setono_sylius_google_ads.command.process_pending_conversions"
+        <service id="setono_sylius_google_ads.command.process_conversions"
                  class="Setono\SyliusGoogleAdsPlugin\Command\ProcessConversionsCommand">
             <argument type="service" id="setono_sylius_google_ads.provider.pre_qualified_conversion"/>
             <argument type="service" id="setono_sylius_google_ads.command_bus"/>
+
+            <tag name="console.command"/>
+        </service>
+
+        <service id="setono_sylius_google_ads.command.prune_conversions"
+                 class="Setono\SyliusGoogleAdsPlugin\Command\PruneConversionsCommand">
+            <argument type="service" id="setono_sylius_google_ads.repository.conversion"/>
 
             <tag name="console.command"/>
         </service>

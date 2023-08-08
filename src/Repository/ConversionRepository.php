@@ -18,4 +18,17 @@ class ConversionRepository extends EntityRepository implements ConversionReposit
             ->setParameter('now', new \DateTimeImmutable())
         ;
     }
+
+    public function prune(): int
+    {
+        $threshold = (new \DateTimeImmutable())->sub(new \DateInterval('P30D'));
+
+        return (int) $this->createQueryBuilder('o')
+            ->delete()
+            ->andWhere('o.createdAt <= :threshold')
+            ->setParameter('threshold', $threshold)
+            ->getQuery()
+            ->execute()
+        ;
+    }
 }
