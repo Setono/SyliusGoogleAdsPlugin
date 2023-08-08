@@ -44,13 +44,19 @@ final class ConversionProcessor extends AbstractConversionProcessor
 
         $client = $this->googleAdsClientFactory->createFromConnection($connection, $managerId);
 
+        $createdAt = $conversion->getCreatedAt();
+        Assert::notNull($createdAt);
+
+        // Google doesn't allow daylight savings time when uploading, so we need this small hack to turn our time into UTC first
+        $createdAt = \DateTimeImmutable::createFromInterface($createdAt)->setTimezone(new \DateTimeZone('UTC'));
+
         $clickConversion = new ClickConversion([
             'conversion_action' => ResourceNames::forConversionAction(
                 (string) $customerId,
                 (string) $connectionMapping->getConversionActionId(),
             ),
             'conversion_value' => round((int) $conversion->getValue() / 100, 2),
-            'conversion_date_time' => $conversion->getCreatedAt()?->format('Y-m-d H:i:sP'),
+            'conversion_date_time' => $createdAt->format('Y-m-d H:i:sP'),
             'currency_code' => $conversion->getCurrencyCode(),
             'order_id' => $order->getId(),
             'gclid' => $conversion->getGoogleClickId(),

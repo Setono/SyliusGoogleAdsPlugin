@@ -88,12 +88,14 @@ final class EnhancedConversionProcessor extends AbstractConversionProcessor
         $conversionAdjustment->setUserIdentifiers([$addressIdentifier, $emailIdentifier]);
 
         $createdAt = $conversion->getCreatedAt();
+        Assert::notNull($createdAt);
 
-        if (null !== $createdAt) {
-            $conversionAdjustment->setGclidDateTimePair(new GclidDateTimePair([
-                'conversion_date_time' => $createdAt->format('Y-m-d H:i:sP'),
-            ]));
-        }
+        // Google doesn't allow daylight savings time when uploading, so we need this small hack to turn our time into UTC first
+        $createdAt = \DateTimeImmutable::createFromInterface($createdAt)->setTimezone(new \DateTimeZone('UTC'));
+
+        $conversionAdjustment->setGclidDateTimePair(new GclidDateTimePair([
+            'conversion_date_time' => $createdAt->format('Y-m-d H:i:sP'),
+        ]));
 
         $userAgent = $order->getUserAgent();
         if (null !== $userAgent) {
