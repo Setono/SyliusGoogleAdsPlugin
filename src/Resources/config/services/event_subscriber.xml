@@ -11,7 +11,7 @@
         <parameter key="setono_sylius_google_ads.gclid_cookie_name">ssga_click_id</parameter>
     </parameters>
     <services>
-        <service id="setono_sylius_google_ads.event_listener.purchase_subscriber"
+        <service id="setono_sylius_google_ads.event_subscriber.purchase_subscriber"
                  class="Setono\SyliusGoogleAdsPlugin\EventSubscriber\PurchaseSubscriber">
             <argument type="service" id="setono_sylius_google_ads.factory.conversion"/>
             <argument type="service" id="doctrine"/>
@@ -21,9 +21,40 @@
             <tag name="kernel.event_subscriber"/>
         </service>
 
-        <service id="setono_sylius_google_ads.event_listener.save_gclid_in_cookie_subscriber"
+        <service id="setono_sylius_google_ads.event_subscriber.save_gclid_in_cookie_subscriber"
                  class="Setono\SyliusGoogleAdsPlugin\EventSubscriber\StoreGclidSubscriber">
             <argument>%setono_sylius_google_ads.gclid_cookie_name%</argument>
+
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <!-- Event subscribers related to conversion processing -->
+        <service id="setono_sylius_google_ads.event_subscriber.start_processing"
+                 class="Setono\SyliusGoogleAdsPlugin\EventSubscriber\ConversionProcessing\StartProcessingSubscriber">
+
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <service id="setono_sylius_google_ads.event_subscriber.end_processing"
+                 class="Setono\SyliusGoogleAdsPlugin\EventSubscriber\ConversionProcessing\EndProcessingSubscriber">
+
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <service id="setono_sylius_google_ads.event_subscriber.update_state_updated_at"
+                 class="Setono\SyliusGoogleAdsPlugin\EventSubscriber\ConversionProcessing\UpdateStateUpdatedAtSubscriber">
+
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <service id="setono_sylius_google_ads.event_subscriber.nullify_next_processing"
+                 class="Setono\SyliusGoogleAdsPlugin\EventSubscriber\ConversionProcessing\NullifyNextProcessingSubscriber">
+
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <service id="setono_sylius_google_ads.event_subscriber.update_previous_state"
+                 class="Setono\SyliusGoogleAdsPlugin\EventSubscriber\ConversionProcessing\UpdatePreviousStateSubscriber">
 
             <tag name="kernel.event_subscriber"/>
         </service>

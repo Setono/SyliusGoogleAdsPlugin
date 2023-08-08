@@ -14,6 +14,8 @@ class Conversion implements ConversionInterface
 
     protected ?int $id = null;
 
+    protected ?int $version = 1;
+
     protected ?string $googleClickId = null;
 
     protected ?int $value = null;
@@ -22,15 +24,22 @@ class Conversion implements ConversionInterface
 
     protected string $state = ConversionInterface::STATE_PENDING;
 
-    protected ?\DateTimeImmutable $lastCheckedAt = null;
+    protected ?string $previousState = null;
 
-    protected \DateTimeImmutable $nextCheckAt;
+    protected ?\DateTimeImmutable $stateUpdatedAt = null;
 
-    protected int $checks = 0;
+    protected bool $processing = false;
 
-    protected ?string $processIdentifier = null;
+    protected ?\DateTimeImmutable $lastProcessingStartedAt = null;
 
-    protected ?string $error = null;
+    protected ?\DateTimeImmutable $lastProcessingEndedAt = null;
+
+    protected ?\DateTimeImmutable $nextProcessingAt;
+
+    protected int $processingCount = 0;
+
+    /** @var list<string> */
+    protected array $logMessages = [];
 
     protected ?ChannelInterface $channel = null;
 
@@ -38,12 +47,22 @@ class Conversion implements ConversionInterface
 
     public function __construct()
     {
-        $this->nextCheckAt = new \DateTimeImmutable();
+        $this->nextProcessingAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getVersion(): ?int
+    {
+        return $this->version;
+    }
+
+    public function setVersion(?int $version): void
+    {
+        $this->version = $version;
     }
 
     public function getGoogleClickId(): ?string
@@ -86,58 +105,98 @@ class Conversion implements ConversionInterface
         $this->state = $state;
     }
 
-    public function getLastCheckedAt(): ?\DateTimeImmutable
+    public function getPreviousState(): ?string
     {
-        return $this->lastCheckedAt;
+        return $this->previousState;
     }
 
-    public function setLastCheckedAt(\DateTimeImmutable $lastCheckedAt): void
+    public function setPreviousState(?string $previousState): void
     {
-        $this->lastCheckedAt = $lastCheckedAt;
+        $this->previousState = $previousState;
     }
 
-    public function getNextCheckAt(): \DateTimeImmutable
+    public function getStateUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->nextCheckAt;
+        return $this->stateUpdatedAt;
     }
 
-    public function setNextCheckAt(\DateTimeImmutable $nextCheck): void
+    public function setStateUpdatedAt(\DateTimeImmutable $stateUpdatedAt): void
     {
-        $this->nextCheckAt = $nextCheck;
+        $this->stateUpdatedAt = $stateUpdatedAt;
     }
 
-    public function getChecks(): int
+    public function isProcessing(): bool
     {
-        return $this->checks;
+        return $this->processing;
     }
 
-    public function setChecks(int $checks): void
+    public function setProcessing(bool $processing): void
     {
-        $this->checks = $checks;
+        $this->processing = $processing;
     }
 
-    public function incrementChecks(int $increment = 1): void
+    public function getLastProcessingStartedAt(): ?\DateTimeImmutable
     {
-        $this->checks += $increment;
+        return $this->lastProcessingStartedAt;
     }
 
-    public function getProcessIdentifier(): ?string
+    public function setLastProcessingStartedAt(\DateTimeImmutable $lastProcessingStartedAt): void
     {
-        return $this->processIdentifier;
+        $this->lastProcessingStartedAt = $lastProcessingStartedAt;
     }
 
-    public function getError(): ?string
+    public function getLastProcessingEndedAt(): ?\DateTimeImmutable
     {
-        return $this->error;
+        return $this->lastProcessingEndedAt;
     }
 
-    public function setError(?string $error): void
+    public function setLastProcessingEndedAt(\DateTimeImmutable $lastProcessingEndedAt): void
     {
-        if ('' === $error) {
-            $error = null;
+        $this->lastProcessingEndedAt = $lastProcessingEndedAt;
+    }
+
+    public function getNextProcessingAt(): ?\DateTimeImmutable
+    {
+        return $this->nextProcessingAt;
+    }
+
+    public function setNextProcessingAt(?\DateTimeImmutable $nextProcessingAt): void
+    {
+        $this->nextProcessingAt = $nextProcessingAt;
+    }
+
+    public function getProcessingCount(): int
+    {
+        return $this->processingCount;
+    }
+
+    public function setProcessingCount(int $processingCount): void
+    {
+        $this->processingCount = $processingCount;
+    }
+
+    public function incrementProcessingCount(int $increment = 1): void
+    {
+        $this->processingCount += $increment;
+    }
+
+    public function getLogMessages(): array
+    {
+        return $this->logMessages;
+    }
+
+    public function setLogMessages(array $logMessages): void
+    {
+        $this->logMessages = [];
+
+        foreach ($logMessages as $logMessage) {
+            $this->addLogMessage($logMessage);
         }
+    }
 
-        $this->error = $error;
+    public function addLogMessage(string $logMessage): void
+    {
+        $this->logMessages[] = sprintf('[%s] %s', (new \DateTimeImmutable())->format('Y-m-d H:i:s'), $logMessage);
     }
 
     public function getChannel(): ?ChannelInterface
