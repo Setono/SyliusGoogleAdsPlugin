@@ -5,15 +5,28 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin\Controller\Action;
 
 use Doctrine\Persistence\ManagerRegistry;
+use Google\Ads\GoogleAds\Lib\V13\GoogleAdsClient;
+use Google\Ads\GoogleAds\Lib\V13\GoogleAdsServerStreamDecorator;
+use Google\Ads\GoogleAds\V13\Enums\ConversionActionCategoryEnum\ConversionActionCategory;
+use Google\Ads\GoogleAds\V13\Enums\ConversionActionStatusEnum\ConversionActionStatus;
+use Google\Ads\GoogleAds\V13\Enums\ConversionActionTypeEnum\ConversionActionType;
+use Google\Ads\GoogleAds\V13\Enums\ResponseContentTypeEnum\ResponseContentType;
+use Google\Ads\GoogleAds\V13\Resources\ConversionAction;
+use Google\Ads\GoogleAds\V13\Services\ConversionActionOperation;
+use Google\Ads\GoogleAds\V13\Services\GoogleAdsRow;
+use Google\Ads\GoogleAds\V13\Services\MutateConversionActionResult;
 use Setono\DoctrineObjectManagerTrait\ORM\ORMManagerTrait;
+use Setono\SyliusGoogleAdsPlugin\Factory\GoogleAdsClientFactoryInterface;
 use Setono\SyliusGoogleAdsPlugin\Form\Type\MapCustomerIdType;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConnectionRepositoryInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Environment;
+use Webmozart\Assert\Assert;
 
 final class SetupMapCustomerIdAction extends AbstractSetupAction
 {
@@ -25,6 +38,7 @@ final class SetupMapCustomerIdAction extends AbstractSetupAction
         UrlGeneratorInterface $urlGenerator,
         private readonly FormFactoryInterface $formFactory,
         ManagerRegistry $managerRegistry,
+        private readonly GoogleAdsClientFactoryInterface $googleAdsClientFactory,
     ) {
         parent::__construct($twig, $connectionRepository, $urlGenerator);
 
@@ -39,10 +53,45 @@ final class SetupMapCustomerIdAction extends AbstractSetupAction
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getManager($connection)->flush();
+            $manager = $this->getManager($connection);
+            $manager->flush();
 
-            return new RedirectResponse($this->urlGenerator->generate('setono_sylius_google_ads_admin_setup_map_conversion_action_id', [
-                'connectionId' => $connectionId,
+            foreach ($connection->getConnectionMappings() as $connectionMapping) {
+                $client = $this->googleAdsClientFactory->createFromConnection($connection, $connectionMapping->getManagerId());
+
+                $conversionActionId = $connectionMapping->getConversionActionId();
+                $customerId = $connectionMapping->getCustomerId();
+                Assert::notNull($customerId);
+
+                // when a conversion action id is already set, we will fetch that conversion action from Google
+                // and verify its settings. If the settings are invalid, we will null $conversionActionId which will
+                // create a new conversion action below
+                if (null !== $conversionActionId) {
+                    $conversionAction = $this->getConversionActionById($client, $customerId, $conversionActionId);
+
+                    // here we verify the settings of the existing conversion action
+                    if (null === $conversionAction || $conversionAction->getType() !== ConversionActionType::UPLOAD_CLICKS || $conversionAction->getStatus() !== ConversionActionStatus::ENABLED) {
+                        $conversionActionId = null;
+                    }
+                }
+
+                // create conversion action
+                if (null === $conversionActionId) {
+                    $conversionActionId = $this->createConversionAction($client, $customerId);
+                }
+
+                $connectionMapping->setConversionActionId($conversionActionId);
+            }
+
+            $manager->flush();
+
+            $session = $request->getSession();
+            if ($session instanceof Session) {
+                $session->getFlashBag()->add('success', 'setono_sylius_google_ads.customer_id_and_conversion_action_mapped');
+            }
+
+            return new RedirectResponse($this->urlGenerator->generate('setono_sylius_google_ads_admin_connection_update', [
+                'id' => $connectionId,
             ]));
         }
 
@@ -50,5 +99,65 @@ final class SetupMapCustomerIdAction extends AbstractSetupAction
             'connection' => $connection,
             'form' => $form->createView(),
         ]));
+    }
+
+    private function getConversionActionById(GoogleAdsClient $googleAdsClient, int $customerId, int $id): ?ConversionAction
+    {
+        $googleAdsServiceClient = $googleAdsClient->getGoogleAdsServiceClient();
+
+        /** @var GoogleAdsServerStreamDecorator $stream */
+        $stream = $googleAdsServiceClient->searchStream(
+            (string) $customerId,
+            "SELECT conversion_action.id, conversion_action.status, conversion_action.name, conversion_action.type FROM conversion_action WHERE conversion_action.id = $id",
+        );
+
+        /** @var GoogleAdsRow $googleAdsRow */
+        foreach ($stream->iterateAllElements() as $googleAdsRow) {
+            $conversionAction = $googleAdsRow->getConversionAction();
+            if (null === $conversionAction) {
+                continue;
+            }
+
+            return $conversionAction;
+        }
+
+        return null;
+    }
+
+    /**
+     * Creates a conversion action and returns its id
+     */
+    private function createConversionAction(GoogleAdsClient $googleAdsClient, int $customerId): int
+    {
+        $conversionAction = new ConversionAction([
+            'name' => sprintf('Google Ads Plugin by Setono [%s]', (new \DateTimeImmutable())->format('Y-m-d H:i')),
+            'category' => ConversionActionCategory::PURCHASE,
+            'type' => ConversionActionType::UPLOAD_CLICKS,
+            'status' => ConversionActionStatus::ENABLED,
+        ]);
+
+        // Creates a conversion action operation.
+        $conversionActionOperation = new ConversionActionOperation();
+        $conversionActionOperation->setCreate($conversionAction);
+
+        // Issues a mutate request to add the conversion action.
+        $conversionActionServiceClient = $googleAdsClient->getConversionActionServiceClient();
+        $response = $conversionActionServiceClient->mutateConversionActions(
+            (string) $customerId,
+            [$conversionActionOperation],
+            ['responseContentType' => ResponseContentType::MUTABLE_RESOURCE],
+        );
+
+        /** @var MutateConversionActionResult $result */
+        foreach ($response->getResults() as $result) {
+            $conversionAction = $result->getConversionAction();
+            if (null === $conversionAction) {
+                continue;
+            }
+
+            return (int) $conversionAction->getId();
+        }
+
+        throw new \RuntimeException('Could not create conversion action');
     }
 }

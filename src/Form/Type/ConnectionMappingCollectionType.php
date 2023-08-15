@@ -15,19 +15,16 @@ final class ConnectionMappingCollectionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setDefault('step', null)
-            ->setAllowedValues('step', [null, MapCustomerIdType::STEP, MapConversionActionIdType::STEP])
             ->setRequired('connection')
             ->setAllowedTypes('connection', ConnectionInterface::class)
             ->setDefaults([
-                'allow_add' => static fn (Options $options): bool => MapConversionActionIdType::STEP !== $options['step'],
-                'allow_delete' => static fn (Options $options): bool => MapConversionActionIdType::STEP !== $options['step'],
+                'allow_add' => true,
+                'allow_delete' => true,
                 'by_reference' => false,
                 'error_bubbling' => false,
                 'entry_type' => ConnectionMappingType::class,
                 'entry_options' => static fn (Options $options): array => [
                     'connection' => $options['connection'],
-                    'step' => $options['step'],
                 ],
             ])
         ;

@@ -53,6 +53,7 @@ final class CustomerIdsResolver implements CustomerIdsResolverInterface
         $client = $this->googleAdsClientFactory->createFromConnection($connection, $rootCustomerId);
 
         $googleAdsServiceClient = $client->getGoogleAdsServiceClient();
+
         $query = 'SELECT customer_client.client_customer, customer_client.descriptive_name, customer_client.id FROM customer_client WHERE customer_client.hidden = FALSE AND customer_client.test_account = FALSE';
 
         // Adds the root customer ID to the list of IDs to be processed.
