@@ -69,11 +69,27 @@ The next cronjob will prune the conversions table. Run this job as often as you'
 php bin/console setono:sylius-google-ads:prune-conversions
 ```
 
+### Step 5: Map the Messenger command to an async transport (optional, but recommended)
+
+The plugin uses the Symfony Messenger to dispatch a message (`ProcessConversion`) which will trigger the processing
+of a conversion. If you want to do this asynchronously, you can do something like the following in your messenger config:
+
+```yaml
+framework:
+    messenger:
+        transports:
+            async: '%env(MESSENGER_TRANSPORT_DSN)%'
+        routing:
+            'Setono\SyliusGoogleAdsPlugin\Message\Command\CommandInterface': async
+```
+
+This maps all messages implementing that interface to the `async` transport.
+
 Now the plugin is installed. Please read the next section to learn how to use it in your store.
 
 ## Usage
 
-To start using the plugin, go to https://your-domain.com/admin/google-ads
+To start using the plugin, go to https://your-domain.com/admin/google-ads and follow the instructions.
 
 [ico-version]: https://poser.pugx.org/setono/sylius-google-ads-plugin/v/stable
 [ico-license]: https://poser.pugx.org/setono/sylius-google-ads-plugin/license
