@@ -73,7 +73,9 @@ final class OAuthResponseAction extends AbstractOAuthAction
         return $this->addFlashAndRedirect(
             $request,
             'setono_sylius_google_ads.refresh_token_updated',
-            $this->urlGenerator->generate('setono_sylius_google_ads_admin_connection_update', ['id' => $connection->getId()]),
+            $this->urlGenerator->generate('setono_sylius_google_ads_admin_setup_map_customer_id', [
+                'connectionId' => $connection->getId(),
+            ]),
             'success',
         );
     }
