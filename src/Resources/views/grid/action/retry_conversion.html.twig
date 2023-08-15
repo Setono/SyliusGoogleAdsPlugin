@@ -1,0 +1,6 @@
+{% import '@SyliusUi/Macro/buttons.html.twig' as buttons %}
+{% set visible = options.visible is defined ? options.visible : true %}
+
+{% if visible %}
+    {{ buttons.default(path('setono_sylius_google_ads_admin_retry_conversion', { id: options.conversionId }), action.label, null, 'redo') }}
+{% endif %}

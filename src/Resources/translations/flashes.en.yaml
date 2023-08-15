@@ -1,3 +1,6 @@
 setono_sylius_google_ads:
     customer_id_and_conversion_action_mapped: You have successfully mapped channels to Google Ads customer ids
     refresh_token_updated: The refresh token was updated
+    conversion_does_not_exist: The conversion does not exist
+    conversion_retrying_failed: Retrying the conversion failed
+    conversion_retrying_succeeded: Retrying the conversion was triggered

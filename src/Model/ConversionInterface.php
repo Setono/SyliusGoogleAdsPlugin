@@ -129,4 +129,9 @@ interface ConversionInterface extends ResourceInterface, TimestampableInterface,
     public function getOrder(): ?OrderInterface;
 
     public function setOrder(OrderInterface $order): void;
+
+    /**
+     * Returns true if the state equals 'failed'
+     */
+    public function isFailed(): bool;
 }

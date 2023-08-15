@@ -9,6 +9,15 @@
             <argument type="service" id="router"/>
         </service>
 
+        <service id="setono_sylius_google_ads.controller.action.retry_conversion"
+                 class="Setono\SyliusGoogleAdsPlugin\Controller\Action\RetryConversionAction" public="true">
+            <argument type="service" id="setono_sylius_google_ads.repository.conversion"/>
+            <argument type="service" id="state_machine.setono_sylius_google_ads__conversion"/>
+            <argument type="service" id="doctrine"/>
+            <argument type="service" id="setono_sylius_google_ads.command_bus"/>
+            <argument type="service" id="router"/>
+        </service>
+
         <!-- Setup related controllers -->
         <service id="setono_sylius_google_ads.controller.action.setup_authorize"
                  class="Setono\SyliusGoogleAdsPlugin\Controller\Action\SetupAuthorizeAction" public="true">
