@@ -13,7 +13,7 @@
         "doctrine/orm": "^2.7",
         "doctrine/persistence": "^1.3 || ^2.2 || ^3.2",
         "google/auth": "^1.26",
-        "googleads/google-ads-php": "^19.0",
+        "googleads/google-ads-php": "^20.0",
         "knplabs/knp-menu": "^3.1",
         "ocramius/doctrine-batch-utils": "^2.4",
         "psr/event-dispatcher": "^1.0",

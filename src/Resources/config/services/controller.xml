@@ -24,15 +24,7 @@
             <argument type="service" id="router"/>
             <argument type="service" id="form.factory"/>
             <argument type="service" id="doctrine"/>
-        </service>
-
-        <service id="setono_sylius_google_ads.controller.action.setup_map_conversion_action_id"
-                 class="Setono\SyliusGoogleAdsPlugin\Controller\Action\SetupMapConversionActionIdAction" public="true">
-            <argument type="service" id="twig"/>
-            <argument type="service" id="setono_sylius_google_ads.repository.connection"/>
-            <argument type="service" id="router"/>
-            <argument type="service" id="form.factory"/>
-            <argument type="service" id="doctrine"/>
+            <argument type="service" id="setono_sylius_google_ads.factory.google_ads_client"/>
         </service>
 
         <!-- OAuth related controllers -->

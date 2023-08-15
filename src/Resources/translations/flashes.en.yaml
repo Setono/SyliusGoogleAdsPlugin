@@ -1,2 +1,3 @@
 setono_sylius_google_ads:
+    customer_id_and_conversion_action_mapped: You have successfully mapped channels to Google Ads customer ids
     refresh_token_updated: The refresh token was updated

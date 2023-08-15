@@ -13,8 +13,6 @@ use Webmozart\Assert\Assert;
 
 final class MapCustomerIdType extends AbstractResourceType
 {
-    public const STEP = 'map_customer_id';
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, static function (FormEvent $event) {
@@ -24,7 +22,6 @@ final class MapCustomerIdType extends AbstractResourceType
             $event->getForm()->add('connectionMappings', ConnectionMappingCollectionType::class, [
                 'connection' => $connection,
                 'label' => false,
-                'step' => self::STEP,
             ]);
         });
     }

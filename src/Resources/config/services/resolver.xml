@@ -7,10 +7,5 @@
                  class="Setono\SyliusGoogleAdsPlugin\Resolver\CustomerIdsResolver">
             <argument type="service" id="setono_sylius_google_ads.factory.google_ads_client"/>
         </service>
-
-        <service id="setono_sylius_google_ads.resolver.conversion_action_ids"
-                 class="Setono\SyliusGoogleAdsPlugin\Resolver\ConversionActionIdsResolver">
-            <argument type="service" id="setono_sylius_google_ads.factory.google_ads_client"/>
-        </service>
     </services>
 </container>

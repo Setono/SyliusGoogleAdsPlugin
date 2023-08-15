@@ -63,6 +63,8 @@ final class PurchaseSubscriber implements EventSubscriberInterface, LoggerAwareI
             $userAgent = $request->headers->get('User-Agent');
             Assert::stringNotEmpty($userAgent);
 
+            $conversion->setUserAgent($userAgent);
+
             $this->eventDispatcher->dispatch(new PrePersistConversionFromOrderEvent($conversion, $order));
 
             $this->getManager($conversion)->persist($conversion);
