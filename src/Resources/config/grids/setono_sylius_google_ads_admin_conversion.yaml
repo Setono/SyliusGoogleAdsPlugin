@@ -1,6 +1,7 @@
 sylius_grid:
     templates:
         action:
+            retry_conversion: "@SetonoSyliusGoogleAdsPlugin/grid/action/retry_conversion.html.twig"
             setup_connections: "@SetonoSyliusGoogleAdsPlugin/grid/action/setup_connections.html.twig"
     grids:
         setono_sylius_google_ads_admin_conversion:
@@ -60,3 +61,10 @@ sylius_grid:
                     setup_connections:
                         type: setup_connections
                         label: setono_sylius_google_ads.ui.setup_connections
+                item:
+                    retry_conversion:
+                        type: retry_conversion
+                        label: setono_sylius_google_ads.ui.retry_conversion
+                        options:
+                            conversionId: resource.id
+                            visible: resource.isFailed

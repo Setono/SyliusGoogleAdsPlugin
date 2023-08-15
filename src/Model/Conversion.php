@@ -230,4 +230,9 @@ class Conversion implements ConversionInterface
     {
         $this->order = $order;
     }
+
+    public function isFailed(): bool
+    {
+        return $this->getState() === self::STATE_FAILED;
+    }
 }

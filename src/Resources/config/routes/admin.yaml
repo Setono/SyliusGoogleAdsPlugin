@@ -4,6 +4,13 @@ setono_sylius_google_ads_admin_redirect_main_menu:
     methods: [GET]
     defaults:
         _controller: setono_sylius_google_ads.controller.action.redirect_main_menu
+        
+# Action that will retry a conversion
+setono_sylius_google_ads_admin_retry_conversion:
+    path: /conversions/{id}/retry
+    methods: [GET]
+    defaults:
+        _controller: setono_sylius_google_ads.controller.action.retry_conversion
 
 # Setup related routes
 setono_sylius_google_ads_admin_setup_authorize:

@@ -63,5 +63,11 @@
 
             <tag name="kernel.event_subscriber"/>
         </service>
+
+        <service id="setono_sylius_google_ads.event_subscriber.retry"
+                 class="Setono\SyliusGoogleAdsPlugin\EventSubscriber\ConversionProcessing\RetrySubscriber">
+
+            <tag name="kernel.event_subscriber"/>
+        </service>
     </services>
 </container>

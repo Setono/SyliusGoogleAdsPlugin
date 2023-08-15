@@ -29,6 +29,8 @@ final class ConversionWorkflow
 
     public const TRANSITION_FAIL = 'fail';
 
+    public const TRANSITION_RETRY = 'retry';
+
     private function __construct()
     {
     }
@@ -121,6 +123,11 @@ final class ConversionWorkflow
                 self::TRANSITION_FAIL,
                 [ConversionInterface::STATE_PENDING, ConversionInterface::STATE_QUALIFIED, ConversionInterface::STATE_CONVERSION_UPLOADED, ConversionInterface::STATE_ENHANCED_CONVERSION_UPLOADED],
                 ConversionInterface::STATE_FAILED,
+            ),
+            new Transition(
+                self::TRANSITION_RETRY,
+                ConversionInterface::STATE_FAILED,
+                ConversionInterface::STATE_PENDING,
             ),
         ];
     }

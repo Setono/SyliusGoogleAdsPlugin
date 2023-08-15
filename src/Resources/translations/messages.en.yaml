@@ -15,6 +15,7 @@ setono_sylius_google_ads:
             customer_id: Customer id
             conversion_action_id: Conversion action id
     ui:
+        retry_conversion: Retry
         authorize_with_google: Authorize with Google
         reauthorize_with_google: Authorize with Google
         connections: Connections
