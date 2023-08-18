@@ -6,6 +6,7 @@ namespace Setono\SyliusGoogleAdsPlugin\ConversionProcessor;
 
 use Google\Ads\GoogleAds\Util\V13\ResourceNames;
 use Google\Ads\GoogleAds\V13\Services\ClickConversion;
+use Setono\SyliusGoogleAdsPlugin\Logger\ConversionLogger;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
 use Setono\SyliusGoogleAdsPlugin\Workflow\ConversionWorkflow;
 use Webmozart\Assert\Assert;
@@ -39,7 +40,7 @@ final class ConversionProcessor extends AbstractConversionProcessor
         $order = $conversion->getOrder();
         Assert::notNull($order);
 
-        $client = $this->googleAdsClientFactory->createFromConnection($connection, $managerId);
+        $client = $this->googleAdsClientFactory->createFromConnection($connection, $managerId, new ConversionLogger($conversion));
 
         $createdAt = $conversion->getCreatedAt();
         Assert::notNull($createdAt);

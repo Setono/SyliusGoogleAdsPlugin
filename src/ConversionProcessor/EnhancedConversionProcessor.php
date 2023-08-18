@@ -11,6 +11,7 @@ use Google\Ads\GoogleAds\V13\Enums\ConversionAdjustmentTypeEnum\ConversionAdjust
 use Google\Ads\GoogleAds\V13\Enums\UserIdentifierSourceEnum\UserIdentifierSource;
 use Google\Ads\GoogleAds\V13\Services\ConversionAdjustment;
 use Google\Ads\GoogleAds\V13\Services\GclidDateTimePair;
+use Setono\SyliusGoogleAdsPlugin\Logger\ConversionLogger;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
 use Setono\SyliusGoogleAdsPlugin\Workflow\ConversionWorkflow;
 use Webmozart\Assert\Assert;
@@ -54,7 +55,7 @@ final class EnhancedConversionProcessor extends AbstractConversionProcessor
         $billingAddress = $order->getBillingAddress();
         Assert::notNull($billingAddress);
 
-        $client = $this->googleAdsClientFactory->createFromConnection($connection, $managerId);
+        $client = $this->googleAdsClientFactory->createFromConnection($connection, $managerId, new ConversionLogger($conversion));
 
         $conversionAdjustment = new ConversionAdjustment([
             'conversion_action' => ResourceNames::forConversionAction(

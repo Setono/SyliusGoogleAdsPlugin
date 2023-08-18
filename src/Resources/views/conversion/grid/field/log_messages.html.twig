@@ -7,8 +7,8 @@
     <div class="ui modal" id="modal-{{ data.id }}">
         <i class="close icon"></i>
         <div class="header">{{ 'setono_sylius_google_ads.ui.log'|trans }}</div>
-        <div class="content">
-            {{ data.logMessages|join('<br>')|raw }}
+        <div class="content" style="overflow-x: auto">
+            {{ data.logMessages|join('<br><br>')|raw|nl2br }}
         </div>
     </div>
 

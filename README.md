@@ -14,7 +14,13 @@ instead of the default javascript tracking. It has a few benefits to do this:
 
 ## Installation
 
-### Step 1: Install and enable plugin
+### Step 1: Install gRPC
+
+Internally this plugin uses the [google-ads-php](https://github.com/googleads/google-ads-php). To use that library properly
+it's advised to install the gRPC PHP extension. It should work by just running `pecl install grpc` and enabling the extension
+in your `php.ini` by adding `extension=grpc.so`.
+
+### Step 2: Install and enable plugin
 
 ```bash
 composer require setono/sylius-google-ads-plugin
@@ -36,7 +42,7 @@ return [
 ];
 ```
 
-### Step 2: Add configuration
+### Step 3: Add configuration
 ```yaml
 # config/packages/setono_sylius_google_ads.yaml
 imports:
@@ -49,13 +55,13 @@ setono_sylius_google_ads:
     resource: "@SetonoSyliusGoogleAdsPlugin/Resources/config/routes.yaml"
 ```
 
-### Step 3: Create migration file
+### Step 4: Create migration file
 ```shell
 php bin/console doctrine:migrations:diff
 php bin/console doctrine:migrations:migrate
 ```
 
-### Step 4: Set up cronjobs
+### Step 5: Set up cronjobs
 
 The first cronjob will process Google Ads conversions. Run this cronjob regularly, e.g. every 5 minutes:
 
@@ -69,7 +75,7 @@ The next cronjob will prune the conversions table. Run this job as often as you'
 php bin/console setono:sylius-google-ads:prune-conversions
 ```
 
-### Step 5: Map the Messenger command to an async transport (optional, but recommended)
+### Step 6: Map the Messenger command to an async transport (optional, but recommended)
 
 The plugin uses the Symfony Messenger to dispatch a message (`ProcessConversion`) which will trigger the processing
 of a conversion. If you want to do this asynchronously, you can do something like the following in your messenger config:
