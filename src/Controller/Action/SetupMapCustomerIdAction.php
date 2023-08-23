@@ -70,7 +70,7 @@ final class SetupMapCustomerIdAction extends AbstractSetupAction
                     $conversionAction = $this->getConversionActionById($client, $customerId, $conversionActionId);
 
                     // here we verify the settings of the existing conversion action
-                    if (null === $conversionAction || $conversionAction->getType() !== ConversionActionType::UPLOAD_CLICKS || $conversionAction->getStatus() !== ConversionActionStatus::ENABLED) {
+                    if (null === $conversionAction || $conversionAction->getType() !== ConversionActionType::WEBPAGE || $conversionAction->getStatus() !== ConversionActionStatus::ENABLED) {
                         $conversionActionId = null;
                     }
                 }
@@ -132,7 +132,7 @@ final class SetupMapCustomerIdAction extends AbstractSetupAction
         $conversionAction = new ConversionAction([
             'name' => sprintf('Google Ads Plugin by Setono [%s]', (new \DateTimeImmutable())->format('Y-m-d H:i')),
             'category' => ConversionActionCategory::PURCHASE,
-            'type' => ConversionActionType::UPLOAD_CLICKS,
+            'type' => ConversionActionType::WEBPAGE,
             'status' => ConversionActionStatus::ENABLED,
         ]);
 
