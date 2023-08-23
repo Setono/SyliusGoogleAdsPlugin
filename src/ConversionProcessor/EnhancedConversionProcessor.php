@@ -10,7 +10,6 @@ use Google\Ads\GoogleAds\V13\Common\UserIdentifier;
 use Google\Ads\GoogleAds\V13\Enums\ConversionAdjustmentTypeEnum\ConversionAdjustmentType;
 use Google\Ads\GoogleAds\V13\Enums\UserIdentifierSourceEnum\UserIdentifierSource;
 use Google\Ads\GoogleAds\V13\Services\ConversionAdjustment;
-use Google\Ads\GoogleAds\V13\Services\GclidDateTimePair;
 use Setono\SyliusGoogleAdsPlugin\Logger\ConversionLogger;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
 use Setono\SyliusGoogleAdsPlugin\Workflow\ConversionWorkflow;
@@ -84,16 +83,6 @@ final class EnhancedConversionProcessor extends AbstractConversionProcessor
         ]);
 
         $conversionAdjustment->setUserIdentifiers([$addressIdentifier, $emailIdentifier]);
-
-        $createdAt = $conversion->getCreatedAt();
-        Assert::notNull($createdAt);
-
-        // Google doesn't allow daylight savings time when uploading, so we need this small hack to turn our time into UTC first
-        $createdAt = \DateTimeImmutable::createFromInterface($createdAt)->setTimezone(new \DateTimeZone('UTC'));
-
-        $conversionAdjustment->setGclidDateTimePair(new GclidDateTimePair([
-            'conversion_date_time' => $createdAt->format('Y-m-d H:i:sP'),
-        ]));
 
         $userAgent = $conversion->getUserAgent();
         if (null !== $userAgent) {
