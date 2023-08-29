@@ -13,6 +13,7 @@
         <field name="managerId" type="bigint"/>
         <field name="customerId" type="bigint"/>
         <field name="conversionActionId" type="bigint" nullable="true"/>
+        <field name="enhancedConversionActionId" type="bigint" nullable="true"/>
 
         <many-to-one field="connection" target-entity="Setono\SyliusGoogleAdsPlugin\Model\ConnectionInterface" inversed-by="connectionMappings">
             <join-column name="connection_id" referenced-column-name="id" nullable="false" on-delete="CASCADE"/>

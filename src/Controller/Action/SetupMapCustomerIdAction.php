@@ -59,9 +59,11 @@ final class SetupMapCustomerIdAction extends AbstractSetupAction
             foreach ($connection->getConnectionMappings() as $connectionMapping) {
                 $client = $this->googleAdsClientFactory->createFromConnection($connection, $connectionMapping->getManagerId());
 
-                $conversionActionId = $connectionMapping->getConversionActionId();
                 $customerId = $connectionMapping->getCustomerId();
                 Assert::notNull($customerId);
+
+                // handle the 'conversion conversion action', i.e. the conversion action where we send conversions
+                $conversionActionId = $connectionMapping->getConversionActionId();
 
                 // when a conversion action id is already set, we will fetch that conversion action from Google
                 // and verify its settings. If the settings are invalid, we will null $conversionActionId which will
@@ -70,17 +72,39 @@ final class SetupMapCustomerIdAction extends AbstractSetupAction
                     $conversionAction = $this->getConversionActionById($client, $customerId, $conversionActionId);
 
                     // here we verify the settings of the existing conversion action
-                    if (null === $conversionAction || $conversionAction->getType() !== ConversionActionType::WEBPAGE || $conversionAction->getStatus() !== ConversionActionStatus::ENABLED) {
+                    if (null === $conversionAction || $conversionAction->getType() !== ConversionActionType::UPLOAD_CLICKS || $conversionAction->getStatus() !== ConversionActionStatus::ENABLED) {
                         $conversionActionId = null;
                     }
                 }
 
                 // create conversion action
                 if (null === $conversionActionId) {
-                    $conversionActionId = $this->createConversionAction($client, $customerId);
+                    $conversionActionId = $this->createConversionAction($client, $customerId, 'Conversions - Google Ads Plugin by Setono', ConversionActionType::UPLOAD_CLICKS);
                 }
 
                 $connectionMapping->setConversionActionId($conversionActionId);
+
+                // handle the 'enhanced conversion conversion action', i.e. the conversion action where we send enhanced conversions
+                $enhancedConversionActionId = $connectionMapping->getEnhancedConversionActionId();
+
+                // when a conversion action id is already set, we will fetch that conversion action from Google
+                // and verify its settings. If the settings are invalid, we will null $conversionActionId which will
+                // create a new conversion action below
+                if (null !== $enhancedConversionActionId) {
+                    $conversionAction = $this->getConversionActionById($client, $customerId, $enhancedConversionActionId);
+
+                    // here we verify the settings of the existing conversion action
+                    if (null === $conversionAction || $conversionAction->getType() !== ConversionActionType::WEBPAGE || $conversionAction->getStatus() !== ConversionActionStatus::ENABLED) {
+                        $enhancedConversionActionId = null;
+                    }
+                }
+
+                // create conversion action
+                if (null === $enhancedConversionActionId) {
+                    $enhancedConversionActionId = $this->createConversionAction($client, $customerId, 'Enhanced Conversions - Google Ads Plugin by Setono', ConversionActionType::WEBPAGE);
+                }
+
+                $connectionMapping->setEnhancedConversionActionId($enhancedConversionActionId);
             }
 
             $manager->flush();
@@ -127,12 +151,14 @@ final class SetupMapCustomerIdAction extends AbstractSetupAction
     /**
      * Creates a conversion action and returns its id
      */
-    private function createConversionAction(GoogleAdsClient $googleAdsClient, int $customerId): int
+    private function createConversionAction(GoogleAdsClient $googleAdsClient, int $customerId, string $name, int $type): int
     {
+        $name = sprintf('%s [%s]', $name, (new \DateTimeImmutable())->format('Y-m-d H:i'));
+
         $conversionAction = new ConversionAction([
-            'name' => sprintf('Google Ads Plugin by Setono [%s]', (new \DateTimeImmutable())->format('Y-m-d H:i')),
+            'name' => $name,
             'category' => ConversionActionCategory::PURCHASE,
-            'type' => ConversionActionType::WEBPAGE,
+            'type' => $type,
             'status' => ConversionActionStatus::ENABLED,
         ]);
 
