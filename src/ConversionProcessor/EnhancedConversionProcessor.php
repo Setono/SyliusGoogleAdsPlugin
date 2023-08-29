@@ -59,7 +59,7 @@ final class EnhancedConversionProcessor extends AbstractConversionProcessor
         $conversionAdjustment = new ConversionAdjustment([
             'conversion_action' => ResourceNames::forConversionAction(
                 (string) $customerId,
-                (string) $connectionMapping->getConversionActionId(),
+                (string) $connectionMapping->getEnhancedConversionActionId(),
             ),
             'adjustment_type' => ConversionAdjustmentType::ENHANCEMENT,
             'order_id' => $order->getId(),
