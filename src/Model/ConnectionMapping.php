@@ -7,7 +7,7 @@ namespace Setono\SyliusGoogleAdsPlugin\Model;
 use Setono\SyliusGoogleAdsPlugin\Resolver\CustomerId;
 use Sylius\Component\Channel\Model\ChannelInterface;
 
-final class ConnectionMapping implements ConnectionMappingInterface
+class ConnectionMapping implements ConnectionMappingInterface
 {
     private ?int $id = null;
 
