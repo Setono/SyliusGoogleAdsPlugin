@@ -15,13 +15,12 @@ setono_sylius_google_ads:
             customer_id: Customer id
             conversion_action_id: Conversion action id
     ui:
-        retry_conversion: Retry
         authorize_with_google: Authorize with Google
-        reauthorize_with_google: Authorize with Google
         connections: Connections
         conversion_uploaded: Conversion uploaded
         conversions: Conversions
         delivered: Delivered
+        disqualified: Disqualified
         edit_connection: Edit connection
         enabled: Enabled
         failed: Failed
@@ -35,7 +34,9 @@ setono_sylius_google_ads:
         no_log_messages: No log messages
         no_value: No value
         pending: Pending
+        reauthorize_with_google: Authorize with Google
         refresh_token_updated: The access token was updated
+        retry_conversion: Retry
         setup_connection_with_google_ads: Setup connection with Google Ads
         setup_connections: Setup connections
         setup:
