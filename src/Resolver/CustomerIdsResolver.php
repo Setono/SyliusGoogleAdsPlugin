@@ -7,15 +7,22 @@ namespace Setono\SyliusGoogleAdsPlugin\Resolver;
 use Google\Ads\GoogleAds\Lib\V13\GoogleAdsServerStreamDecorator;
 use Google\Ads\GoogleAds\V13\Services\CustomerServiceClient;
 use Google\Ads\GoogleAds\V13\Services\GoogleAdsRow;
+use Google\ApiCore\ApiException;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Setono\SyliusGoogleAdsPlugin\Factory\GoogleAdsClientFactoryInterface;
 use Setono\SyliusGoogleAdsPlugin\Model\ConnectionInterface;
 use function Symfony\Component\String\u;
 use Webmozart\Assert\Assert;
 
-final class CustomerIdsResolver implements CustomerIdsResolverInterface
+final class CustomerIdsResolver implements CustomerIdsResolverInterface, LoggerAwareInterface
 {
+    private LoggerInterface $logger;
+
     public function __construct(private readonly GoogleAdsClientFactoryInterface $googleAdsClientFactory)
     {
+        $this->logger = new NullLogger();
     }
 
     public function getCustomerIdsFromConnection(ConnectionInterface $connection): array
@@ -23,7 +30,14 @@ final class CustomerIdsResolver implements CustomerIdsResolverInterface
         $client = $this->googleAdsClientFactory->createFromConnection($connection);
 
         $rootCustomerIds = [];
-        $customersResponse = $client->getCustomerServiceClient()->listAccessibleCustomers();
+
+        try {
+            $customersResponse = $client->getCustomerServiceClient()->listAccessibleCustomers();
+        } catch (ApiException $e) {
+            $this->logger->error('An error occurred while trying the API call "listAccessibleCustomers"');
+
+            throw $e;
+        }
 
         foreach ($customersResponse->getResourceNames() as $customerResourceName) {
             Assert::string($customerResourceName);
@@ -67,8 +81,14 @@ final class CustomerIdsResolver implements CustomerIdsResolverInterface
             $customerIdToSearch = array_shift($managerCustomerIdsToSearch);
             Assert::integer($customerIdToSearch);
 
-            /** @var GoogleAdsServerStreamDecorator $stream */
-            $stream = $googleAdsServiceClient->searchStream((string) $customerIdToSearch, $query);
+            try {
+                /** @var GoogleAdsServerStreamDecorator $stream */
+                $stream = $googleAdsServiceClient->searchStream((string) $customerIdToSearch, $query);
+            } catch (ApiException $e) {
+                $this->logger->error(sprintf('An error occurred while trying to run the query "%s" with customer id: %s', $query, (string) $customerIdToSearch));
+
+                throw $e;
+            }
 
             /** @var GoogleAdsRow $googleAdsRow */
             foreach ($stream->iterateAllElements() as $googleAdsRow) {
@@ -105,5 +125,10 @@ final class CustomerIdsResolver implements CustomerIdsResolverInterface
                 }
             }
         }
+    }
+
+    public function setLogger(LoggerInterface $logger): void
+    {
+        $this->logger = $logger;
     }
 }

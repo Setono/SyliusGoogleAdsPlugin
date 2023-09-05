@@ -6,6 +6,10 @@
         <service id="setono_sylius_google_ads.resolver.customer_ids"
                  class="Setono\SyliusGoogleAdsPlugin\Resolver\CustomerIdsResolver">
             <argument type="service" id="setono_sylius_google_ads.factory.google_ads_client"/>
+
+            <call method="setLogger">
+                <argument type="service" id="logger"/>
+            </call>
         </service>
     </services>
 </container>
