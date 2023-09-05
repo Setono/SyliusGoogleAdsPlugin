@@ -85,9 +85,14 @@ final class CustomerIdsResolver implements CustomerIdsResolverInterface, LoggerA
                 /** @var GoogleAdsServerStreamDecorator $stream */
                 $stream = $googleAdsServiceClient->searchStream((string) $customerIdToSearch, $query);
             } catch (ApiException $e) {
-                $this->logger->error(sprintf('An error occurred while trying to run the query "%s" with customer id: %s', $query, (string) $customerIdToSearch));
+                $this->logger->error(sprintf(
+                    'An error occurred while trying to run the query "%s" with customer id "%s": %s',
+                    $query,
+                    (string) $customerIdToSearch,
+                    $e->getMessage(),
+                ));
 
-                throw $e;
+                continue;
             }
 
             /** @var GoogleAdsRow $googleAdsRow */
