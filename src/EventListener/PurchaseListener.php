@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusGoogleAdsPlugin\EventSubscriber;
+namespace Setono\SyliusGoogleAdsPlugin\EventListener;
 
 use Doctrine\Persistence\ManagerRegistry;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -14,11 +14,10 @@ use Setono\SyliusGoogleAdsPlugin\Event\PrePersistConversionFromOrderEvent;
 use Setono\SyliusGoogleAdsPlugin\Factory\ConversionFactoryInterface;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Sylius\Component\Core\Model\OrderInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Webmozart\Assert\Assert;
 
-final class PurchaseSubscriber implements EventSubscriberInterface, LoggerAwareInterface
+final class PurchaseListener implements LoggerAwareInterface
 {
     use ORMManagerTrait;
 
@@ -30,16 +29,10 @@ final class PurchaseSubscriber implements EventSubscriberInterface, LoggerAwareI
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly RequestStack $requestStack,
         private readonly string $cookieName,
+        private readonly bool $flush = false,
     ) {
         $this->managerRegistry = $managerRegistry;
         $this->logger = new NullLogger();
-    }
-
-    public static function getSubscribedEvents(): array
-    {
-        return [
-            'sylius.order.pre_complete' => 'track',
-        ];
     }
 
     public function track(ResourceControllerEvent $event): void
@@ -67,7 +60,11 @@ final class PurchaseSubscriber implements EventSubscriberInterface, LoggerAwareI
 
             $this->eventDispatcher->dispatch(new PrePersistConversionFromOrderEvent($conversion, $order));
 
-            $this->getManager($conversion)->persist($conversion);
+            $manager = $this->getManager($conversion);
+            $manager->persist($conversion);
+            if ($this->flush) {
+                $manager->flush();
+            }
         } catch (\Throwable $e) {
             $this->logger->error(sprintf(
                 'An error occurred when trying to track a Google Ads conversion: %s',

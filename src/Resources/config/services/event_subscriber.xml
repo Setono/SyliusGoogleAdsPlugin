@@ -11,21 +11,6 @@
         <parameter key="setono_sylius_google_ads.gclid_cookie_name">ssga_click_id</parameter>
     </parameters>
     <services>
-        <service id="setono_sylius_google_ads.event_subscriber.purchase_subscriber"
-                 class="Setono\SyliusGoogleAdsPlugin\EventSubscriber\PurchaseSubscriber">
-            <argument type="service" id="doctrine"/>
-            <argument type="service" id="setono_sylius_google_ads.factory.conversion"/>
-            <argument type="service" id="event_dispatcher"/>
-            <argument type="service" id="request_stack"/>
-            <argument>%setono_sylius_google_ads.gclid_cookie_name%</argument>
-
-            <call method="setLogger">
-                <argument type="service" id="logger"/>
-            </call>
-
-            <tag name="kernel.event_subscriber"/>
-        </service>
-
         <service id="setono_sylius_google_ads.event_subscriber.save_gclid_in_cookie_subscriber"
                  class="Setono\SyliusGoogleAdsPlugin\EventSubscriber\StoreGclidSubscriber">
             <argument>%setono_sylius_google_ads.gclid_cookie_name%</argument>
