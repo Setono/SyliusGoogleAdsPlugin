@@ -10,13 +10,25 @@ use Google\Ads\GoogleAds\V13\Common\UserIdentifier;
 use Google\Ads\GoogleAds\V13\Enums\ConversionAdjustmentTypeEnum\ConversionAdjustmentType;
 use Google\Ads\GoogleAds\V13\Enums\UserIdentifierSourceEnum\UserIdentifierSource;
 use Google\Ads\GoogleAds\V13\Services\ConversionAdjustment;
+use Setono\SyliusGoogleAdsPlugin\Factory\GoogleAdsClientFactoryInterface;
 use Setono\SyliusGoogleAdsPlugin\Logger\ConversionLogger;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
+use Setono\SyliusGoogleAdsPlugin\Repository\ConnectionMappingRepositoryInterface;
 use Setono\SyliusGoogleAdsPlugin\Workflow\ConversionWorkflow;
+use Symfony\Component\Workflow\WorkflowInterface;
 use Webmozart\Assert\Assert;
 
 final class EnhancedConversionProcessor extends AbstractConversionProcessor
 {
+    public function __construct(
+        WorkflowInterface $workflow,
+        GoogleAdsClientFactoryInterface $googleAdsClientFactory,
+        ConnectionMappingRepositoryInterface $connectionMappingRepository,
+        private readonly string $enhancedConversionUploadDelay,
+    ) {
+        parent::__construct($workflow, $googleAdsClientFactory, $connectionMappingRepository);
+    }
+
     public function isEligible(ConversionInterface $conversion): bool
     {
         $stateUpdatedAt = $conversion->getStateUpdatedAt();
@@ -24,7 +36,7 @@ final class EnhancedConversionProcessor extends AbstractConversionProcessor
             return false;
         }
 
-        $lastUpdatedThreshold = (new \DateTimeImmutable())->sub(new \DateInterval('PT23H30M'));
+        $lastUpdatedThreshold = (new \DateTimeImmutable())->sub(new \DateInterval($this->enhancedConversionUploadDelay));
 
         return $stateUpdatedAt <= $lastUpdatedThreshold && $this->workflow->can($conversion, ConversionWorkflow::TRANSITION_UPLOAD_ENHANCED_CONVERSION);
     }

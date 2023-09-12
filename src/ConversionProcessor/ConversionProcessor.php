@@ -6,13 +6,25 @@ namespace Setono\SyliusGoogleAdsPlugin\ConversionProcessor;
 
 use Google\Ads\GoogleAds\Util\V13\ResourceNames;
 use Google\Ads\GoogleAds\V13\Services\ClickConversion;
+use Setono\SyliusGoogleAdsPlugin\Factory\GoogleAdsClientFactoryInterface;
 use Setono\SyliusGoogleAdsPlugin\Logger\ConversionLogger;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
+use Setono\SyliusGoogleAdsPlugin\Repository\ConnectionMappingRepositoryInterface;
 use Setono\SyliusGoogleAdsPlugin\Workflow\ConversionWorkflow;
+use Symfony\Component\Workflow\WorkflowInterface;
 use Webmozart\Assert\Assert;
 
 final class ConversionProcessor extends AbstractConversionProcessor
 {
+    public function __construct(
+        WorkflowInterface $workflow,
+        GoogleAdsClientFactoryInterface $googleAdsClientFactory,
+        ConnectionMappingRepositoryInterface $connectionMappingRepository,
+        private readonly string $enhancedConversionUploadDelay,
+    ) {
+        parent::__construct($workflow, $googleAdsClientFactory, $connectionMappingRepository);
+    }
+
     public function isEligible(ConversionInterface $conversion): bool
     {
         return $this->workflow->can($conversion, ConversionWorkflow::TRANSITION_UPLOAD_CONVERSION);
@@ -75,9 +87,7 @@ final class ConversionProcessor extends AbstractConversionProcessor
             ));
         }
 
-        // According to Google we must upload the enhanced conversion within 24 hours
-        // See https://developers.google.com/google-ads/api/docs/conversions/enhance-conversions
-        $conversion->setNextProcessingAt((new \DateTimeImmutable())->add(new \DateInterval('PT23H30M')));
+        $conversion->setNextProcessingAt((new \DateTimeImmutable())->add(new \DateInterval($this->enhancedConversionUploadDelay)));
 
         $this->workflow->apply($conversion, ConversionWorkflow::TRANSITION_UPLOAD_CONVERSION);
     }

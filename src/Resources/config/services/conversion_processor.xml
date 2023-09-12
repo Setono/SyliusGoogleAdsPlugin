@@ -20,6 +20,7 @@
         <service id="setono_sylius_google_ads.conversion_processor.conversion"
                  class="Setono\SyliusGoogleAdsPlugin\ConversionProcessor\ConversionProcessor"
                  parent="setono_sylius_google_ads.conversion_processor.abstract">
+            <argument>%setono_sylius_google_ads.enhanced_conversion_upload_delay%</argument>
 
             <tag name="setono_sylius_google_ads.conversion_processor" priority="90"/>
         </service>
@@ -27,6 +28,7 @@
         <service id="setono_sylius_google_ads.conversion_processor.enhanced_conversion"
                  class="Setono\SyliusGoogleAdsPlugin\ConversionProcessor\EnhancedConversionProcessor"
                  parent="setono_sylius_google_ads.conversion_processor.abstract">
+            <argument>%setono_sylius_google_ads.enhanced_conversion_upload_delay%</argument>
 
             <tag name="setono_sylius_google_ads.conversion_processor" priority="80"/>
         </service>
