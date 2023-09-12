@@ -24,7 +24,7 @@ final class EnhancedConversionProcessor extends AbstractConversionProcessor
             return false;
         }
 
-        $lastUpdatedThreshold = (new \DateTimeImmutable())->sub(new \DateInterval('PT24H'));
+        $lastUpdatedThreshold = (new \DateTimeImmutable())->sub(new \DateInterval('PT23H30M'));
 
         return $stateUpdatedAt <= $lastUpdatedThreshold && $this->workflow->can($conversion, ConversionWorkflow::TRANSITION_UPLOAD_ENHANCED_CONVERSION);
     }

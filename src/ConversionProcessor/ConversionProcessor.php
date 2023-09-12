@@ -75,9 +75,9 @@ final class ConversionProcessor extends AbstractConversionProcessor
             ));
         }
 
-        // According to Google we must wait 24 hours before sending a conversion adjustment.
-        // See https://developers.google.com/google-ads/api/docs/conversions/upload-adjustments
-        $conversion->setNextProcessingAt((new \DateTimeImmutable())->add(new \DateInterval('PT24H')));
+        // According to Google we must upload the enhanced conversion within 24 hours
+        // See https://developers.google.com/google-ads/api/docs/conversions/enhance-conversions
+        $conversion->setNextProcessingAt((new \DateTimeImmutable())->add(new \DateInterval('PT23H30M')));
 
         $this->workflow->apply($conversion, ConversionWorkflow::TRANSITION_UPLOAD_CONVERSION);
     }
