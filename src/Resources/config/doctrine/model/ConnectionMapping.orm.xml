@@ -4,7 +4,7 @@
                   xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                                       http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <entity name="Setono\SyliusGoogleAdsPlugin\Model\ConnectionMapping"
+    <mapped-superclass name="Setono\SyliusGoogleAdsPlugin\Model\ConnectionMapping"
             table="setono_sylius_google_ads__connection_mapping">
         <id name="id" type="integer">
             <generator strategy="AUTO"/>
@@ -26,5 +26,5 @@
         <unique-constraints>
             <unique-constraint columns="connection_id,channel_id"/>
         </unique-constraints>
-    </entity>
+    </mapped-superclass>
 </doctrine-mapping>

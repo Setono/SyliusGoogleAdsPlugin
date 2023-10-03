@@ -5,7 +5,7 @@
                   xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                                       http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <entity name="Setono\SyliusGoogleAdsPlugin\Model\Conversion"
+    <mapped-superclass name="Setono\SyliusGoogleAdsPlugin\Model\Conversion"
             table="setono_sylius_google_ads__conversion">
         <indexes>
             <index columns="created_at,channel_id"/>
@@ -46,5 +46,5 @@
         <many-to-one field="order" target-entity="Sylius\Component\Order\Model\OrderInterface">
             <join-column name="order_id" referenced-column-name="id" on-delete="SET NULL"/>
         </many-to-one>
-    </entity>
+    </mapped-superclass>
 </doctrine-mapping>
