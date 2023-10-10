@@ -7,6 +7,7 @@
                  class="Setono\SyliusGoogleAdsPlugin\EventListener\PurchaseListener">
             <argument type="service" id="doctrine"/>
             <argument type="service" id="setono_sylius_google_ads.factory.conversion"/>
+            <argument type="service" id="setono_sylius_google_ads.repository.conversion"/>
             <argument type="service" id="event_dispatcher"/>
             <argument type="service" id="request_stack"/>
             <argument>%setono_sylius_google_ads.gclid_cookie_name%</argument>

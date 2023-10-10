@@ -6,6 +6,7 @@ namespace Setono\SyliusGoogleAdsPlugin\Repository;
 
 use Doctrine\ORM\QueryBuilder;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
+use Sylius\Component\Order\Model\OrderInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 /**
@@ -21,4 +22,6 @@ interface ConversionRepositoryInterface extends RepositoryInterface
      * @return int the number of conversions pruned/removed
      */
     public function prune(): int;
+
+    public function findOneByOrder(OrderInterface $order): ?ConversionInterface;
 }

@@ -12,6 +12,7 @@ use Psr\Log\NullLogger;
 use Setono\DoctrineObjectManagerTrait\ORM\ORMManagerTrait;
 use Setono\SyliusGoogleAdsPlugin\Event\PrePersistConversionFromOrderEvent;
 use Setono\SyliusGoogleAdsPlugin\Factory\ConversionFactoryInterface;
+use Setono\SyliusGoogleAdsPlugin\Repository\ConversionRepositoryInterface;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Sylius\Component\Core\Model\OrderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -26,6 +27,7 @@ final class PurchaseListener implements LoggerAwareInterface
     public function __construct(
         ManagerRegistry $managerRegistry,
         private readonly ConversionFactoryInterface $conversionFactory,
+        private readonly ConversionRepositoryInterface $conversionRepository,
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly RequestStack $requestStack,
         private readonly string $cookieName,
@@ -41,6 +43,10 @@ final class PurchaseListener implements LoggerAwareInterface
             /** @var mixed|OrderInterface $order */
             $order = $event->getSubject();
             Assert::isInstanceOf($order, OrderInterface::class);
+
+            if (null !== $this->conversionRepository->findOneByOrder($order)) {
+                return;
+            }
 
             $request = $this->requestStack->getMainRequest();
             Assert::notNull($request);
