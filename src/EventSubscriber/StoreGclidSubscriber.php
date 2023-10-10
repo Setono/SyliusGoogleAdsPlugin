@@ -41,7 +41,7 @@ final class StoreGclidSubscriber implements EventSubscriberInterface
         $response->headers->setCookie(Cookie::create(
             $this->cookieName,
             (string) $request->query->get('gclid'),
-            new DateTimeImmutable('+3 months'),
+            new DateTimeImmutable('+90 days'), // this should be set to the 'Click-through conversion window' in your Google conversion action settings
             null,
             null,
             false,
