@@ -20,6 +20,6 @@ final class StartProcessingSubscriber implements EventSubscriberInterface
     {
         $event->conversion->setLastProcessingStartedAt(new \DateTimeImmutable());
         $event->conversion->setProcessing(true);
-        $event->conversion->setLogMessages(['Processing started']);
+        $event->conversion->addLogMessage('Processing started');
     }
 }
