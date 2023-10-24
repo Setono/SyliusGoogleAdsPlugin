@@ -2,7 +2,7 @@
     "name": "setono/sylius-google-ads-plugin",
     "description": "Google Ads plugin for Sylius.",
     "license": "MIT",
-    "type": "symfony-bundle",
+    "type": "sylius-plugin",
     "keywords": [
         "sylius",
         "sylius-plugin"
