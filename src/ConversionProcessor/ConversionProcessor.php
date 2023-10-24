@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin\ConversionProcessor;
 
 use Google\Ads\GoogleAds\Util\V13\ResourceNames;
+use Google\Ads\GoogleAds\V13\Common\UserIdentifier;
+use Google\Ads\GoogleAds\V13\Enums\UserIdentifierSourceEnum\UserIdentifierSource;
 use Google\Ads\GoogleAds\V13\Services\ClickConversion;
 use Setono\SyliusGoogleAdsPlugin\Factory\GoogleAdsClientFactoryInterface;
 use Setono\SyliusGoogleAdsPlugin\Logger\ConversionLogger;
@@ -72,6 +74,13 @@ final class ConversionProcessor extends AbstractConversionProcessor
             'gclid' => $conversion->getGoogleClickId(),
         ]);
 
+        $clickConversion->setUserIdentifiers([
+            new UserIdentifier([
+                'hashed_email' => self::normalizeAndHashEmailAddress($order->getCustomer()?->getEmailCanonical()),
+                'user_identifier_source' => UserIdentifierSource::FIRST_PARTY,
+            ]),
+        ]);
+
         $conversionUploadServiceClient = $client->getConversionUploadServiceClient();
 
         $response = $conversionUploadServiceClient->uploadClickConversions(
@@ -90,5 +99,42 @@ final class ConversionProcessor extends AbstractConversionProcessor
         $conversion->setNextProcessingAt((new \DateTimeImmutable())->add(new \DateInterval($this->enhancedConversionUploadDelay)));
 
         $this->workflow->apply($conversion, ConversionWorkflow::TRANSITION_UPLOAD_CONVERSION);
+    }
+
+    private static function normalizeAndHash(?string $value): string
+    {
+        if (null === $value) {
+            return '';
+        }
+
+        // Uses the SHA-256 hash algorithm for hashing user identifiers in a privacy-safe way, as
+        // described at https://support.google.com/google-ads/answer/9888656.
+        return hash('sha256', strtolower(trim($value)));
+    }
+
+    /**
+     * Returns the result of normalizing and hashing an email address. For this use case, Google
+     * Ads requires removal of any '.' characters preceding "gmail.com" or "googlemail.com".
+     *
+     * @param string $emailAddress the email address to normalize and hash
+     *
+     * @return string the normalized and hashed email address
+     */
+    private static function normalizeAndHashEmailAddress(?string $emailAddress): string
+    {
+        if (null === $emailAddress) {
+            return '';
+        }
+
+        $normalizedEmail = strtolower($emailAddress);
+        $emailParts = explode('@', $normalizedEmail);
+        if (count($emailParts) > 1 && preg_match('/^(gmail|googlemail)\.com\s*/', $emailParts[1])) {
+            // Removes any '.' characters from the portion of the email address before the domain
+            // if the domain is gmail.com or googlemail.com.
+            $emailParts[0] = str_replace('.', '', $emailParts[0]);
+            $normalizedEmail = sprintf('%s@%s', $emailParts[0], $emailParts[1]);
+        }
+
+        return self::normalizeAndHash($normalizedEmail);
     }
 }
