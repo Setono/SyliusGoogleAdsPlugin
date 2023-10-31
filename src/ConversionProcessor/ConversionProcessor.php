@@ -16,14 +16,13 @@ use Setono\SyliusGoogleAdsPlugin\Workflow\ConversionWorkflow;
 use Symfony\Component\Workflow\WorkflowInterface;
 use Webmozart\Assert\Assert;
 
-final class ConversionProcessor extends AbstractConversionProcessor
+final class ConversionProcessor implements ConversionProcessorInterface
 {
     public function __construct(
-        WorkflowInterface $workflow,
-        GoogleAdsClientFactoryInterface $googleAdsClientFactory,
-        ConnectionMappingRepositoryInterface $connectionMappingRepository,
+        private readonly WorkflowInterface $workflow,
+        private readonly GoogleAdsClientFactoryInterface $googleAdsClientFactory,
+        private readonly ConnectionMappingRepositoryInterface $connectionMappingRepository,
     ) {
-        parent::__construct($workflow, $googleAdsClientFactory, $connectionMappingRepository);
     }
 
     public function isEligible(ConversionInterface $conversion): bool

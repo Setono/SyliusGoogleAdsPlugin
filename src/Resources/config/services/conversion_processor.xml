@@ -10,25 +10,36 @@
             <argument type="service" id="event_dispatcher"/>
         </service>
 
-        <service id="setono_sylius_google_ads.conversion_processor.abstract"
-                 class="Setono\SyliusGoogleAdsPlugin\ConversionProcessor\AbstractConversionProcessor" abstract="true">
+        <service id="setono_sylius_google_ads.conversion_processor.conversion"
+                 class="Setono\SyliusGoogleAdsPlugin\ConversionProcessor\ConversionProcessor">
             <argument type="service" id="state_machine.setono_sylius_google_ads__conversion"/>
             <argument type="service" id="setono_sylius_google_ads.factory.google_ads_client"/>
             <argument type="service" id="setono_sylius_google_ads.repository.connection_mapping"/>
-        </service>
-
-        <service id="setono_sylius_google_ads.conversion_processor.conversion"
-                 class="Setono\SyliusGoogleAdsPlugin\ConversionProcessor\ConversionProcessor"
-                 parent="setono_sylius_google_ads.conversion_processor.abstract">
 
             <tag name="setono_sylius_google_ads.conversion_processor" priority="90"/>
         </service>
 
         <service id="setono_sylius_google_ads.conversion_processor.qualification"
-                 class="Setono\SyliusGoogleAdsPlugin\ConversionProcessor\QualificationConversionProcessor"
-                 parent="setono_sylius_google_ads.conversion_processor.abstract">
+                 class="Setono\SyliusGoogleAdsPlugin\ConversionProcessor\QualificationConversionProcessor">
+            <argument type="service" id="state_machine.setono_sylius_google_ads__conversion"/>
+            <argument type="service" id="setono_sylius_google_ads.conversion_processor.qualification_voter.composite"/>
 
             <tag name="setono_sylius_google_ads.conversion_processor" priority="100"/>
+        </service>
+
+        <!-- Qualification voters -->
+        <service id="setono_sylius_google_ads.conversion_processor.qualification_voter.composite"
+                 class="Setono\SyliusGoogleAdsPlugin\ConversionProcessor\QualificationVoter\CompositeQualificationVoter">
+        </service>
+
+        <service id="setono_sylius_google_ads.conversion_processor.qualification_voter.order_state"
+                 class="Setono\SyliusGoogleAdsPlugin\ConversionProcessor\QualificationVoter\OrderStateQualificationVoter">
+            <tag name="setono_sylius_google_ads.qualification_voter"/>
+        </service>
+
+        <service id="setono_sylius_google_ads.conversion_processor.qualification_voter.payment_state"
+                 class="Setono\SyliusGoogleAdsPlugin\ConversionProcessor\QualificationVoter\PaymentStateQualificationVoter">
+            <tag name="setono_sylius_google_ads.qualification_voter"/>
         </service>
     </services>
 </container>

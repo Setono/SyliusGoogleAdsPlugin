@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\ConversionProcessor;
 
+use Setono\SyliusGoogleAdsPlugin\ConversionProcessor\QualificationVoter\QualificationVoterInterface;
+use Setono\SyliusGoogleAdsPlugin\ConversionProcessor\QualificationVoter\Vote;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
 use Setono\SyliusGoogleAdsPlugin\Workflow\ConversionWorkflow;
-use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\OrderPaymentStates;
+use Symfony\Component\Workflow\WorkflowInterface;
 use Webmozart\Assert\Assert;
 
-/**
- * This qualification processor more or less mimics the default behavior of the Google Ads javascript tracking snippet
- * which is injected on the 'success' page which usually means the order is completed and paid, but hasn't been shipped
- */
-final class QualificationConversionProcessor extends AbstractConversionProcessor
+final class QualificationConversionProcessor implements ConversionProcessorInterface
 {
-    private int $initialNextProcessingDelay = 300;
+    public function __construct(
+        private readonly WorkflowInterface $workflow,
+        private readonly QualificationVoterInterface $qualificationVoter,
+        private readonly int $initialNextProcessingDelay = 300,
+    ) {
+    }
 
     public function isEligible(ConversionInterface $conversion): bool
     {
@@ -28,30 +30,28 @@ final class QualificationConversionProcessor extends AbstractConversionProcessor
     {
         Assert::true($this->isEligible($conversion));
 
-        /** @var OrderInterface $order */
-        $order = $conversion->getOrder();
-        Assert::isInstanceOf($order, OrderInterface::class);
+        $vote = $this->qualificationVoter->vote($conversion);
+        $conversion->addLogMessage($vote->reasons);
 
-        if ($order->getPaymentState() === OrderPaymentStates::STATE_CANCELLED || $order->getState() === OrderInterface::STATE_CANCELLED) {
-            $conversion->addLogMessage('The conversion was disqualified because either the payment state or order state was "cancelled"');
+        switch ($vote->value) {
+            case Vote::QUALIFY:
+                $this->workflow->apply($conversion, ConversionWorkflow::TRANSITION_QUALIFY);
 
-            $this->workflow->apply($conversion, ConversionWorkflow::TRANSITION_DISQUALIFY);
+                break;
+            case Vote::DISQUALIFY:
+                $this->workflow->apply($conversion, ConversionWorkflow::TRANSITION_DISQUALIFY);
 
-            return;
+                break;
+            case Vote::ABSTAIN:
+                $nextProcessingAt = $this->calculateNextProcessingAt($conversion);
+                $conversion->addLogMessage(sprintf(
+                    'The next time this conversion will be processed it set to %s',
+                    $nextProcessingAt->format('Y-m-d H:i'),
+                ));
+                $conversion->setNextProcessingAt($nextProcessingAt);
+
+                break;
         }
-
-        if (!in_array($order->getPaymentState(), [OrderPaymentStates::STATE_PAID, OrderPaymentStates::STATE_AUTHORIZED], true)) {
-            $nextProcessingAt = $this->calculateNextProcessingAt($conversion);
-            $conversion->addLogMessage(sprintf(
-                'The conversion does not qualify for further processing yet because the order is not paid. The next time this conversion will be processed it set to %s',
-                $nextProcessingAt->format('Y-m-d H:i'),
-            ));
-            $conversion->setNextProcessingAt($nextProcessingAt);
-
-            return;
-        }
-
-        $this->workflow->apply($conversion, ConversionWorkflow::TRANSITION_QUALIFY);
     }
 
     private function calculateNextProcessingAt(ConversionInterface $conversion): \DateTimeImmutable

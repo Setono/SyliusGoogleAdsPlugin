@@ -201,9 +201,12 @@ class Conversion implements ConversionInterface
         }
     }
 
-    public function addLogMessage(string $logMessage): void
+    public function addLogMessage(array|string $logMessage): void
     {
-        $this->logMessages[] = sprintf('[%s] %s', (new \DateTimeImmutable())->format('Y-m-d H:i:s'), $logMessage);
+        $logMessage = (array) $logMessage;
+        foreach ($logMessage as $value) {
+            $this->logMessages[] = sprintf('[%s] %s', (new \DateTimeImmutable())->format('Y-m-d H:i:s'), $value);
+        }
     }
 
     public function hasLogMessages(): bool
