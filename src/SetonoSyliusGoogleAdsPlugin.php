@@ -22,6 +22,11 @@ final class SetonoSyliusGoogleAdsPlugin extends AbstractResourceBundle
             'setono_sylius_google_ads.conversion_processor.composite',
             'setono_sylius_google_ads.conversion_processor',
         ));
+
+        $container->addCompilerPass(new CompositeCompilerPass(
+            'setono_sylius_google_ads.conversion_processor.qualification_voter.composite',
+            'setono_sylius_google_ads.qualification_voter',
+        ));
     }
 
     public function getSupportedDrivers(): array

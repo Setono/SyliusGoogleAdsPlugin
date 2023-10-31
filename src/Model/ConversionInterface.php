@@ -116,7 +116,10 @@ interface ConversionInterface extends ResourceInterface, TimestampableInterface,
      */
     public function setLogMessages(array $logMessages): void;
 
-    public function addLogMessage(string $logMessage): void;
+    /**
+     * @param list<string>|string $logMessage
+     */
+    public function addLogMessage(array|string $logMessage): void;
 
     public function hasLogMessages(): bool;
 
