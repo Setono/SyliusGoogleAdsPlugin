@@ -22,8 +22,6 @@ interface ConversionInterface extends ResourceInterface, TimestampableInterface,
 
     public const STATE_CONVERSION_UPLOADED = 'conversion_uploaded';
 
-    public const STATE_ENHANCED_CONVERSION_UPLOADED = 'enhanced_conversion_uploaded';
-
     public const STATE_DELIVERED = 'delivered';
 
     public function getId(): ?int;

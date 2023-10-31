@@ -24,10 +24,6 @@ final class SetonoSyliusGoogleAdsExtension extends AbstractResourceExtension imp
         $config = $this->processConfiguration($this->getConfiguration([], $container), $configs);
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
-        // According to Google we must upload the enhanced conversion within 24 hours
-        // See https://developers.google.com/google-ads/api/docs/conversions/enhance-conversions
-        $container->setParameter('setono_sylius_google_ads.enhanced_conversion_upload_delay', 'PT23H30M');
-
         $loader->load('services.xml');
 
         $this->registerResources(

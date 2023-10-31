@@ -21,8 +21,6 @@ class ConnectionMapping implements ConnectionMappingInterface
 
     private ?int $conversionActionId = null;
 
-    private ?int $enhancedConversionActionId = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -81,15 +79,5 @@ class ConnectionMapping implements ConnectionMappingInterface
     public function setConversionActionId(null|int $conversionActionId): void
     {
         $this->conversionActionId = $conversionActionId;
-    }
-
-    public function getEnhancedConversionActionId(): ?int
-    {
-        return $this->enhancedConversionActionId;
-    }
-
-    public function setEnhancedConversionActionId(?int $enhancedConversionActionId): void
-    {
-        $this->enhancedConversionActionId = $enhancedConversionActionId;
     }
 }

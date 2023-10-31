@@ -22,7 +22,6 @@ final class ConversionProcessor extends AbstractConversionProcessor
         WorkflowInterface $workflow,
         GoogleAdsClientFactoryInterface $googleAdsClientFactory,
         ConnectionMappingRepositoryInterface $connectionMappingRepository,
-        private readonly string $enhancedConversionUploadDelay,
     ) {
         parent::__construct($workflow, $googleAdsClientFactory, $connectionMappingRepository);
     }
@@ -95,8 +94,6 @@ final class ConversionProcessor extends AbstractConversionProcessor
                 (string) $response->getPartialFailureError()?->getMessage(),
             ));
         }
-
-        $conversion->setNextProcessingAt((new \DateTimeImmutable())->add(new \DateInterval($this->enhancedConversionUploadDelay)));
 
         $this->workflow->apply($conversion, ConversionWorkflow::TRANSITION_UPLOAD_CONVERSION);
     }
