@@ -15,6 +15,7 @@
             <argument type="service" id="state_machine.setono_sylius_google_ads__conversion"/>
             <argument type="service" id="setono_sylius_google_ads.factory.google_ads_client"/>
             <argument type="service" id="setono_sylius_google_ads.repository.connection_mapping"/>
+            <argument type="service" id="event_dispatcher"/>
 
             <tag name="setono_sylius_google_ads.conversion_processor" priority="90"/>
         </service>

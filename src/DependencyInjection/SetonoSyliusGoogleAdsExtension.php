@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\DependencyInjection;
 
+use Setono\SyliusGoogleAdsPlugin\ConversionProcessor\ConversionProcessorInterface;
 use Setono\SyliusGoogleAdsPlugin\ConversionProcessor\QualificationVoter\QualificationVoterInterface;
 use Setono\SyliusGoogleAdsPlugin\Workflow\ConversionWorkflow;
 use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
@@ -24,6 +25,10 @@ final class SetonoSyliusGoogleAdsExtension extends AbstractResourceExtension imp
          */
         $config = $this->processConfiguration($this->getConfiguration([], $container), $configs);
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+
+        $container->registerForAutoconfiguration(ConversionProcessorInterface::class)
+            ->addTag('setono_sylius_google_ads.conversion_processor')
+        ;
 
         $container->registerForAutoconfiguration(QualificationVoterInterface::class)
             ->addTag('setono_sylius_google_ads.qualification_processor')
