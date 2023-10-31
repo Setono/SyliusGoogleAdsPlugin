@@ -23,8 +23,6 @@ final class ConversionWorkflow
 
     public const TRANSITION_UPLOAD_CONVERSION = 'upload_conversion';
 
-    public const TRANSITION_UPLOAD_ENHANCED_CONVERSION = 'upload_enhanced_conversion';
-
     public const TRANSITION_DELIVER = 'deliver';
 
     public const TRANSITION_FAIL = 'fail';
@@ -43,7 +41,6 @@ final class ConversionWorkflow
         return [
             ConversionInterface::STATE_CONVERSION_UPLOADED,
             ConversionInterface::STATE_DELIVERED,
-            ConversionInterface::STATE_ENHANCED_CONVERSION_UPLOADED,
             ConversionInterface::STATE_FAILED,
             ConversionInterface::STATE_DISQUALIFIED,
             ConversionInterface::STATE_PENDING,
@@ -110,18 +107,13 @@ final class ConversionWorkflow
                 ConversionInterface::STATE_CONVERSION_UPLOADED,
             ),
             new Transition(
-                self::TRANSITION_UPLOAD_ENHANCED_CONVERSION,
-                ConversionInterface::STATE_CONVERSION_UPLOADED,
-                ConversionInterface::STATE_ENHANCED_CONVERSION_UPLOADED,
-            ),
-            new Transition(
                 self::TRANSITION_DELIVER,
-                ConversionInterface::STATE_ENHANCED_CONVERSION_UPLOADED,
+                ConversionInterface::STATE_CONVERSION_UPLOADED,
                 ConversionInterface::STATE_DELIVERED,
             ),
             new Transition(
                 self::TRANSITION_FAIL,
-                [ConversionInterface::STATE_PENDING, ConversionInterface::STATE_QUALIFIED, ConversionInterface::STATE_CONVERSION_UPLOADED, ConversionInterface::STATE_ENHANCED_CONVERSION_UPLOADED],
+                [ConversionInterface::STATE_PENDING, ConversionInterface::STATE_QUALIFIED, ConversionInterface::STATE_CONVERSION_UPLOADED],
                 ConversionInterface::STATE_FAILED,
             ),
             new Transition(

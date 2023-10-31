@@ -83,28 +83,6 @@ final class SetupMapCustomerIdAction extends AbstractSetupAction
                 }
 
                 $connectionMapping->setConversionActionId($conversionActionId);
-
-                // handle the 'enhanced conversion conversion action', i.e. the conversion action where we send enhanced conversions
-                $enhancedConversionActionId = $connectionMapping->getEnhancedConversionActionId();
-
-                // when a conversion action id is already set, we will fetch that conversion action from Google
-                // and verify its settings. If the settings are invalid, we will null $conversionActionId which will
-                // create a new conversion action below
-                if (null !== $enhancedConversionActionId) {
-                    $conversionAction = $this->getConversionActionById($client, $customerId, $enhancedConversionActionId);
-
-                    // here we verify the settings of the existing conversion action
-                    if (null === $conversionAction || $conversionAction->getType() !== ConversionActionType::WEBPAGE || $conversionAction->getStatus() !== ConversionActionStatus::ENABLED) {
-                        $enhancedConversionActionId = null;
-                    }
-                }
-
-                // create conversion action
-                if (null === $enhancedConversionActionId) {
-                    $enhancedConversionActionId = $this->createConversionAction($client, $customerId, 'Enhanced Conversions - Google Ads Plugin by Setono', ConversionActionType::WEBPAGE);
-                }
-
-                $connectionMapping->setEnhancedConversionActionId($enhancedConversionActionId);
             }
 
             $manager->flush();

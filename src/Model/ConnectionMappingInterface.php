@@ -27,8 +27,4 @@ interface ConnectionMappingInterface extends ResourceInterface, ChannelAwareInte
     public function getConversionActionId(): ?int;
 
     public function setConversionActionId(?int $conversionActionId): void;
-
-    public function getEnhancedConversionActionId(): ?int;
-
-    public function setEnhancedConversionActionId(?int $enhancedConversionActionId): void;
 }
