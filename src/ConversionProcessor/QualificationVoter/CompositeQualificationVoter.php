@@ -13,14 +13,13 @@ use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
  * NOTICE the following rules apply to the voting process:
  *
  * 1. Only one voter needs to vote 'disqualify' for the voting to be disqualified
- * 2. At least one voter needs to vote 'qualify' for the voting to be qualified
+ * 2. All voters have to vote 'qualify' for the voting to be qualified
  * 3. If none of the above two conditions are met, the voting will be 'abstain'
  */
 final class CompositeQualificationVoter extends CompositeService implements QualificationVoterInterface
 {
     public function vote(ConversionInterface $conversion): Vote
     {
-        $qualify = false;
         $reasons = [];
 
         foreach ($this->services as $service) {
@@ -29,17 +28,13 @@ final class CompositeQualificationVoter extends CompositeService implements Qual
                 $reasons[] = $vote->reasons;
             }
 
-            if ($vote->isDisqualify()) {
+            if ($vote->isDisqualify() || $vote->isAbstain()) {
                 return $vote;
-            }
-
-            if ($vote->isQualify()) {
-                $qualify = true;
             }
         }
 
         $reasons = array_merge(...$reasons);
 
-        return $qualify ? Vote::qualify($reasons) : Vote::abstain($reasons);
+        return Vote::qualify($reasons);
     }
 }
