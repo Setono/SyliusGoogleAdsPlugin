@@ -31,7 +31,7 @@ final class SetonoSyliusGoogleAdsExtension extends AbstractResourceExtension imp
         ;
 
         $container->registerForAutoconfiguration(QualificationVoterInterface::class)
-            ->addTag('setono_sylius_google_ads.qualification_processor')
+            ->addTag('setono_sylius_google_ads.qualification_voter')
         ;
 
         $loader->load('services.xml');
