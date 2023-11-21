@@ -15,11 +15,11 @@ class ConnectionMapping implements ConnectionMappingInterface
 
     private ?ChannelInterface $channel = null;
 
-    private ?int $managerId = null;
+    private ?string $managerId = null;
 
-    private ?int $customerId = null;
+    private ?string $customerId = null;
 
-    private ?int $conversionActionId = null;
+    private ?string $conversionActionId = null;
 
     public function getId(): ?int
     {
@@ -46,22 +46,22 @@ class ConnectionMapping implements ConnectionMappingInterface
         $this->channel = $channel;
     }
 
-    public function getManagerId(): ?int
+    public function getManagerId(): ?string
     {
         return $this->managerId;
     }
 
-    public function setManagerId(?int $managerId): void
+    public function setManagerId(?string $managerId): void
     {
         $this->managerId = $managerId;
     }
 
-    public function getCustomerId(): ?int
+    public function getCustomerId(): ?string
     {
         return $this->customerId;
     }
 
-    public function setCustomerId(null|int|CustomerId $customerId): void
+    public function setCustomerId(null|string|CustomerId $customerId): void
     {
         if ($customerId instanceof CustomerId) {
             $this->setManagerId($customerId->managerId);
@@ -71,12 +71,12 @@ class ConnectionMapping implements ConnectionMappingInterface
         $this->customerId = $customerId;
     }
 
-    public function getConversionActionId(): ?int
+    public function getConversionActionId(): ?string
     {
         return $this->conversionActionId;
     }
 
-    public function setConversionActionId(null|int $conversionActionId): void
+    public function setConversionActionId(?string $conversionActionId): void
     {
         $this->conversionActionId = $conversionActionId;
     }

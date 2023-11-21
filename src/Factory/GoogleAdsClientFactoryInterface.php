@@ -15,13 +15,13 @@ interface GoogleAdsClientFactoryInterface
         string $clientSecret,
         string $refreshToken,
         string $developerToken,
-        int $managerId = null,
+        string $managerId = null,
         LoggerInterface $logger = null,
     ): GoogleAdsClient;
 
     public function createFromConnection(
         ConnectionInterface $connection,
-        int $managerId = null,
+        string $managerId = null,
         LoggerInterface $logger = null,
     ): GoogleAdsClient;
 }

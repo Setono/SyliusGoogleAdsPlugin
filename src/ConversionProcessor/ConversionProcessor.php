@@ -64,7 +64,7 @@ final class ConversionProcessor implements ConversionProcessorInterface
 
         $preSetClickConversionDataEvent = new PreSetClickConversionDataEvent($conversion, [
             'conversion_action' => ResourceNames::forConversionAction(
-                (string) $customerId,
+                $customerId,
                 (string) $connectionMapping->getConversionActionId(),
             ),
             'conversion_value' => round((int) $conversion->getValue() / 100, 2),
@@ -87,7 +87,7 @@ final class ConversionProcessor implements ConversionProcessorInterface
         $conversionUploadServiceClient = $client->getConversionUploadServiceClient();
 
         $response = $conversionUploadServiceClient->uploadClickConversions(
-            (string) $customerId,
+            $customerId,
             [$clickConversion],
             true, // notice that we only add one operation so in practice it's not a partial error, but just an error
         );

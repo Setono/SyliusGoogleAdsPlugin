@@ -18,7 +18,7 @@ final class GoogleAdsClientFactory implements GoogleAdsClientFactoryInterface
         string $clientSecret,
         string $refreshToken,
         string $developerToken,
-        int $managerId = null,
+        string $managerId = null,
         LoggerInterface $logger = null,
     ): GoogleAdsClient {
         $tokenBuilder = (new OAuth2TokenBuilder())
@@ -29,7 +29,7 @@ final class GoogleAdsClientFactory implements GoogleAdsClientFactoryInterface
         $builder = (new GoogleAdsClientBuilder())
             ->withDeveloperToken($developerToken)
             ->withOAuth2Credential($tokenBuilder->build())
-            ->withLoginCustomerId($managerId)
+            ->withLoginCustomerId((int) $managerId)
         ;
 
         if (null !== $logger) {
@@ -43,7 +43,7 @@ final class GoogleAdsClientFactory implements GoogleAdsClientFactoryInterface
 
     public function createFromConnection(
         ConnectionInterface $connection,
-        int $managerId = null,
+        string $managerId = null,
         LoggerInterface $logger = null,
     ): GoogleAdsClient {
         return $this->create(

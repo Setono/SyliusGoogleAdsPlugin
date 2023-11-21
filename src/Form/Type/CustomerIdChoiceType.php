@@ -31,8 +31,8 @@ final class CustomerIdChoiceType extends AbstractType
 
                     return $this->customerIdsResolver->getCustomerIdsFromConnection($connection);
                 },
-                'choice_value' => static fn (mixed $customerId): ?int => match (true) {
-                    null === $customerId || is_int($customerId) => $customerId,
+                'choice_value' => static fn (mixed $customerId): ?string => match (true) {
+                    null === $customerId || is_string($customerId) => $customerId,
                     $customerId instanceof CustomerId => $customerId->customerId,
                     default => throw new \RuntimeException('Invalid input')
                 },
