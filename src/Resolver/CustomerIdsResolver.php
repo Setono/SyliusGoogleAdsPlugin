@@ -29,6 +29,7 @@ final class CustomerIdsResolver implements CustomerIdsResolverInterface, LoggerA
     {
         $client = $this->googleAdsClientFactory->createFromConnection($connection);
 
+        /** @var list<string> $rootCustomerIds */
         $rootCustomerIds = [];
 
         try {
@@ -41,7 +42,7 @@ final class CustomerIdsResolver implements CustomerIdsResolverInterface, LoggerA
 
         foreach ($customersResponse->getResourceNames() as $customerResourceName) {
             Assert::string($customerResourceName);
-            $rootCustomerIds[] = (int) CustomerServiceClient::parseName($customerResourceName)['customer_id'];
+            $rootCustomerIds[] = (string) CustomerServiceClient::parseName($customerResourceName)['customer_id'];
         }
 
         $customerIds = [];
@@ -62,7 +63,7 @@ final class CustomerIdsResolver implements CustomerIdsResolverInterface, LoggerA
     /**
      * @return \Generator<array-key, CustomerId>
      */
-    private function getChildAccounts(int $rootCustomerId, ConnectionInterface $connection): \Generator
+    private function getChildAccounts(string $rootCustomerId, ConnectionInterface $connection): \Generator
     {
         $client = $this->googleAdsClientFactory->createFromConnection($connection, $rootCustomerId);
 
@@ -79,16 +80,16 @@ final class CustomerIdsResolver implements CustomerIdsResolverInterface, LoggerA
 
         while (!empty($managerCustomerIdsToSearch)) {
             $customerIdToSearch = array_shift($managerCustomerIdsToSearch);
-            Assert::integer($customerIdToSearch);
+            Assert::string($customerIdToSearch);
 
             try {
                 /** @var GoogleAdsServerStreamDecorator $stream */
-                $stream = $googleAdsServiceClient->searchStream((string) $customerIdToSearch, $query);
+                $stream = $googleAdsServiceClient->searchStream($customerIdToSearch, $query);
             } catch (ApiException $e) {
                 $this->logger->error(sprintf(
                     'An error occurred while trying to run the query "%s" with customer id "%s": %s',
                     $query,
-                    (string) $customerIdToSearch,
+                    $customerIdToSearch,
                     $e->getMessage(),
                 ));
 
@@ -102,7 +103,7 @@ final class CustomerIdsResolver implements CustomerIdsResolverInterface, LoggerA
                     continue;
                 }
 
-                yield new CustomerId($customerClient->getDescriptiveName(), $rootCustomerId, (int) $customerClient->getId());
+                yield new CustomerId($customerClient->getDescriptiveName(), $rootCustomerId, (string) $customerClient->getId());
 
                 // The steps below map parent and children accounts. Continue here so that managers
                 // accounts exclude themselves from the list of their children accounts.

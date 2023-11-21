@@ -103,13 +103,13 @@ final class SetupMapCustomerIdAction extends AbstractSetupAction
         ]));
     }
 
-    private function getConversionActionById(GoogleAdsClient $googleAdsClient, int $customerId, int $id): ?ConversionAction
+    private function getConversionActionById(GoogleAdsClient $googleAdsClient, string $customerId, string $id): ?ConversionAction
     {
         $googleAdsServiceClient = $googleAdsClient->getGoogleAdsServiceClient();
 
         /** @var GoogleAdsServerStreamDecorator $stream */
         $stream = $googleAdsServiceClient->searchStream(
-            (string) $customerId,
+            $customerId,
             "SELECT conversion_action.id, conversion_action.status, conversion_action.name, conversion_action.type FROM conversion_action WHERE conversion_action.id = $id",
         );
 
@@ -129,7 +129,7 @@ final class SetupMapCustomerIdAction extends AbstractSetupAction
     /**
      * Creates a conversion action and returns its id
      */
-    private function createConversionAction(GoogleAdsClient $googleAdsClient, int $customerId, string $name, int $type): int
+    private function createConversionAction(GoogleAdsClient $googleAdsClient, string $customerId, string $name, int $type): string
     {
         $name = sprintf('%s [%s]', $name, (new \DateTimeImmutable())->format('Y-m-d H:i'));
 
@@ -147,7 +147,7 @@ final class SetupMapCustomerIdAction extends AbstractSetupAction
         // Issues a mutate request to add the conversion action.
         $conversionActionServiceClient = $googleAdsClient->getConversionActionServiceClient();
         $response = $conversionActionServiceClient->mutateConversionActions(
-            (string) $customerId,
+            $customerId,
             [$conversionActionOperation],
             ['responseContentType' => ResponseContentType::MUTABLE_RESOURCE],
         );
@@ -159,7 +159,7 @@ final class SetupMapCustomerIdAction extends AbstractSetupAction
                 continue;
             }
 
-            return (int) $conversionAction->getId();
+            return (string) $conversionAction->getId();
         }
 
         throw new \RuntimeException('Could not create conversion action');

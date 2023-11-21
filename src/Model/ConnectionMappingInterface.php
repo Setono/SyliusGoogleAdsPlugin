@@ -16,15 +16,15 @@ interface ConnectionMappingInterface extends ResourceInterface, ChannelAwareInte
 
     public function setConnection(?ConnectionInterface $connection): void;
 
-    public function getManagerId(): ?int;
+    public function getManagerId(): ?string;
 
-    public function setManagerId(?int $managerId): void;
+    public function setManagerId(?string $managerId): void;
 
-    public function getCustomerId(): ?int;
+    public function getCustomerId(): ?string;
 
-    public function setCustomerId(null|int|CustomerId $customerId): void;
+    public function setCustomerId(null|string|CustomerId $customerId): void;
 
-    public function getConversionActionId(): ?int;
+    public function getConversionActionId(): ?string;
 
-    public function setConversionActionId(?int $conversionActionId): void;
+    public function setConversionActionId(?string $conversionActionId): void;
 }

@@ -19,20 +19,20 @@ trait LiveTestTrait
         return is_string($live) && true === (bool) $live;
     }
 
-    public static function getManagerId(): int
+    public static function getManagerId(): string
     {
         $managerId = getenv('GOOGLE_ADS_MANAGER_ID');
         Assert::stringNotEmpty($managerId);
 
-        return (int) $managerId;
+        return $managerId;
     }
 
-    public static function getCustomerId(): int
+    public static function getCustomerId(): string
     {
         $customerId = getenv('GOOGLE_ADS_CUSTOMER_ID');
         Assert::stringNotEmpty($customerId);
 
-        return (int) $customerId;
+        return $customerId;
     }
 
     public static function createConnection(): ConnectionInterface
