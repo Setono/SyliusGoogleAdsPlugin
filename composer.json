@@ -54,7 +54,7 @@
         "jms/serializer-bundle": "^4.2",
         "lexik/jwt-authentication-bundle": "^2.17",
         "matthiasnoback/symfony-config-test": "^4.3",
-        "phpunit/phpunit": "^9.6",
+        "phpunit/phpunit": "^10.4",
         "psalm/plugin-phpunit": "^0.18",
         "setono/code-quality-pack": "^2.6",
         "sylius/sylius": "~1.12.9",
