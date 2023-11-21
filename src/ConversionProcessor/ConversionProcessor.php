@@ -59,10 +59,10 @@ final class ConversionProcessor implements ConversionProcessorInterface
         $createdAt = $conversion->getCreatedAt();
         Assert::notNull($createdAt);
 
-        // Google doesn't allow daylight savings time when uploading, so we need this small hack to turn our time into UTC first
+        // Google doesn't allow daylight savings time when uploading, so we need to turn our time into UTC first
         $createdAt = \DateTimeImmutable::createFromInterface($createdAt)->setTimezone(new \DateTimeZone('UTC'));
 
-        $preSetClickConversionDataEvent = new PreSetClickConversionDataEvent($conversion, [
+        $preSetClickConversionDataEvent = new PreSetClickConversionDataEvent($conversion, array_filter([
             'conversion_action' => ResourceNames::forConversionAction(
                 $customerId,
                 (string) $connectionMapping->getConversionActionId(),
@@ -71,8 +71,10 @@ final class ConversionProcessor implements ConversionProcessorInterface
             'conversion_date_time' => $createdAt->format('Y-m-d H:i:sP'),
             'currency_code' => $conversion->getCurrencyCode(),
             'order_id' => $order->getId(),
-            'gclid' => $conversion->getGoogleClickId(),
-        ]);
+            'gclid' => $conversion->getGclid(),
+            'gbraid' => $conversion->getGbraid(),
+            'wbraid' => $conversion->getWbraid(),
+        ]));
         $this->eventDispatcher->dispatch($preSetClickConversionDataEvent);
 
         $clickConversion = new ClickConversion($preSetClickConversionDataEvent->data);

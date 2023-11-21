@@ -26,9 +26,17 @@ interface ConversionInterface extends ResourceInterface, TimestampableInterface,
 
     public function getId(): ?int;
 
-    public function getGoogleClickId(): ?string;
+    public function getGclid(): ?string;
 
-    public function setGoogleClickId(string $googleClickId): void;
+    public function setGclid(?string $gclid): void;
+
+    public function getGbraid(): ?string;
+
+    public function setGbraid(?string $gbraid): void;
+
+    public function getWbraid(): ?string;
+
+    public function setWbraid(?string $wbraid): void;
 
     /**
      * The user agent of the user completing the order
