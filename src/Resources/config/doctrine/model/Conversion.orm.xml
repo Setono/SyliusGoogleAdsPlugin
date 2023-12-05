@@ -17,7 +17,9 @@
 
         <field name="version" type="integer" version="true" />
 
-        <field name="googleClickId" type="string"/>
+        <field name="gclid" type="string" nullable="true"/>
+        <field name="gbraid" type="string" nullable="true"/>
+        <field name="wbraid" type="string" nullable="true"/>
         <field name="userAgent" type="text"/>
         <field name="value" type="integer"/>
         <field name="currencyCode" type="string"/>

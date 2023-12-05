@@ -10,7 +10,7 @@
             <argument type="service" id="setono_sylius_google_ads.repository.conversion"/>
             <argument type="service" id="event_dispatcher"/>
             <argument type="service" id="request_stack"/>
-            <argument>%setono_sylius_google_ads.gclid_cookie_name%</argument>
+            <argument type="service" id="setono_sylius_google_ads.tracking_information.storage.default"/>
 
             <call method="setLogger">
                 <argument type="service" id="logger"/>

@@ -3,16 +3,19 @@
 <container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://symfony.com/schema/dic/services"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <parameters>
-        <!--
-        The cookie name namespace 'ssga' is an acronym for 'setono sylius google ads'
-
-        DO NOT change this on a live site since you will loose conversion data from Google Ads if you do
-        -->
         <parameter key="setono_sylius_google_ads.gclid_cookie_name">ssga_click_id</parameter>
     </parameters>
     <services>
-        <service id="setono_sylius_google_ads.event_subscriber.save_gclid_in_cookie_subscriber"
-                 class="Setono\SyliusGoogleAdsPlugin\EventSubscriber\StoreGclidSubscriber">
+        <service id="setono_sylius_google_ads.event_subscriber.store_tracking_information"
+                 class="Setono\SyliusGoogleAdsPlugin\EventSubscriber\StoreTrackingInformationSubscriber">
+            <argument type="service" id="setono_sylius_google_ads.tracking_information.storage.default"/>
+
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <service id="setono_sylius_google_ads.event_subscriber.migrate_legacy_cookie"
+                 class="Setono\SyliusGoogleAdsPlugin\EventSubscriber\MigrateLegacyCookieSubscriber">
+            <argument type="service" id="setono_sylius_google_ads.tracking_information.storage.default"/>
             <argument>%setono_sylius_google_ads.gclid_cookie_name%</argument>
 
             <tag name="kernel.event_subscriber"/>

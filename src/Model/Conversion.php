@@ -16,7 +16,11 @@ class Conversion implements ConversionInterface
 
     protected ?int $version = 1;
 
-    protected ?string $googleClickId = null;
+    protected ?string $gclid = null;
+
+    protected ?string $gbraid = null;
+
+    protected ?string $wbraid = null;
 
     protected ?string $userAgent = null;
 
@@ -62,14 +66,34 @@ class Conversion implements ConversionInterface
         $this->version = $version;
     }
 
-    public function getGoogleClickId(): ?string
+    public function getGclid(): ?string
     {
-        return $this->googleClickId;
+        return $this->gclid;
     }
 
-    public function setGoogleClickId(string $googleClickId): void
+    public function setGclid(?string $gclid): void
     {
-        $this->googleClickId = $googleClickId;
+        $this->gclid = $gclid;
+    }
+
+    public function getGbraid(): ?string
+    {
+        return $this->gbraid;
+    }
+
+    public function setGbraid(?string $gbraid): void
+    {
+        $this->gbraid = $gbraid;
+    }
+
+    public function getWbraid(): ?string
+    {
+        return $this->wbraid;
+    }
+
+    public function setWbraid(?string $wbraid): void
+    {
+        $this->wbraid = $wbraid;
     }
 
     public function getUserAgent(): ?string

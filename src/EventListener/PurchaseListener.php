@@ -13,6 +13,7 @@ use Setono\DoctrineObjectManagerTrait\ORM\ORMManagerTrait;
 use Setono\SyliusGoogleAdsPlugin\Event\PrePersistConversionFromOrderEvent;
 use Setono\SyliusGoogleAdsPlugin\Factory\ConversionFactoryInterface;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConversionRepositoryInterface;
+use Setono\SyliusGoogleAdsPlugin\TrackingInformation\TrackingInformationStorageInterface;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Sylius\Component\Core\Model\OrderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -30,7 +31,7 @@ final class PurchaseListener implements LoggerAwareInterface
         private readonly ConversionRepositoryInterface $conversionRepository,
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly RequestStack $requestStack,
-        private readonly string $cookieName,
+        private readonly TrackingInformationStorageInterface $trackingInformationStorage,
         private readonly bool $flush = false,
     ) {
         $this->managerRegistry = $managerRegistry;
@@ -51,13 +52,14 @@ final class PurchaseListener implements LoggerAwareInterface
             $request = $this->requestStack->getMainRequest();
             Assert::notNull($request);
 
-            $gclid = $request->cookies->get($this->cookieName);
-            if (!is_string($gclid) || '' === $gclid) {
+            $conversion = $this->conversionFactory->createFromOrder($order);
+
+            $trackingInformation = $this->trackingInformationStorage->get();
+            if (null === $trackingInformation) {
                 return;
             }
 
-            $conversion = $this->conversionFactory->createFromOrder($order);
-            $conversion->setGoogleClickId($gclid);
+            $trackingInformation->assignToConversion($conversion);
 
             $userAgent = $request->headers->get('User-Agent');
             Assert::stringNotEmpty($userAgent);
