@@ -26,6 +26,18 @@ interface ConversionInterface extends ResourceInterface, TimestampableInterface,
 
     public function getId(): ?int;
 
+    /**
+     * Returns the value of either gclid, gbraid or wbraid (in that order)
+     *
+     * @throws \RuntimeException if none of the tracking ids are set
+     */
+    public function getTrackingId(): string;
+
+    /**
+     * Returns the name of the tracking id parameter (gclid, gbraid or wbraid)
+     */
+    public function getTrackingIdParameter(): string;
+
     public function getGclid(): ?string;
 
     public function setGclid(?string $gclid): void;

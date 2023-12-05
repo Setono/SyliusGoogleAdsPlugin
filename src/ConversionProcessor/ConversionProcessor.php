@@ -71,10 +71,9 @@ final class ConversionProcessor implements ConversionProcessorInterface
             'conversion_date_time' => $createdAt->format('Y-m-d H:i:sP'),
             'currency_code' => $conversion->getCurrencyCode(),
             'order_id' => $order->getId(),
-            'gclid' => $conversion->getGclid(),
-            'gbraid' => $conversion->getGbraid(),
-            'wbraid' => $conversion->getWbraid(),
+            $conversion->getTrackingIdParameter() => $conversion->getTrackingId(),
         ]));
+
         $this->eventDispatcher->dispatch($preSetClickConversionDataEvent);
 
         $clickConversion = new ClickConversion($preSetClickConversionDataEvent->data);
