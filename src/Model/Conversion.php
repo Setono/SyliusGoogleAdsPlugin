@@ -7,6 +7,7 @@ namespace Setono\SyliusGoogleAdsPlugin\Model;
 use Sylius\Component\Channel\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Resource\Model\TimestampableTrait;
+use Webmozart\Assert\Assert;
 
 class Conversion implements ConversionInterface
 {
@@ -64,6 +65,29 @@ class Conversion implements ConversionInterface
     public function setVersion(?int $version): void
     {
         $this->version = $version;
+    }
+
+    public function getTrackingId(): string
+    {
+        $val = $this->{$this->getTrackingIdParameter()};
+        Assert::nullOrString($val);
+
+        if (null !== $val) {
+            return $val;
+        }
+
+        throw new \RuntimeException('This conversion has no tracking id');
+    }
+
+    public function getTrackingIdParameter(): string
+    {
+        foreach (['gclid', 'gbraid', 'wbraid'] as $parameter) {
+            if (null !== $this->{$parameter}) {
+                return $parameter;
+            }
+        }
+
+        throw new \RuntimeException('This conversion has no tracking id');
     }
 
     public function getGclid(): ?string
