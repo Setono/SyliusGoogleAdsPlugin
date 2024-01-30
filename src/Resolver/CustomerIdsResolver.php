@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Resolver;
 
-use Google\Ads\GoogleAds\Lib\V13\GoogleAdsServerStreamDecorator;
-use Google\Ads\GoogleAds\V13\Services\CustomerServiceClient;
-use Google\Ads\GoogleAds\V13\Services\GoogleAdsRow;
+use Google\Ads\GoogleAds\Lib\V15\GoogleAdsServerStreamDecorator;
+use Google\Ads\GoogleAds\V15\Services\Client\CustomerServiceClient;
+use Google\Ads\GoogleAds\V15\Services\Client\GoogleAdsServiceClient;
+use Google\Ads\GoogleAds\V15\Services\GoogleAdsRow;
+use Google\Ads\GoogleAds\V15\Services\ListAccessibleCustomersRequest;
+use Google\Ads\GoogleAds\V15\Services\SearchGoogleAdsStreamRequest;
 use Google\ApiCore\ApiException;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
@@ -32,8 +35,12 @@ final class CustomerIdsResolver implements CustomerIdsResolverInterface, LoggerA
         /** @var list<string> $rootCustomerIds */
         $rootCustomerIds = [];
 
+        /** @var CustomerServiceClient $customerServiceClient */
+        $customerServiceClient = $client->getCustomerServiceClient();
+        Assert::isInstanceOf($customerServiceClient, CustomerServiceClient::class);
+
         try {
-            $customersResponse = $client->getCustomerServiceClient()->listAccessibleCustomers();
+            $customersResponse = $customerServiceClient->listAccessibleCustomers(new ListAccessibleCustomersRequest());
         } catch (ApiException $e) {
             $this->logger->error('An error occurred while trying the API call "listAccessibleCustomers"');
 
@@ -67,7 +74,9 @@ final class CustomerIdsResolver implements CustomerIdsResolverInterface, LoggerA
     {
         $client = $this->googleAdsClientFactory->createFromConnection($connection, $rootCustomerId);
 
+        /** @var GoogleAdsServiceClient $googleAdsServiceClient */
         $googleAdsServiceClient = $client->getGoogleAdsServiceClient();
+        Assert::isInstanceOf($googleAdsServiceClient, GoogleAdsServiceClient::class);
 
         $query = "SELECT customer_client.client_customer, customer_client.descriptive_name, customer_client.id FROM customer_client WHERE customer_client.hidden = FALSE AND customer_client.test_account = FALSE AND customer_client.status = 'ENABLED'";
 
@@ -84,7 +93,7 @@ final class CustomerIdsResolver implements CustomerIdsResolverInterface, LoggerA
 
             try {
                 /** @var GoogleAdsServerStreamDecorator $stream */
-                $stream = $googleAdsServiceClient->searchStream($customerIdToSearch, $query);
+                $stream = $googleAdsServiceClient->searchStream(SearchGoogleAdsStreamRequest::build($customerIdToSearch, $query));
             } catch (ApiException $e) {
                 $this->logger->error(sprintf(
                     'An error occurred while trying to run the query "%s" with customer id "%s": %s',

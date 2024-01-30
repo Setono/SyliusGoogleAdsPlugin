@@ -6,8 +6,8 @@ namespace Setono\SyliusGoogleAdsPlugin\EventSubscriber\ConversionProcessing;
 
 use Brick\PhoneNumber\PhoneNumber;
 use Brick\PhoneNumber\PhoneNumberFormat;
-use Google\Ads\GoogleAds\V13\Common\UserIdentifier;
-use Google\Ads\GoogleAds\V13\Enums\UserIdentifierSourceEnum\UserIdentifierSource;
+use Google\Ads\GoogleAds\V15\Common\UserIdentifier;
+use Google\Ads\GoogleAds\V15\Enums\UserIdentifierSourceEnum\UserIdentifierSource;
 use Setono\SyliusGoogleAdsPlugin\Event\PreSetClickConversionUserIdentifiersEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

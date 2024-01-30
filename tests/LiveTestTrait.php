@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusGoogleAdsPlugin;
+namespace Setono\SyliusGoogleAdsPlugin\Tests;
 
 use Setono\SyliusGoogleAdsPlugin\Model\Connection;
 use Setono\SyliusGoogleAdsPlugin\Model\ConnectionInterface;
