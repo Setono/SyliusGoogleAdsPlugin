@@ -9,6 +9,9 @@ sylius_grid:
                 name: doctrine/orm
                 options:
                     class: "%setono_sylius_google_ads.model.conversion.class%"
+            sorting:
+                createdAt: desc
+            limits: [100, 200, 500, 1000]
             fields:
                 order:
                     type: twig
