@@ -29,6 +29,8 @@ class Conversion implements ConversionInterface
 
     protected ?string $currencyCode = null;
 
+    protected ?Consent $consent = null;
+
     protected string $state = ConversionInterface::STATE_PENDING;
 
     protected ?string $previousState = null;
@@ -148,6 +150,16 @@ class Conversion implements ConversionInterface
     public function setCurrencyCode(string $currencyCode): void
     {
         $this->currencyCode = $currencyCode;
+    }
+
+    public function getConsent(): ?Consent
+    {
+        return $this->consent;
+    }
+
+    public function setConsent(?Consent $consent): void
+    {
+        $this->consent = $consent;
     }
 
     public function getState(): string

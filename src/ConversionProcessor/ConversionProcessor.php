@@ -5,14 +5,18 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin\ConversionProcessor;
 
 use Google\Ads\GoogleAds\Util\V15\ResourceNames;
+use Google\Ads\GoogleAds\V15\Common\Consent as GoogleConsent;
+use Google\Ads\GoogleAds\V15\Enums\ConsentStatusEnum\ConsentStatus;
 use Google\Ads\GoogleAds\V15\Services\ClickConversion;
 use Google\Ads\GoogleAds\V15\Services\Client\ConversionUploadServiceClient;
 use Google\Ads\GoogleAds\V15\Services\UploadClickConversionsRequest;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Setono\SyliusGoogleAdsPlugin\Event\PreSetClickConversionConsentEvent;
 use Setono\SyliusGoogleAdsPlugin\Event\PreSetClickConversionDataEvent;
 use Setono\SyliusGoogleAdsPlugin\Event\PreSetClickConversionUserIdentifiersEvent;
 use Setono\SyliusGoogleAdsPlugin\Factory\GoogleAdsClientFactoryInterface;
 use Setono\SyliusGoogleAdsPlugin\Logger\ConversionLogger;
+use Setono\SyliusGoogleAdsPlugin\Model\Consent;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConnectionMappingRepositoryInterface;
 use Setono\SyliusGoogleAdsPlugin\Workflow\ConversionWorkflow;
@@ -86,6 +90,17 @@ final class ConversionProcessor implements ConversionProcessorInterface
         if ([] !== $preSetUserIdentifiersEvent->userIdentifiers) {
             $clickConversion->setUserIdentifiers($preSetUserIdentifiersEvent->userIdentifiers);
         }
+
+        $consent = $conversion->getConsent() ?? new Consent();
+        $this->eventDispatcher->dispatch(new PreSetClickConversionConsentEvent($conversion, $consent));
+        $clickConversion->setConsent(new GoogleConsent([
+            'ad_user_data' => match ($consent->getAdUserData()) {
+                null => ConsentStatus::UNSPECIFIED, true => ConsentStatus::GRANTED, false => ConsentStatus::DENIED
+            },
+            'ad_personalization' => match ($consent->getAdPersonalization()) {
+                null => ConsentStatus::UNSPECIFIED, true => ConsentStatus::GRANTED, false => ConsentStatus::DENIED
+            },
+        ]));
 
         /** @var ConversionUploadServiceClient $conversionUploadServiceClient */
         $conversionUploadServiceClient = $client->getConversionUploadServiceClient();
