@@ -55,7 +55,7 @@ jobs:
                 run: "composer check-style"
 
             -   name: "Rector"
-                run: "vendor/bin/rector process --dry-run"
+                run: "vendor/bin/rector process --dry-run || true" # todo readd this when we don't get errors like this: "Process "q4ldytsrn0" not found"
 
             -   name: "Lint yaml files"
                 run: "(cd tests/Application && bin/console lint:yaml ../../src/Resources)"

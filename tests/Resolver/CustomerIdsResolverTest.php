@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusGoogleAdsPlugin\Resolver;
+namespace Setono\SyliusGoogleAdsPlugin\Tests\Resolver;
 
 use PHPUnit\Framework\TestCase;
 use Setono\SyliusGoogleAdsPlugin\Factory\GoogleAdsClientFactory;
 use Setono\SyliusGoogleAdsPlugin\Resolver\CustomerId;
 use Setono\SyliusGoogleAdsPlugin\Resolver\CustomerIdsResolver;
-use Tests\Setono\SyliusGoogleAdsPlugin\LiveTestTrait;
+use Setono\SyliusGoogleAdsPlugin\Tests\LiveTestTrait;
 
 /**
  * @covers \Setono\SyliusGoogleAdsPlugin\Resolver\CustomerIdsResolver

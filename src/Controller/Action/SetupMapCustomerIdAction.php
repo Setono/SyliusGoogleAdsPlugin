@@ -5,16 +5,20 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin\Controller\Action;
 
 use Doctrine\Persistence\ManagerRegistry;
-use Google\Ads\GoogleAds\Lib\V13\GoogleAdsClient;
-use Google\Ads\GoogleAds\Lib\V13\GoogleAdsServerStreamDecorator;
-use Google\Ads\GoogleAds\V13\Enums\ConversionActionCategoryEnum\ConversionActionCategory;
-use Google\Ads\GoogleAds\V13\Enums\ConversionActionStatusEnum\ConversionActionStatus;
-use Google\Ads\GoogleAds\V13\Enums\ConversionActionTypeEnum\ConversionActionType;
-use Google\Ads\GoogleAds\V13\Enums\ResponseContentTypeEnum\ResponseContentType;
-use Google\Ads\GoogleAds\V13\Resources\ConversionAction;
-use Google\Ads\GoogleAds\V13\Services\ConversionActionOperation;
-use Google\Ads\GoogleAds\V13\Services\GoogleAdsRow;
-use Google\Ads\GoogleAds\V13\Services\MutateConversionActionResult;
+use Google\Ads\GoogleAds\Lib\V15\GoogleAdsClient;
+use Google\Ads\GoogleAds\Lib\V15\GoogleAdsServerStreamDecorator;
+use Google\Ads\GoogleAds\V15\Enums\ConversionActionCategoryEnum\ConversionActionCategory;
+use Google\Ads\GoogleAds\V15\Enums\ConversionActionStatusEnum\ConversionActionStatus;
+use Google\Ads\GoogleAds\V15\Enums\ConversionActionTypeEnum\ConversionActionType;
+use Google\Ads\GoogleAds\V15\Enums\ResponseContentTypeEnum\ResponseContentType;
+use Google\Ads\GoogleAds\V15\Resources\ConversionAction;
+use Google\Ads\GoogleAds\V15\Services\Client\ConversionActionServiceClient;
+use Google\Ads\GoogleAds\V15\Services\Client\GoogleAdsServiceClient;
+use Google\Ads\GoogleAds\V15\Services\ConversionActionOperation;
+use Google\Ads\GoogleAds\V15\Services\GoogleAdsRow;
+use Google\Ads\GoogleAds\V15\Services\MutateConversionActionResult;
+use Google\Ads\GoogleAds\V15\Services\MutateConversionActionsRequest;
+use Google\Ads\GoogleAds\V15\Services\SearchGoogleAdsStreamRequest;
 use Setono\DoctrineObjectManagerTrait\ORM\ORMManagerTrait;
 use Setono\SyliusGoogleAdsPlugin\Factory\GoogleAdsClientFactoryInterface;
 use Setono\SyliusGoogleAdsPlugin\Form\Type\MapCustomerIdType;
@@ -105,13 +109,15 @@ final class SetupMapCustomerIdAction extends AbstractSetupAction
 
     private function getConversionActionById(GoogleAdsClient $googleAdsClient, string $customerId, string $id): ?ConversionAction
     {
+        /** @var GoogleAdsServiceClient $googleAdsServiceClient */
         $googleAdsServiceClient = $googleAdsClient->getGoogleAdsServiceClient();
+        Assert::isInstanceOf($googleAdsServiceClient, GoogleAdsServiceClient::class);
 
         /** @var GoogleAdsServerStreamDecorator $stream */
-        $stream = $googleAdsServiceClient->searchStream(
+        $stream = $googleAdsServiceClient->searchStream(SearchGoogleAdsStreamRequest::build(
             $customerId,
             "SELECT conversion_action.id, conversion_action.status, conversion_action.name, conversion_action.type FROM conversion_action WHERE conversion_action.id = $id",
-        );
+        ));
 
         /** @var GoogleAdsRow $googleAdsRow */
         foreach ($stream->iterateAllElements() as $googleAdsRow) {
@@ -144,12 +150,17 @@ final class SetupMapCustomerIdAction extends AbstractSetupAction
         $conversionActionOperation = new ConversionActionOperation();
         $conversionActionOperation->setCreate($conversionAction);
 
-        // Issues a mutate request to add the conversion action.
+        /**
+         * Issues a mutate request to add the conversion action
+         *
+         * @var ConversionActionServiceClient $conversionActionServiceClient
+         */
         $conversionActionServiceClient = $googleAdsClient->getConversionActionServiceClient();
+        Assert::isInstanceOf($conversionActionServiceClient, ConversionActionServiceClient::class);
+
         $response = $conversionActionServiceClient->mutateConversionActions(
-            $customerId,
-            [$conversionActionOperation],
-            ['responseContentType' => ResponseContentType::MUTABLE_RESOURCE],
+            MutateConversionActionsRequest::build($customerId, [$conversionActionOperation])
+                ->setResponseContentType(ResponseContentType::MUTABLE_RESOURCE),
         );
 
         /** @var MutateConversionActionResult $result */

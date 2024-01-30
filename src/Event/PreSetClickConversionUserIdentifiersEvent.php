@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Event;
 
-use Google\Ads\GoogleAds\V13\Common\UserIdentifier;
+use Google\Ads\GoogleAds\V15\Common\UserIdentifier;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 

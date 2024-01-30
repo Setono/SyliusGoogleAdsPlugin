@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusGoogleAdsPlugin\TrackingInformation;
+namespace Setono\SyliusGoogleAdsPlugin\Tests\TrackingInformation;
 
 use PHPUnit\Framework\TestCase;
 use Setono\SyliusGoogleAdsPlugin\Model\Conversion;
