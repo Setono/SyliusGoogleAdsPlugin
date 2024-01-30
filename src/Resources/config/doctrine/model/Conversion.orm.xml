@@ -23,6 +23,7 @@
         <field name="userAgent" type="text"/>
         <field name="value" type="integer"/>
         <field name="currencyCode" type="string"/>
+        <field name="consent" type="google_ads_consent" nullable="true"/>
         <field name="state" type="string"/>
         <field name="previousState" type="string" nullable="true"/>
         <field name="stateUpdatedAt" type="datetime_immutable" nullable="true"/>

@@ -65,6 +65,10 @@ interface ConversionInterface extends ResourceInterface, TimestampableInterface,
 
     public function setCurrencyCode(string $currencyCode): void;
 
+    public function setConsent(?Consent $consent): void;
+
+    public function getConsent(): ?Consent;
+
     public function getState(): string;
 
     public function setState(string $state): void;

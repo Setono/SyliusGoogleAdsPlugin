@@ -6,6 +6,7 @@ namespace Setono\SyliusGoogleAdsPlugin\DependencyInjection;
 
 use Setono\SyliusGoogleAdsPlugin\ConversionProcessor\ConversionProcessorInterface;
 use Setono\SyliusGoogleAdsPlugin\ConversionProcessor\QualificationVoter\QualificationVoterInterface;
+use Setono\SyliusGoogleAdsPlugin\Doctrine\DBAL\Type\ConsentType;
 use Setono\SyliusGoogleAdsPlugin\Workflow\ConversionWorkflow;
 use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
@@ -46,6 +47,14 @@ final class SetonoSyliusGoogleAdsExtension extends AbstractResourceExtension imp
 
     public function prepend(ContainerBuilder $container): void
     {
+        $container->prependExtensionConfig('doctrine', [
+            'dbal' => [
+                'types' => [
+                    ConsentType::NAME => ConsentType::class,
+                ],
+            ],
+        ]);
+
         $container->prependExtensionConfig('framework', [
             'workflows' => ConversionWorkflow::getConfig(),
         ]);
