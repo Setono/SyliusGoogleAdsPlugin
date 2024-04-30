@@ -85,13 +85,6 @@ final class Configuration implements ConfigurationInterface
                                         ->scalarNode('repository')->defaultValue(ConversionRepository::class)->cannotBeEmpty()->end()
                                         ->scalarNode('factory')->defaultValue(Factory::class)->end()
                                         ->scalarNode('form')->defaultValue(DefaultResourceType::class)->cannotBeEmpty()->end()
-                                    ->end()
-                                ->end()
-                            ->end()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end()
         ;
     }
 }
