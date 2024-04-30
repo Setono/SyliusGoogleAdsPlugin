@@ -5,11 +5,7 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin\Workflow;
 
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
-use Symfony\Component\Workflow\DefinitionBuilder;
-use Symfony\Component\Workflow\MarkingStore\MethodMarkingStore;
 use Symfony\Component\Workflow\Transition;
-use Symfony\Component\Workflow\Workflow;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class ConversionWorkflow
 {
@@ -71,18 +67,6 @@ final class ConversionWorkflow
                 'transitions' => $transitions,
             ],
         ];
-    }
-
-    public static function getWorkflow(EventDispatcherInterface $eventDispatcher): Workflow
-    {
-        $definitionBuilder = new DefinitionBuilder(self::getStates(), self::getTransitions());
-
-        return new Workflow(
-            $definitionBuilder->build(),
-            new MethodMarkingStore(true, 'state'),
-            $eventDispatcher,
-            self::NAME,
-        );
     }
 
     /**
