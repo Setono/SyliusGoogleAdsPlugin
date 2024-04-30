@@ -2,14 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusGoogleAdsPlugin\Menu;
+namespace Setono\SyliusGoogleAdsPlugin\EventSubscriber;
 
 use Knp\Menu\ItemInterface;
 use Sylius\Bundle\UiBundle\Menu\Event\MenuBuilderEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class AdminMenuListener
+final class AddMenuSubscriber implements EventSubscriberInterface
 {
-    public function addAdminMenuItems(MenuBuilderEvent $event): void
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            'sylius.menu.admin.main' => 'add',
+        ];
+    }
+
+    public function add(MenuBuilderEvent $event): void
     {
         $menu = $event->getMenu();
 

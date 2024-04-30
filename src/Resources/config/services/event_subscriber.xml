@@ -6,6 +6,11 @@
         <parameter key="setono_sylius_google_ads.gclid_cookie_name">ssga_click_id</parameter>
     </parameters>
     <services>
+        <service id="setono_sylius_google_ads.event_subscriber.add_menu"
+                 class="Setono\SyliusGoogleAdsPlugin\EventSubscriber\AddMenuSubscriber">
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
         <service id="setono_sylius_google_ads.event_subscriber.store_tracking_information"
                  class="Setono\SyliusGoogleAdsPlugin\EventSubscriber\StoreTrackingInformationSubscriber">
             <argument type="service" id="setono_sylius_google_ads.tracking_information.storage.default"/>
