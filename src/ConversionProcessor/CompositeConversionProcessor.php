@@ -8,7 +8,7 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\Persistence\ManagerRegistry;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Setono\CompositeCompilerPass\CompositeService;
-use Setono\DoctrineObjectManagerTrait\ORM\ORMManagerTrait;
+use Setono\Doctrine\ORMTrait;
 use Setono\SyliusGoogleAdsPlugin\Event\ConversionProcessingEndedEvent;
 use Setono\SyliusGoogleAdsPlugin\Event\ConversionProcessingStartedEvent;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
@@ -20,7 +20,7 @@ use Symfony\Component\Workflow\WorkflowInterface;
  */
 final class CompositeConversionProcessor extends CompositeService implements ConversionProcessorInterface
 {
-    use ORMManagerTrait;
+    use ORMTrait;
 
     public function __construct(
         ManagerRegistry $managerRegistry,

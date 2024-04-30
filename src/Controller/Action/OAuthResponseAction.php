@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin\Controller\Action;
 
 use Doctrine\Persistence\ManagerRegistry;
-use Setono\DoctrineObjectManagerTrait\ORM\ORMManagerTrait;
+use Setono\Doctrine\ORMTrait;
 use Setono\SyliusGoogleAdsPlugin\Model\ConnectionInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +16,7 @@ use Webmozart\Assert\Assert;
 
 final class OAuthResponseAction extends AbstractOAuthAction
 {
-    use ORMManagerTrait;
+    use ORMTrait;
 
     public function __construct(
         UrlGeneratorInterface $urlGenerator,

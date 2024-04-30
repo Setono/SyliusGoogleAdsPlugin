@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin\Controller\Action;
 
 use Doctrine\Persistence\ManagerRegistry;
-use Setono\DoctrineObjectManagerTrait\ORM\ORMManagerTrait;
+use Setono\Doctrine\ORMTrait;
 use Setono\SyliusGoogleAdsPlugin\Message\Command\ProcessConversion;
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConversionRepositoryInterface;
@@ -20,7 +20,7 @@ use Symfony\Component\Workflow\WorkflowInterface;
 
 final class RetryConversionAction
 {
-    use ORMManagerTrait;
+    use ORMTrait;
 
     public function __construct(
         private readonly ConversionRepositoryInterface $conversionRepository,

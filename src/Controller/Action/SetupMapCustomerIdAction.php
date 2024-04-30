@@ -19,7 +19,7 @@ use Google\Ads\GoogleAds\V15\Services\GoogleAdsRow;
 use Google\Ads\GoogleAds\V15\Services\MutateConversionActionResult;
 use Google\Ads\GoogleAds\V15\Services\MutateConversionActionsRequest;
 use Google\Ads\GoogleAds\V15\Services\SearchGoogleAdsStreamRequest;
-use Setono\DoctrineObjectManagerTrait\ORM\ORMManagerTrait;
+use Setono\Doctrine\ORMTrait;
 use Setono\SyliusGoogleAdsPlugin\Factory\GoogleAdsClientFactoryInterface;
 use Setono\SyliusGoogleAdsPlugin\Form\Type\MapCustomerIdType;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConnectionRepositoryInterface;
@@ -34,7 +34,7 @@ use Webmozart\Assert\Assert;
 
 final class SetupMapCustomerIdAction extends AbstractSetupAction
 {
-    use ORMManagerTrait;
+    use ORMTrait;
 
     public function __construct(
         Environment $twig,
