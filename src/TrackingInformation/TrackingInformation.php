@@ -10,8 +10,11 @@ use Webmozart\Assert\Assert;
 
 final class TrackingInformation implements \JsonSerializable
 {
-    public function __construct(public readonly ?string $gclid, public readonly ?string $gbraid, public readonly ?string $wbraid)
-    {
+    public function __construct(
+        public readonly ?string $gclid,
+        public readonly ?string $gbraid,
+        public readonly ?string $wbraid,
+    ) {
         if (null === $gclid && null === $gbraid && null === $wbraid) {
             throw new \InvalidArgumentException('At least one of the tracking parameters must be set');
         }
