@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Tests\Setono\SyliusGoogleAdsPlugin\Application\Kernel;
+use Setono\SyliusGoogleAdsPlugin\Tests\Application\Kernel;
 use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\HttpFoundation\Request;
 

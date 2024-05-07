@@ -23,7 +23,7 @@
         <pluginClass class="Weirdan\DoctrinePsalmPlugin\Plugin"/>
     </plugins>
     <issueHandlers>
-        <PluginIssue name="QueryBuilderSetParameter" errorLevel="info" />
+        <PluginIssue name="QueryBuilderSetParameter" errorLevel="info"/>
         <UnnecessaryVarAnnotation errorLevel="suppress"/> <!-- We use unnecessary var annotations to aid the IDE -->
         <TooManyTemplateParams>
             <errorLevel type="suppress">

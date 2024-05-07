@@ -14,6 +14,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Webmozart\Assert\Assert;
 
 final class SetonoSyliusGoogleAdsExtension extends AbstractResourceExtension implements PrependExtensionInterface
 {
@@ -22,7 +23,7 @@ final class SetonoSyliusGoogleAdsExtension extends AbstractResourceExtension imp
         /**
          * @psalm-suppress PossiblyNullArgument
          *
-         * @var array{resources: array<string, mixed>} $config
+         * @var array{cookie_name: string, storage: string, resources: array<string, mixed>} $config
          */
         $config = $this->processConfiguration($this->getConfiguration([], $container), $configs);
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
@@ -34,6 +35,22 @@ final class SetonoSyliusGoogleAdsExtension extends AbstractResourceExtension imp
         $container->registerForAutoconfiguration(QualificationVoterInterface::class)
             ->addTag('setono_sylius_google_ads.qualification_voter')
         ;
+
+        $container->setParameter('setono_sylius_google_ads.cookie_name', $config['cookie_name']);
+        $container->setParameter('setono_sylius_google_ads.storage', $config['storage']);
+
+        if ('cookie' === $config['storage']) {
+            $loader->load('services/conditional/storage_cookie.xml');
+        } else {
+            $bundles = $container->getParameter('kernel.bundles');
+            Assert::isArray($bundles);
+
+            if (!array_key_exists('SetonoClientBundle', $bundles)) {
+                throw new \RuntimeException('You need to install the SetonoClientBundle in order to use the client_metadata storage. Run "composer require setono/client-bundle" to install it. See https://github.com/Setono/client-bundle');
+            }
+
+            $loader->load('services/conditional/storage_client_metadata.xml');
+        }
 
         $loader->load('services.xml');
 

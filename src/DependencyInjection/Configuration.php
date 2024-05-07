@@ -28,6 +28,24 @@ final class Configuration implements ConfigurationInterface
         /** @var ArrayNodeDefinition $rootNode */
         $rootNode = $treeBuilder->getRootNode();
 
+        /** @psalm-suppress MixedMethodCall,PossiblyNullReference,UndefinedInterfaceMethod */
+        $rootNode
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->scalarNode('cookie_name')
+                    ->defaultValue('ssga_tinfo')
+                    ->cannotBeEmpty()
+                    ->info('The name of the cookie to store the tracking information in if the storage is set to cookie')
+                ->end()
+                ->scalarNode('storage')
+                    ->defaultValue('cookie')
+                    ->cannotBeEmpty()
+                    ->info('The storage to use for tracking information. Available options are: cookie and client_metadata')
+                    ->validate()
+                        ->ifNotInArray(['cookie', 'client_metadata'])
+                        ->thenInvalid('Invalid storage %s')
+        ;
+
         $this->addResourcesSection($rootNode);
 
         return $treeBuilder;
