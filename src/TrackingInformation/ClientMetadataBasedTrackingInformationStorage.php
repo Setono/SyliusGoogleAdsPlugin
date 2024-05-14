@@ -43,6 +43,6 @@ final class ClientMetadataBasedTrackingInformationStorage extends AbstractTracki
             return;
         }
 
-        $this->clientContext->getClient()->metadata->set($this->metadataKey, $this->trackingInformation);
+        $this->clientContext->getClient()->metadata->set($this->metadataKey, $this->trackingInformation, 7_776_000); // todo the ttl should be set to the 'Click-through conversion window' in your Google conversion action settings
     }
 }
