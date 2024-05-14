@@ -42,9 +42,14 @@ final class TrackingInformationTest extends TestCase
     /**
      * @test
      */
-    public function it_creates_from_json(): void
+    public function it_creates_from_cookie(): void
     {
-        $trackingInformation = TrackingInformation::fromJson('{"gclid":"gclid","gbraid":"gbraid","wbraid":"wbraid"}');
+        $request = new Request(
+            cookies: [
+                'ssga_tinfo' => 'eyJnY2xpZCI6ImdjbGlkIiwiZ2JyYWlkIjoiZ2JyYWlkIiwid2JyYWlkIjoid2JyYWlkIn0=',
+            ],
+        );
+        $trackingInformation = TrackingInformation::fromCookie($request, 'ssga_tinfo');
 
         self::assertSame('gclid', $trackingInformation->gclid);
         self::assertSame('gbraid', $trackingInformation->gbraid);
@@ -61,7 +66,7 @@ final class TrackingInformationTest extends TestCase
             'gbraid' => 'gbraid',
             'wbraid' => 'wbraid',
         ]);
-        $trackingInformation = TrackingInformation::fromRequest($request);
+        $trackingInformation = TrackingInformation::fromQuery($request);
 
         self::assertSame('gclid', $trackingInformation->gclid);
         self::assertSame('gbraid', $trackingInformation->gbraid);
