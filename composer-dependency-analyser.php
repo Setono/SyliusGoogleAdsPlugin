@@ -5,5 +5,6 @@ use ShipMonk\ComposerDependencyAnalyser\Config\ErrorType;
 
 return (new Configuration())
     ->addPathToExclude(__DIR__ . '/tests')
-    ->ignoreErrorsOnPackage('setono/client-bundle', [ErrorType::DEV_DEPENDENCY_IN_PROD])
+    ->ignoreErrorsOnPackage('symfony/validator', [ErrorType::UNUSED_DEPENDENCY])
+    ->ignoreUnknownClasses([\Setono\ClientBundle\Context\ClientContextInterface::class])
 ;
