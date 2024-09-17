@@ -95,6 +95,9 @@ jobs:
 
             -   name: "Remove require-dev section in composer.json"
                 run: "composer config --unset require-dev"
+                
+            -   name: "Add shipmonk/composer-dependency-analyser to composer.json"
+                run: "composer require --dev --no-install --no-update --no-plugins --no-scripts shipmonk/composer-dependency-analyser"
 
             -   name: "Install composer dependencies"
                 uses: "ramsey/composer-install@v3"
