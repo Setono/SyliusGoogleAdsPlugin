@@ -5,5 +5,5 @@ use ShipMonk\ComposerDependencyAnalyser\Config\ErrorType;
 
 return (new Configuration())
     ->addPathToExclude(__DIR__ . '/tests')
-    ->ignoreErrorsOnPackage('setono/client-bundle', ErrorType::DEV_DEPENDENCY_IN_PROD)
+    ->ignoreErrorsOnPackage('setono/client-bundle', [ErrorType::DEV_DEPENDENCY_IN_PROD])
 ;
