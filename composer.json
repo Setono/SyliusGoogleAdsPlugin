@@ -59,6 +59,7 @@
         "psalm/plugin-phpunit": "^0.18",
         "setono/client-bundle": "^1.0@beta",
         "setono/code-quality-pack": "^2.8.2",
+        "shipmonk/composer-dependency-analyser": "^1.7",
         "sylius/sylius": "~1.12.19",
         "symfony/debug-bundle": "^6.4 || ^7.0",
         "symfony/dotenv": "^6.4 || ^7.0",

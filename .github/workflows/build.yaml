@@ -55,7 +55,7 @@ jobs:
                 run: "composer check-style"
 
             -   name: "Rector"
-                run: "vendor/bin/rector process --dry-run || true" # todo readd this when we don't get errors like this: "Process "q4ldytsrn0" not found"
+                run: "vendor/bin/rector process --dry-run"
 
             -   name: "Lint yaml files"
                 run: "(cd tests/Application && bin/console lint:yaml ../../src/Resources)"
@@ -91,7 +91,7 @@ jobs:
                     coverage: "none"
                     extensions: "${{ env.PHP_EXTENSIONS }}"
                     php-version: "${{ matrix.php-version }}"
-                    tools: "composer-require-checker, composer-unused, flex"
+                    tools: "flex"
 
             -   name: "Remove require-dev section in composer.json"
                 run: "composer config --unset require-dev"
@@ -103,11 +103,8 @@ jobs:
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
 
-            -   name: "Run maglnet/composer-require-checker"
-                run: "composer-require-checker check"
-
-            -   name: "Run composer-unused/composer-unused"
-                run: "composer-unused"
+            -   name: "Run dependency analysis"
+                run: "vendor/bin/composer-dependency-analyser"
     
     static-code-analysis:
         name: "Static Code Analysis (PHP${{ matrix.php-version }} | Deps: ${{ matrix.dependencies }} | SF${{ matrix.symfony }})"

@@ -1,5 +1,0 @@
-{
-    "symbol-whitelist": [
-        "Setono\\ClientBundle\\Context\\ClientContextInterface"
-    ]
-}
