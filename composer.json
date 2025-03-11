@@ -18,8 +18,8 @@
         "sylius/core": "^1.0",
         "sylius/core-bundle": "^1.0",
         "sylius/order": "^1.0",
-        "sylius/ui-bundle": "^1.0",
         "sylius/resource-bundle": "^1.6",
+        "sylius/ui-bundle": "^1.0",
         "symfony/config": "^5.4 || ^6.4",
         "symfony/console": "^5.4 || ^6.4",
         "symfony/dependency-injection": "^5.4 || ^6.4",
@@ -36,7 +36,6 @@
         "matthiasnoback/symfony-config-test": "^4.3 || ^5.1",
         "phpunit/phpunit": "^9.5",
         "psalm/plugin-phpunit": "^0.17",
-        "psalm/plugin-symfony": "^3.1",
         "setono/code-quality-pack": "^2.2",
         "shipmonk/composer-dependency-analyser": "^1.8.2",
         "sylius/sylius": "~1.12.19",
@@ -64,8 +63,8 @@
     "config": {
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": false,
-            "symfony/thanks": false,
-            "ergebnis/composer-normalize": true
+            "ergebnis/composer-normalize": true,
+            "symfony/thanks": false
         },
         "sort-packages": true
     },
