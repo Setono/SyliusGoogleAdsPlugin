@@ -5,6 +5,10 @@
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
     phpVersion="8.1"
     errorLevel="1"
+    findUnusedBaselineEntry="false"
+    findUnusedPsalmSuppress="false"
+    findUnusedCode="false"
+    findUnusedVariablesAndParams="false"
 >
     <projectFiles>
         <directory name="src"/>
@@ -18,7 +22,11 @@
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
         <pluginClass class="Weirdan\DoctrinePsalmPlugin\Plugin"/>
     </plugins>
-    <issueHandlers>
-        <PluginIssue name="QueryBuilderSetParameter" errorLevel="info" />
-    </issueHandlers>
+    <forbiddenFunctions>
+        <function name="dd"/>
+        <function name="dump"/>
+        <function name="exit"/>
+        <function name="var_dump"/>
+        <function name="print_r"/>
+    </forbiddenFunctions>
 </psalm>
