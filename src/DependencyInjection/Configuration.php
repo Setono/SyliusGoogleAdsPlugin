@@ -25,6 +25,7 @@ final class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder('setono_sylius_google_ads');
 
+        /** @var ArrayNodeDefinition $rootNode */
         $rootNode = $treeBuilder->getRootNode();
 
         /** @psalm-suppress MixedMethodCall,PossiblyNullReference,PossiblyUndefinedMethod */
@@ -83,10 +84,6 @@ final class Configuration implements ConfigurationInterface
                         ->end()
                         ->scalarNode(ConversionActionInterface::CATEGORY_SUBSCRIBE)
                             ->defaultValue(ConversionInterface::STATE_READY)
-                        ->end()
-                    ->end()
-                ->end()
-            ->end()
         ;
 
         $this->addResourcesSection($rootNode);
@@ -130,13 +127,6 @@ final class Configuration implements ConfigurationInterface
                                         ->scalarNode('repository')->defaultValue(ConversionActionRepository::class)->cannotBeEmpty()->end()
                                         ->scalarNode('factory')->defaultValue(Factory::class)->end()
                                         ->scalarNode('form')->defaultValue(ConversionActionType::class)->cannotBeEmpty()->end()
-                                    ->end()
-                                ->end()
-                            ->end()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end()
         ;
     }
 }
