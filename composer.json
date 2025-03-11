@@ -13,6 +13,7 @@
         "knplabs/knp-menu": "^3.1",
         "psr/event-dispatcher": "^1.0",
         "setono/doctrine-object-manager-trait": "^1.0",
+        "sylius/channel-bundle": "^1.0",
         "sylius/resource-bundle": "^1.6",
         "symfony/config": "^5.4 || ^6.4",
         "symfony/console": "^5.4 || ^6.4",

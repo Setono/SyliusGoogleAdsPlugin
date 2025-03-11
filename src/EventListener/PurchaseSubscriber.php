@@ -7,7 +7,6 @@ namespace Setono\SyliusGoogleAdsPlugin\EventListener;
 use Doctrine\Persistence\ManagerRegistry;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Setono\DoctrineObjectManagerTrait\ORM\ORMManagerTrait;
-use Setono\MainRequestTrait\MainRequestTrait;
 use Setono\SyliusGoogleAdsPlugin\ConsentChecker\ConsentCheckerInterface;
 use Setono\SyliusGoogleAdsPlugin\Event\PrePersistConversionFromOrderEvent;
 use Setono\SyliusGoogleAdsPlugin\Exception\WrongOrderTypeException;
@@ -24,7 +23,6 @@ use Webmozart\Assert\Assert;
 
 final class PurchaseSubscriber implements EventSubscriberInterface
 {
-    use MainRequestTrait;
     use ORMManagerTrait;
 
     private ConversionActionRepositoryInterface $conversionActionRepository;
@@ -62,11 +60,11 @@ final class PurchaseSubscriber implements EventSubscriberInterface
 
     public function track(RequestEvent $requestEvent): void
     {
-        $request = $requestEvent->getRequest();
-
-        if (!$this->isMainRequest($requestEvent)) {
+        if (!$requestEvent->isMainRequest()) {
             return;
         }
+
+        $request = $requestEvent->getRequest();
 
         if (!$request->attributes->has('_route')) {
             return;
