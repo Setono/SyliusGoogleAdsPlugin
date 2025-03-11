@@ -48,7 +48,7 @@ final class SaveGclidInCookieSubscriber implements EventSubscriberInterface
             null,
             null,
             false,
-            false
+            false,
         ));
     }
 }

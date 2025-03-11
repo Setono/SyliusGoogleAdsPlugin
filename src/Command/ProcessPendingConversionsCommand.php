@@ -26,7 +26,7 @@ final class ProcessPendingConversionsCommand extends Command
     public function __construct(
         ConversionRepositoryInterface $conversionRepository,
         StateResolverInterface $stateResolver,
-        ObjectManager $manager
+        ObjectManager $manager,
     ) {
         parent::__construct();
 

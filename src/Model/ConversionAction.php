@@ -23,7 +23,6 @@ class ConversionAction implements ConversionActionInterface
 
     /**
      * @var Collection|BaseChannelInterface[]
-     *
      * @psalm-var Collection<array-key, BaseChannelInterface>
      */
     protected Collection $channels;

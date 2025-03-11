@@ -25,7 +25,6 @@ use Webmozart\Assert\Assert;
 final class PurchaseSubscriber implements EventSubscriberInterface
 {
     use MainRequestTrait;
-
     use ORMManagerTrait;
 
     private ConversionActionRepositoryInterface $conversionActionRepository;
@@ -44,7 +43,7 @@ final class PurchaseSubscriber implements EventSubscriberInterface
         ManagerRegistry $managerRegistry,
         ConsentCheckerInterface $consentChecker,
         EventDispatcherInterface $eventDispatcher,
-        OrderRepositoryInterface $orderRepository
+        OrderRepositoryInterface $orderRepository,
     ) {
         $this->conversionActionRepository = $conversionActionRepository;
         $this->conversionFactory = $conversionFactory;
@@ -102,7 +101,7 @@ final class PurchaseSubscriber implements EventSubscriberInterface
 
         $conversionActions = $this->conversionActionRepository->findEnabledByChannelAndCategory(
             $channel,
-            ConversionActionInterface::CATEGORY_PURCHASE
+            ConversionActionInterface::CATEGORY_PURCHASE,
         );
 
         $manager = null;
@@ -113,7 +112,7 @@ final class PurchaseSubscriber implements EventSubscriberInterface
             $conversion->setChannel($channel);
 
             $this->eventDispatcher->dispatch(
-                new PrePersistConversionFromOrderEvent($conversion, $conversionAction, $order)
+                new PrePersistConversionFromOrderEvent($conversion, $conversionAction, $order),
             );
 
             $manager = $this->getManager($conversion);

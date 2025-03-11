@@ -27,7 +27,7 @@ final class PrePersistConversionFromOrderEvent
     public function __construct(
         ConversionInterface $conversion,
         ConversionActionInterface $conversionAction,
-        OrderInterface $order
+        OrderInterface $order,
     ) {
         $this->conversion = $conversion;
         $this->conversionAction = $conversionAction;

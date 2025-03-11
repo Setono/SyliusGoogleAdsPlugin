@@ -18,7 +18,7 @@ final class WrongOrderTypeException
     {
         Assert::isInstanceOf($order, OrderInterface::class, sprintf(
             'You must implement the %s in your Sylius application. Read the readme here: https://github.com/Setono/SyliusGoogleAdsPlugin',
-            OrderInterface::class
+            OrderInterface::class,
         ));
     }
 }

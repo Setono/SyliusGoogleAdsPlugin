@@ -68,7 +68,7 @@ final class ConfigurationTest extends TestCase
                     'submit_lead_form' => 'ready',
                     'subscribe' => 'ready',
                 ],
-            ]
+            ],
         );
     }
 }
