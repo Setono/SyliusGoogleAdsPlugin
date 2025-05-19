@@ -1,0 +1,6 @@
+{% import '@SyliusUi/Macro/buttons.html.twig' as buttons %}
+{% set visible = options.visible is defined ? options.visible : true %}
+
+{% if visible %}
+    {{ buttons.default(path('setono_sylius_google_ads_admin_merchant_mapping_index'), action.label, null, 'exchange') }}
+{% endif %}

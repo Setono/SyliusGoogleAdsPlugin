@@ -1,0 +1,15 @@
+{{ form_errors(form) }}
+<div class="ui two column stackable grid">
+    <div class="ten wide column">
+        <div class="ui segment">
+            {{ form_row(form.channel) }}
+            {{ form_row(form.merchantId) }}
+        </div>
+    </div>
+    <div class="six wide column">
+        <div class="ui segment">
+            <h4 class="ui dividing header">{{ 'setono_sylius_google_ads.ui.map_merchants_help.heading'|trans }}</h4>
+            {{ 'setono_sylius_google_ads.ui.map_merchants_help.body'|trans|raw }}
+        </div>
+    </div>
+</div>
