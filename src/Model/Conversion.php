@@ -50,6 +50,8 @@ class Conversion implements ConversionInterface
     /** @var list<string> */
     protected array $logMessages = [];
 
+    protected ?string $stackTrace = null;
+
     protected ?ChannelInterface $channel = null;
 
     protected ?OrderInterface $order = null;
@@ -272,6 +274,16 @@ class Conversion implements ConversionInterface
     public function hasLogMessages(): bool
     {
         return [] !== $this->logMessages;
+    }
+
+    public function getStackTrace(): ?string
+    {
+        return $this->stackTrace;
+    }
+
+    public function setStackTrace(?string $stackTrace): void
+    {
+        $this->stackTrace = $stackTrace;
     }
 
     public function getChannel(): ?ChannelInterface

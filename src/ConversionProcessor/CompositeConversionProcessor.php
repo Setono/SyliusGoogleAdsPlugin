@@ -59,6 +59,8 @@ final class CompositeConversionProcessor extends CompositeService implements Con
                     $service->process($conversion);
                 } catch (\Throwable $e) {
                     $conversion->addLogMessage($e->getMessage());
+                    $conversion->setStackTrace($e->getTraceAsString());
+
                     $this->workflow->apply($conversion, ConversionWorkflow::TRANSITION_FAIL);
 
                     break;

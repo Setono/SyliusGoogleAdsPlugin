@@ -147,6 +147,10 @@ interface ConversionInterface extends ResourceInterface, TimestampableInterface,
 
     public function hasLogMessages(): bool;
 
+    public function getStackTrace(): ?string;
+
+    public function setStackTrace(?string $stackTrace): void;
+
     public function getChannel(): ?ChannelInterface;
 
     public function setChannel(?ChannelInterface $channel): void;

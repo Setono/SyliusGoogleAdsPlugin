@@ -33,6 +33,7 @@
         <field name="nextProcessingAt" type="datetime_immutable" nullable="true"/>
         <field name="processingCount" type="integer"/>
         <field name="logMessages" type="json"/>
+        <field name="stackTrace" type="text" nullable="true"/>
 
         <field name="createdAt" column="created_at" type="datetime">
             <gedmo:timestampable on="create"/>
