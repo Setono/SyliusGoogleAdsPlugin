@@ -6,12 +6,15 @@ namespace Setono\SyliusGoogleAdsPlugin\DependencyInjection;
 
 use Setono\SyliusGoogleAdsPlugin\Form\Type\ConnectionMappingType;
 use Setono\SyliusGoogleAdsPlugin\Form\Type\ConnectionType;
+use Setono\SyliusGoogleAdsPlugin\Form\Type\MerchantMappingType;
 use Setono\SyliusGoogleAdsPlugin\Model\Connection;
 use Setono\SyliusGoogleAdsPlugin\Model\ConnectionMapping;
 use Setono\SyliusGoogleAdsPlugin\Model\Conversion;
+use Setono\SyliusGoogleAdsPlugin\Model\MerchantMapping;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConnectionMappingRepository;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConnectionRepository;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConversionRepository;
+use Setono\SyliusGoogleAdsPlugin\Repository\MerchantMappingRepository;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Sylius\Bundle\ResourceBundle\Form\Type\DefaultResourceType;
 use Sylius\Component\Resource\Factory\Factory;
@@ -103,6 +106,22 @@ final class Configuration implements ConfigurationInterface
                                         ->scalarNode('repository')->defaultValue(ConversionRepository::class)->cannotBeEmpty()->end()
                                         ->scalarNode('factory')->defaultValue(Factory::class)->end()
                                         ->scalarNode('form')->defaultValue(DefaultResourceType::class)->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('merchant_mapping')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode('options')->end()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(MerchantMapping::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('repository')->defaultValue(MerchantMappingRepository::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
+                                        ->scalarNode('form')->defaultValue(MerchantMappingType::class)->cannotBeEmpty()->end()
         ;
     }
 }

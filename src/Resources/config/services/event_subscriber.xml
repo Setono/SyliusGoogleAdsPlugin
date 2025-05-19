@@ -74,5 +74,11 @@
 
             <tag name="kernel.event_subscriber"/>
         </service>
+
+        <service id="Setono\SyliusGoogleAdsPlugin\EventSubscriber\ConversionProcessing\AddCartDataSubscriber">
+            <argument type="service" id="setono_sylius_google_ads.repository.merchant_mapping"/>
+
+            <tag name="kernel.event_subscriber"/>
+        </service>
     </services>
 </container>

@@ -14,6 +14,8 @@ setono_sylius_google_ads:
         connection_mapping:
             customer_id: Customer id
             conversion_action_id: Conversion action id
+        merchant_mapping:
+            merchant_id: Merchant id
     ui:
         authorize_with_google: Authorize with Google
         connections: Connections
@@ -22,13 +24,24 @@ setono_sylius_google_ads:
         delivered: Delivered
         disqualified: Disqualified
         edit_connection: Edit connection
+        edit_merchant_mapping: Edit merchant mapping
         enabled: Enabled
         failed: Failed
         google_ads: Google Ads
         log: Log
         manage_connections: Manage Google Ads API connections
         manage_conversions: A list of conversions with a Google Ads click identifier
+        manage_merchant_mappings: Map your channels to merchants
+        map_merchants: Map merchants
+        map_merchants_help:
+            heading: Map between channel and merchant
+            body: |
+                <p>You should have a mapping between each channel that receives traffic from Google Ads and a related merchant.</p>
+                <p>This allows the plugin to automatically send cart to Google Ads as well.</p>
+        merchant_id: Merchant id
+        merchant_mappings: Merchant mappings
         new_connection: New connection
+        new_merchant_mapping: New merchant mapping
         next_processing_at: Next processing
         no_channels: No channels
         no_log_messages: No log messages
