@@ -44,7 +44,7 @@ final class CompositeConversionProcessor extends CompositeService implements Con
         try {
             $manager->flush();
         } catch (OptimisticLockException) {
-            // if an OptimisticLockException is thrown we know that another process
+            // if an OptimisticLockException is thrown, we know that another process
             // is processing this conversion, so we will just return and do nothing
             return;
         }
