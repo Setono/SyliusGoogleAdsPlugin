@@ -6,7 +6,7 @@ namespace Setono\SyliusGoogleAdsPlugin\Message\Command;
 
 use Setono\SyliusGoogleAdsPlugin\Model\ConversionInterface;
 
-final class ProcessConversion
+final class ProcessConversion implements CommandInterface
 {
     /**
      * The conversion id
