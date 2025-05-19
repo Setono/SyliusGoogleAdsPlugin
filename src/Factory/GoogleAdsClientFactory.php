@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin\Factory;
 
 use Google\Ads\GoogleAds\Lib\OAuth2TokenBuilder;
-use Google\Ads\GoogleAds\Lib\V17\GoogleAdsClient;
-use Google\Ads\GoogleAds\Lib\V17\GoogleAdsClientBuilder;
+use Google\Ads\GoogleAds\Lib\V19\GoogleAdsClient;
+use Google\Ads\GoogleAds\Lib\V19\GoogleAdsClientBuilder;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Setono\SyliusGoogleAdsPlugin\Model\ConnectionInterface;
@@ -35,7 +35,6 @@ final class GoogleAdsClientFactory implements GoogleAdsClientFactoryInterface
             ->withDeveloperToken($developerToken)
             ->withOAuth2Credential($tokenBuilder->build())
             ->withLoginCustomerId((int) $managerId)
-            ->usingGapicV2Source(true) // this will enable the new, more type strict, versions of the google client services
         ;
 
         if (null !== $logger) {

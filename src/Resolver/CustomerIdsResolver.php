@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Resolver;
 
-use Google\Ads\GoogleAds\Lib\V17\GoogleAdsServerStreamDecorator;
-use Google\Ads\GoogleAds\V17\Services\Client\CustomerServiceClient;
-use Google\Ads\GoogleAds\V17\Services\Client\GoogleAdsServiceClient;
-use Google\Ads\GoogleAds\V17\Services\GoogleAdsRow;
-use Google\Ads\GoogleAds\V17\Services\ListAccessibleCustomersRequest;
-use Google\Ads\GoogleAds\V17\Services\SearchGoogleAdsStreamRequest;
+use Google\Ads\GoogleAds\Lib\V19\GoogleAdsServerStreamDecorator;
+use Google\Ads\GoogleAds\V19\Services\Client\CustomerServiceClient;
+use Google\Ads\GoogleAds\V19\Services\Client\GoogleAdsServiceClient;
+use Google\Ads\GoogleAds\V19\Services\GoogleAdsRow;
+use Google\Ads\GoogleAds\V19\Services\ListAccessibleCustomersRequest;
+use Google\Ads\GoogleAds\V19\Services\SearchGoogleAdsStreamRequest;
 use Google\ApiCore\ApiException;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
