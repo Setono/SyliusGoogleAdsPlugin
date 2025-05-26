@@ -6,18 +6,19 @@ namespace Setono\SyliusGoogleAdsPlugin\Command;
 
 use Setono\SyliusGoogleAdsPlugin\Message\Command\ProcessConversion;
 use Setono\SyliusGoogleAdsPlugin\Provider\ConversionIdProviderInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Messenger\MessageBusInterface;
 
+#[AsCommand(
+    'setono:sylius-google-ads:process-conversions',
+    'Process conversions',
+)]
 final class ProcessConversionsCommand extends Command
 {
-    protected static $defaultName = 'setono:sylius-google-ads:process-conversions';
-
-    protected static $defaultDescription = 'Process conversions';
-
     public function __construct(
         private readonly ConversionIdProviderInterface $conversionIdProvider,
         private readonly MessageBusInterface $commandBus,
