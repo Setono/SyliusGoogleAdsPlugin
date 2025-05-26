@@ -8,7 +8,6 @@ use Google\Ads\GoogleAds\Util\V18\ResourceNames;
 use Google\Ads\GoogleAds\V19\Common\Consent as GoogleConsent;
 use Google\Ads\GoogleAds\V19\Enums\ConsentStatusEnum\ConsentStatus;
 use Google\Ads\GoogleAds\V19\Services\ClickConversion;
-use Google\Ads\GoogleAds\V19\Services\Client\ConversionUploadServiceClient;
 use Google\Ads\GoogleAds\V19\Services\UploadClickConversionsRequest;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Setono\SyliusGoogleAdsPlugin\Event\PreSetClickConversionConsentEvent;
@@ -102,11 +101,7 @@ final class ConversionProcessor implements ConversionProcessorInterface
             },
         ]));
 
-        /** @var ConversionUploadServiceClient $conversionUploadServiceClient */
-        $conversionUploadServiceClient = $client->getConversionUploadServiceClient();
-        Assert::isInstanceOf($conversionUploadServiceClient, ConversionUploadServiceClient::class);
-
-        $response = $conversionUploadServiceClient->uploadClickConversions(
+        $response = $client->getConversionUploadServiceClient()->uploadClickConversions(
             UploadClickConversionsRequest::build($customerId, [$clickConversion], true),
         );
 
