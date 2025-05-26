@@ -79,6 +79,7 @@ jobs:
                     - "highest"
                 
                 symfony:
+                    - "~5.4.0"
                     - "~6.4.0"
 
         steps:
@@ -125,6 +126,7 @@ jobs:
                     - "highest"
 
                 symfony:
+                    - "~5.4.0"
                     - "~6.4.0"
 
         steps:
@@ -168,6 +170,7 @@ jobs:
                     - "highest"
 
                 symfony:
+                    - "~5.4.0"
                     - "~6.4.0"
 
         steps:
@@ -208,6 +211,7 @@ jobs:
                     - "highest"
                 
                 symfony:
+                    - "~5.4.0"
                     - "~6.4.0"
 
         steps:
