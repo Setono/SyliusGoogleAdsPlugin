@@ -1,0 +1,44 @@
+{% extends '@SyliusAdmin/layout.html.twig' %}
+{% import '@SyliusAdmin/Macro/breadcrumb.html.twig' as breadcrumb %}
+
+{% block title %}{{ 'setono_sylius_google_ads.ui.dashboard'|trans }} {{ parent() }}{% endblock %}
+
+{# todo translate #}
+
+{% block content %}
+    <h1 class="ui header">
+        <i class="google icon"></i>
+        <div class="content">
+            {{ 'setono_sylius_google_ads.ui.dashboard'|trans }}
+            <div class="sub header">
+                {{ 'setono_sylius_google_ads.ui.dashboard_sub_header'|trans }}
+            </div>
+        </div>
+    </h1>
+
+    {% set breadcrumbs = [
+        { label: 'sylius.ui.administration'|trans, url: path('sylius_admin_dashboard') },
+        { label: 'setono_sylius_google_ads.ui.google_ads'|trans, url: path('setono_sylius_google_ads_admin_dashboard') }
+    ] %}
+
+    {{ breadcrumb.crumble(breadcrumbs) }}
+
+    <div class="ui horizontal segments">
+        <div class="ui segment">
+            <h4 class="ui header">Conversions</h4>
+            <a href="{{ path('setono_sylius_google_ads_admin_conversion_index') }}" class="ui labeled icon primary button"><i class="chevron right icon"></i> See conversions</a>
+        </div>
+        <div class="ui segment">
+            <h4 class="ui header">Customer lists</h4>
+            <a href="{{ path('setono_sylius_google_ads_admin_customer_list_index') }}" class="ui labeled icon primary button"><i class="chevron right icon"></i> See customer lists</a>
+        </div>
+        <div class="ui segment">
+            <h4 class="ui header">Merchant mappings</h4>
+            <a href="{{ path('setono_sylius_google_ads_admin_merchant_mapping_index') }}" class="ui labeled icon primary button"><i class="chevron right icon"></i> See merchant mappings</a>
+        </div>
+        <div class="ui segment">
+            <h4 class="ui header">Connection setup</h4>
+            <a href="{{ path('setono_sylius_google_ads_admin_connection_index') }}" class="ui labeled icon primary button"><i class="chevron right icon"></i> See connections</a>
+        </div>
+    </div>
+{% endblock %}

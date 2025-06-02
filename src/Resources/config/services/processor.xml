@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://symfony.com/schema/dic/services"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="Setono\SyliusGoogleAdsPlugin\Processor\CustomerList\CustomerListProcessorInterface"
+                 alias="Setono\SyliusGoogleAdsPlugin\Processor\CustomerList\CustomerListProcessor"/>
+
+        <service id="Setono\SyliusGoogleAdsPlugin\Processor\CustomerList\CustomerListProcessor">
+            <argument type="service" id="Setono\SyliusGoogleAdsPlugin\Provisioner\CustomerListProvisionerInterface"/>
+            <argument type="service" id="setono_sylius_google_ads.repository.customer_list"/>
+            <argument type="service" id="setono_sylius_google_ads.command_bus"/>
+            <argument type="service" id="Setono\SyliusGoogleAdsPlugin\Uploader\CustomerListUploaderInterface"/>
+            <argument type="service" id="Setono\SyliusGoogleAdsPlugin\Uploader\CustomerUploaderInterface"/>
+        </service>
+    </services>
+</container>

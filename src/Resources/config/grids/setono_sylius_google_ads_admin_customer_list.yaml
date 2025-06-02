@@ -1,0 +1,42 @@
+sylius_grid:
+    grids:
+        setono_sylius_google_ads_admin_customer_list:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%setono_sylius_google_ads.model.customer_list.class%"
+            fields:
+                # todo add customer type category
+                name:
+                    type: string
+                    label: sylius.ui.name
+                    sortable: ~
+                membershipLifespan:
+                    type: twig
+                    label: setono_sylius_google_ads.ui.membership_lifespan
+                    sortable: ~
+                    options:
+                        template: "@SetonoSyliusGoogleAdsPlugin/customer_list/grid/field/membership_lifespan.html.twig"
+                channel:
+                    type: twig
+                    label: sylius.ui.channel
+                    sortable: channel.code
+                    options:
+                        template: "@SyliusAdmin/Order/Grid/Field/channel.html.twig"
+                uploadedAt:
+                    type: twig
+                    label: setono_sylius_google_ads.ui.uploaded_at
+                    sortable: ~
+                    options:
+                        template: "@SetonoSyliusGoogleAdsPlugin/grid/field/date.html.twig"
+                        vars:
+                            nullLabel: setono_sylius_google_ads.ui.not_uploaded
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    update:
+                        type: update
+                    delete:
+                        type: delete

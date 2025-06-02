@@ -11,7 +11,10 @@
         <import resource="services/factory.xml"/>
         <import resource="services/form.xml"/>
         <import resource="services/message.xml"/>
+        <import resource="services/processor.xml"/>
         <import resource="services/provider.xml"/>
+        <import resource="services/provisioner.xml"/>
         <import resource="services/resolver.xml"/>
+        <import resource="services/uploader.xml"/>
     </imports>
 </container>

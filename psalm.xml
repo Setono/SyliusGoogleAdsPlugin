@@ -3,12 +3,12 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
-    phpVersion="8.1"
-    errorLevel="1"
     findUnusedBaselineEntry="false"
     findUnusedPsalmSuppress="false"
     findUnusedCode="false"
     findUnusedVariablesAndParams="false"
+    phpVersion="8.1"
+    errorLevel="1"
 >
     <projectFiles>
         <directory name="src"/>
@@ -24,7 +24,6 @@
     </plugins>
     <issueHandlers>
         <PluginIssue name="QueryBuilderSetParameter" errorLevel="info"/>
-        <UnnecessaryVarAnnotation errorLevel="suppress"/> <!-- We use unnecessary var annotations to aid the IDE -->
         <TooManyTemplateParams>
             <errorLevel type="suppress">
                 <directory name="src/Factory"/> <!-- Sylius added @template annotations in later editions -->
@@ -33,4 +32,12 @@
         </TooManyTemplateParams>
         <RedundantConditionGivenDocblockType errorLevel="suppress"/>
     </issueHandlers>
+    <forbiddenFunctions>
+        <function name="dd"/>
+        <function name="dump"/>
+        <function name="echo"/>
+        <function name="exit"/>
+        <function name="var_dump"/>
+        <function name="print_r"/>
+    </forbiddenFunctions>
 </psalm>

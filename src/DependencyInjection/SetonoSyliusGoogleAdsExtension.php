@@ -23,7 +23,12 @@ final class SetonoSyliusGoogleAdsExtension extends AbstractResourceExtension imp
         /**
          * @psalm-suppress PossiblyNullArgument
          *
-         * @var array{cookie_name: string, storage: string, resources: array<string, mixed>} $config
+         * @var array{
+         *     cookie_name: string,
+         *     storage: string,
+         *     customer_lists: array{default_membership_lifespan: int},
+         *     resources: array<string, mixed>
+         * } $config
          */
         $config = $this->processConfiguration($this->getConfiguration([], $container), $configs);
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
@@ -38,6 +43,7 @@ final class SetonoSyliusGoogleAdsExtension extends AbstractResourceExtension imp
 
         $container->setParameter('setono_sylius_google_ads.cookie_name', $config['cookie_name']);
         $container->setParameter('setono_sylius_google_ads.storage', $config['storage']);
+        $container->setParameter('setono_sylius_google_ads.customer_lists.default_membership_lifespan', $config['customer_lists']['default_membership_lifespan']);
 
         if ('cookie' === $config['storage']) {
             $loader->load('services/conditional/storage_cookie.xml');

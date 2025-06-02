@@ -97,6 +97,12 @@ Now the plugin is installed. Please read the next section to learn how to use it
 
 To start using the plugin, go to https://your-domain.com/admin/google-ads and follow the instructions.
 
+# Backward compatibility
+
+The plugin adheres to semantic versioning, however, if a feature is `experimental` it is not included in the promise.
+
+Right now the customer lists feature is experimental.
+
 [ico-version]: https://poser.pugx.org/setono/sylius-google-ads-plugin/v/stable
 [ico-license]: https://poser.pugx.org/setono/sylius-google-ads-plugin/license
 [ico-github-actions]: https://github.com/Setono/SyliusGoogleAdsPlugin/workflows/build/badge.svg

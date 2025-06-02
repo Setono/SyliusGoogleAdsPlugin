@@ -1,6 +1,9 @@
 {# @var data \DateTimeImmutable|null #}
+
+{% set nullLabel = options.vars.nullLabel|default('setono_sylius_google_ads.ui.no_value') %}
+
 {% if data is null %}
-    <span style="color: grey; font-style: italic">{{ 'setono_sylius_google_ads.ui.no_value'|trans }}</span>
+    <span style="color: grey; font-style: italic">{{ nullLabel|trans }}</span>
 {% else %}
     {{ data|date('Y-m-d H:i') }}
 {% endif %}

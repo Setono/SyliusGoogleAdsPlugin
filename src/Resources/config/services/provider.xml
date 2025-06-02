@@ -7,5 +7,14 @@
                  class="Setono\SyliusGoogleAdsPlugin\Provider\PreQualifiedConversionIdProvider">
             <argument type="service" id="setono_sylius_google_ads.repository.conversion"/>
         </service>
+
+        <service id="Setono\SyliusGoogleAdsPlugin\DataProvider\CustomerDataProviderInterface"
+                 alias="Setono\SyliusGoogleAdsPlugin\DataProvider\CustomerDataProvider"/>
+
+        <service id="Setono\SyliusGoogleAdsPlugin\DataProvider\CustomerDataProvider">
+            <argument type="service" id="doctrine"/>
+            <argument>%sylius.model.customer.class%</argument>
+            <argument>%sylius.model.order.class%</argument>
+        </service>
     </services>
 </container>

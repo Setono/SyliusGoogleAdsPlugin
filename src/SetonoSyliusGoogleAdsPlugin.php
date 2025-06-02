@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin;
 
 use Setono\CompositeCompilerPass\CompositeCompilerPass;
+use Setono\SyliusGoogleAdsPlugin\Resolver\UserIdentifier\CompositeUserIdentifierResolver;
 use Sylius\Bundle\CoreBundle\Application\SyliusPluginTrait;
 use Sylius\Bundle\ResourceBundle\AbstractResourceBundle;
 use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
@@ -26,6 +27,11 @@ final class SetonoSyliusGoogleAdsPlugin extends AbstractResourceBundle
         $container->addCompilerPass(new CompositeCompilerPass(
             'setono_sylius_google_ads.conversion_processor.qualification_voter.composite',
             'setono_sylius_google_ads.qualification_voter',
+        ));
+
+        $container->addCompilerPass(new CompositeCompilerPass(
+            CompositeUserIdentifierResolver::class,
+            'setono_sylius_google_ads.user_identifier_resolver',
         ));
     }
 
