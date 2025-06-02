@@ -13,6 +13,7 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Setono\SyliusGoogleAdsPlugin\Event\PreSetClickConversionConsentEvent;
 use Setono\SyliusGoogleAdsPlugin\Event\PreSetClickConversionDataEvent;
 use Setono\SyliusGoogleAdsPlugin\Event\PreSetClickConversionUserIdentifiersEvent;
+use Setono\SyliusGoogleAdsPlugin\Event\PreUploadConversionEvent;
 use Setono\SyliusGoogleAdsPlugin\Factory\GoogleAdsClientFactoryInterface;
 use Setono\SyliusGoogleAdsPlugin\Logger\ConversionLogger;
 use Setono\SyliusGoogleAdsPlugin\Model\Consent;
@@ -100,6 +101,8 @@ final class ConversionProcessor implements ConversionProcessorInterface
                 null => ConsentStatus::UNSPECIFIED, true => ConsentStatus::GRANTED, false => ConsentStatus::DENIED
             },
         ]));
+
+        $this->eventDispatcher->dispatch(new PreUploadConversionEvent($clickConversion, $conversion));
 
         $response = $client->getConversionUploadServiceClient()->uploadClickConversions(
             UploadClickConversionsRequest::build($customerId, [$clickConversion], true),
