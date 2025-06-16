@@ -7,6 +7,7 @@ namespace Setono\SyliusGoogleAdsPlugin\ConversionProcessor;
 use Google\Ads\GoogleAds\Util\V18\ResourceNames;
 use Google\Ads\GoogleAds\V19\Common\Consent as GoogleConsent;
 use Google\Ads\GoogleAds\V19\Enums\ConsentStatusEnum\ConsentStatus;
+use Google\Ads\GoogleAds\V19\Enums\ConversionEnvironmentEnum\ConversionEnvironment;
 use Google\Ads\GoogleAds\V19\Services\ClickConversion;
 use Google\Ads\GoogleAds\V19\Services\UploadClickConversionsRequest;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -77,6 +78,7 @@ final class ConversionProcessor implements ConversionProcessorInterface
             'conversion_date_time' => $createdAt->format('Y-m-d H:i:sP'),
             'currency_code' => $conversion->getCurrencyCode(),
             'order_id' => $order->getId(),
+            'conversion_environment' => ConversionEnvironment::WEB,
             $conversion->getTrackingIdParameter() => $conversion->getTrackingId(),
         ]));
 
