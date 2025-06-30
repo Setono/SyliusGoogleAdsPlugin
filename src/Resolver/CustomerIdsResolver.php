@@ -47,6 +47,7 @@ final class CustomerIdsResolver implements CustomerIdsResolverInterface, LoggerA
             throw $e;
         }
 
+        /** @psalm-suppress RawObjectIteration,DeprecatedClass */
         foreach ($customersResponse->getResourceNames() as $customerResourceName) {
             Assert::string($customerResourceName);
             $rootCustomerIds[] = (string) CustomerServiceClient::parseName($customerResourceName)['customer_id'];
