@@ -163,7 +163,11 @@ final class SetupMapCustomerIdAction extends AbstractSetupAction
                 ->setResponseContentType(ResponseContentType::MUTABLE_RESOURCE),
         );
 
-        /** @var MutateConversionActionResult $result */
+        /**
+         * @psalm-suppress RawObjectIteration,DeprecatedClass
+         *
+         * @var MutateConversionActionResult $result
+         */
         foreach ($response->getResults() as $result) {
             $conversionAction = $result->getConversionAction();
             if (null === $conversionAction) {
