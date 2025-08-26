@@ -1,0 +1,19 @@
+{# @var resource \Setono\SyliusGoogleAdsPlugin\Model\MerchantMappingInterface|null #}
+{% import '@SyliusAdmin/Macro/breadcrumb.html.twig' as breadcrumb %}
+
+{% set breadcrumbs = [
+    { label: 'sylius.ui.administration'|trans, url: path('sylius_admin_dashboard') },
+    { label: 'setono_sylius_google_ads.ui.google_ads'|trans, url: path('setono_sylius_google_ads_admin_dashboard') },
+    { label: 'setono_sylius_google_ads.ui.merchant_mappings'|trans, url: path('setono_sylius_google_ads_admin_merchant_mapping_index') },
+]
+%}
+
+{% if resource is defined %}
+    {% if resource.id is null %}
+        {% set breadcrumbs = breadcrumbs|merge([{ label: 'setono_sylius_google_ads.ui.new_merchant_mapping'|trans }]) %}
+    {% else %}
+        {% set breadcrumbs = breadcrumbs|merge([{ label: ('setono_sylius_google_ads.ui.merchant_id'|trans) ~ ': ' ~ resource.merchantId }, { label: 'setono_sylius_google_ads.ui.edit_merchant_mapping'|trans }]) %}
+    {% endif %}
+{% endif %}
+
+{{ breadcrumb.crumble(breadcrumbs) }}

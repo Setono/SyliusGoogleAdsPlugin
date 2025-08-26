@@ -1,9 +1,16 @@
-# Route responsible for redirecting the user to the 'correct' Google Ads page depending on the state of his/her setup
-setono_sylius_google_ads_admin_redirect_main_menu:
+# Dashboard route
+setono_sylius_google_ads_admin_dashboard:
     path: /
     methods: [GET]
     defaults:
-        _controller: setono_sylius_google_ads.controller.action.redirect_main_menu
+        _controller: Setono\SyliusGoogleAdsPlugin\Controller\Action\DashboardAction
+
+# Route responsible for redirecting the user to the 'correct' Google Ads page depending on the state of his/her setup
+setono_sylius_google_ads_admin_redirect_main_menu:
+    alias: setono_sylius_google_ads_admin_dashboard
+    deprecated:
+        package: 'setono/sylius-google-ads-plugin'
+        version: '2.5'
         
 # Action that will retry a conversion
 setono_sylius_google_ads_admin_retry_conversion:
@@ -58,6 +65,7 @@ setono_sylius_google_ads_admin_connection:
                 subheader: setono_sylius_google_ads.ui.manage_connections
                 templates:
                     form: "@SetonoSyliusGoogleAdsPlugin/connection/_form.html.twig"
+                    breadcrumb: "@SetonoSyliusGoogleAdsPlugin/connection/_breadcrumbs.html.twig"
             index:
                 icon: 'linkify'
     type: sylius.resource
@@ -76,10 +84,30 @@ setono_sylius_google_ads_admin_conversion:
                 subheader: setono_sylius_google_ads.ui.manage_conversions
                 templates:
                     form: "@SetonoSyliusGoogleAdsPlugin/conversion/_form.html.twig"
+                    breadcrumb: "@SetonoSyliusGoogleAdsPlugin/conversion/_breadcrumbs.html.twig"
             index:
                 icon: 'money bill alternate outline'
     type: sylius.resource
-    
+
+# Customer list resource routes
+setono_sylius_google_ads_admin_customer_list:
+    resource: |
+        section: admin
+        alias: setono_sylius_google_ads.customer_list
+        permission: true
+        templates: '@SyliusAdmin\\Crud'
+        redirect: update
+        grid: setono_sylius_google_ads_admin_customer_list
+        vars:
+            all:
+                subheader: setono_sylius_google_ads.ui.manage_customer_lists
+                templates:
+                    form: "@SetonoSyliusGoogleAdsPlugin/customer_list/_form.html.twig"
+                    breadcrumb: "@SetonoSyliusGoogleAdsPlugin/customer_list/_breadcrumbs.html.twig"
+            index:
+                icon: 'users'
+    type: sylius.resource
+
 # Merchant mapping resource routes
 setono_sylius_google_ads_admin_merchant_mapping:
     resource: |
@@ -94,6 +122,7 @@ setono_sylius_google_ads_admin_merchant_mapping:
                 subheader: setono_sylius_google_ads.ui.manage_merchant_mappings
                 templates:
                     form: "@SetonoSyliusGoogleAdsPlugin/merchant_mapping/_form.html.twig"
+                    breadcrumb: "@SetonoSyliusGoogleAdsPlugin/merchant_mapping/_breadcrumbs.html.twig"
             index:
                 icon: 'exchange'
     type: sylius.resource

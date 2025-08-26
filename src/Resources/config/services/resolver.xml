@@ -11,5 +11,27 @@
                 <argument type="service" id="logger"/>
             </call>
         </service>
+
+        <service id="Setono\SyliusGoogleAdsPlugin\Resolver\UserIdentifier\EmailUserIdentifierResolver">
+            <tag name="setono_sylius_google_ads.user_identifier_resolver"/>
+        </service>
+
+        <service id="Setono\SyliusGoogleAdsPlugin\Resolver\CustomerCountryResolverInterface"
+                 alias="Setono\SyliusGoogleAdsPlugin\Resolver\CustomerCountryResolver"/>
+
+        <service id="Setono\SyliusGoogleAdsPlugin\Resolver\CustomerCountryResolver">
+            <argument type="service" id="doctrine"/>
+            <argument>%sylius.model.order.class%</argument>
+        </service>
+
+        <service id="Setono\SyliusGoogleAdsPlugin\Resolver\UserIdentifier\PhoneNumberUserIdentifierResolver">
+            <argument type="service" id="Setono\SyliusGoogleAdsPlugin\Resolver\CustomerCountryResolverInterface"/>
+            <tag name="setono_sylius_google_ads.user_identifier_resolver"/>
+        </service>
+
+        <service id="Setono\SyliusGoogleAdsPlugin\Resolver\UserIdentifier\UserIdentifierResolverInterface"
+                 alias="Setono\SyliusGoogleAdsPlugin\Resolver\UserIdentifier\CompositeUserIdentifierResolver"/>
+
+        <service id="Setono\SyliusGoogleAdsPlugin\Resolver\UserIdentifier\CompositeUserIdentifierResolver"/>
     </services>
 </container>

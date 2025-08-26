@@ -6,14 +6,17 @@ namespace Setono\SyliusGoogleAdsPlugin\DependencyInjection;
 
 use Setono\SyliusGoogleAdsPlugin\Form\Type\ConnectionMappingType;
 use Setono\SyliusGoogleAdsPlugin\Form\Type\ConnectionType;
+use Setono\SyliusGoogleAdsPlugin\Form\Type\CustomerListType;
 use Setono\SyliusGoogleAdsPlugin\Form\Type\MerchantMappingType;
 use Setono\SyliusGoogleAdsPlugin\Model\Connection;
 use Setono\SyliusGoogleAdsPlugin\Model\ConnectionMapping;
 use Setono\SyliusGoogleAdsPlugin\Model\Conversion;
+use Setono\SyliusGoogleAdsPlugin\Model\CustomerList;
 use Setono\SyliusGoogleAdsPlugin\Model\MerchantMapping;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConnectionMappingRepository;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConnectionRepository;
 use Setono\SyliusGoogleAdsPlugin\Repository\ConversionRepository;
+use Setono\SyliusGoogleAdsPlugin\Repository\CustomerListRepository;
 use Setono\SyliusGoogleAdsPlugin\Repository\MerchantMappingRepository;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Sylius\Bundle\ResourceBundle\Form\Type\DefaultResourceType;
@@ -47,6 +50,14 @@ final class Configuration implements ConfigurationInterface
                     ->validate()
                         ->ifNotInArray(['cookie', 'client_metadata'])
                         ->thenInvalid('Invalid storage %s')
+                    ->end()
+                ->end()
+                ->arrayNode('customer_lists')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->integerNode('default_membership_lifespan')
+                            ->defaultValue(540)
+                            ->info('The default membership lifespan in days for customer lists')
         ;
 
         $this->addResourcesSection($rootNode);
@@ -106,6 +117,22 @@ final class Configuration implements ConfigurationInterface
                                         ->scalarNode('repository')->defaultValue(ConversionRepository::class)->cannotBeEmpty()->end()
                                         ->scalarNode('factory')->defaultValue(Factory::class)->end()
                                         ->scalarNode('form')->defaultValue(DefaultResourceType::class)->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('customer_list')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode('options')->end()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(CustomerList::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('repository')->defaultValue(CustomerListRepository::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
+                                        ->scalarNode('form')->defaultValue(CustomerListType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()

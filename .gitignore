@@ -11,3 +11,4 @@
 /.phpunit.result.cache
 /.build
 /phpunit.xml
+/.claude/*.local.json

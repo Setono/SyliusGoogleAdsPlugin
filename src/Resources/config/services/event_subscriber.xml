@@ -26,6 +26,12 @@
             <tag name="kernel.event_subscriber"/>
         </service>
 
+        <service id="Setono\SyliusGoogleAdsPlugin\EventSubscriber\ProvisionCustomerListsSubscriber">
+            <argument type="service" id="Setono\SyliusGoogleAdsPlugin\Provisioner\CustomerListProvisionerInterface"/>
+
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
         <!-- Event subscribers related to conversion processing -->
         <service id="setono_sylius_google_ads.event_subscriber.start_processing"
                  class="Setono\SyliusGoogleAdsPlugin\EventSubscriber\ConversionProcessing\StartProcessingSubscriber">

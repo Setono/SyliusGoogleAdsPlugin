@@ -3,13 +3,29 @@
 <container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://symfony.com/schema/dic/services"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
+        <!-- Sylius resource factories -->
         <service id="setono_sylius_google_ads.custom_factory.conversion"
                  class="Setono\SyliusGoogleAdsPlugin\Factory\ConversionFactory"
                  decorates="setono_sylius_google_ads.factory.conversion" decoration-priority="128">
             <argument type="service" id="setono_sylius_google_ads.custom_factory.conversion.inner"/>
         </service>
 
+        <service id="Setono\SyliusGoogleAdsPlugin\Factory\CustomerListFactory"
+                 decorates="setono_sylius_google_ads.factory.customer_list" decoration-priority="128">
+            <argument type="service" id="Setono\SyliusGoogleAdsPlugin\Factory\CustomerListFactory.inner"/>
+            <argument>%setono_sylius_google_ads.customer_lists.default_membership_lifespan%</argument>
+        </service>
+
+        <!-- Other service factories -->
         <service id="setono_sylius_google_ads.factory.google_ads_client"
                  class="Setono\SyliusGoogleAdsPlugin\Factory\GoogleAdsClientFactory"/>
+
+        <service id="Setono\SyliusGoogleAdsPlugin\Factory\ClientFactoryInterface"
+                 alias="Setono\SyliusGoogleAdsPlugin\Factory\ClientFactory"/>
+
+        <service id="Setono\SyliusGoogleAdsPlugin\Factory\ClientFactory">
+            <argument type="service" id="setono_sylius_google_ads.repository.connection_mapping"/>
+            <argument type="service" id="setono_sylius_google_ads.factory.google_ads_client"/>
+        </service>
     </services>
 </container>

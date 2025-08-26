@@ -18,7 +18,7 @@ final class MerchantMappingType extends AbstractResourceType
                 'multiple' => false,
                 'expanded' => false,
                 'label' => 'sylius.ui.channel',
-                'placeholder' => '',
+                'placeholder' => 'setono_sylius_google_ads.form.channel_placeholder',
             ])
             ->add('merchantId', TextType::class, [
                 'label' => 'setono_sylius_google_ads.form.merchant_mapping.merchant_id',

@@ -1,0 +1,19 @@
+{# @var resource \Setono\SyliusGoogleAdsPlugin\Model\CustomerListInterface|null #}
+{% import '@SyliusAdmin/Macro/breadcrumb.html.twig' as breadcrumb %}
+
+{% set breadcrumbs = [
+    { label: 'sylius.ui.administration'|trans, url: path('sylius_admin_dashboard') },
+    { label: 'setono_sylius_google_ads.ui.google_ads'|trans, url: path('setono_sylius_google_ads_admin_dashboard') },
+    { label: 'setono_sylius_google_ads.ui.customer_lists'|trans, url: path('setono_sylius_google_ads_admin_customer_list_index') },
+]
+%}
+
+{% if resource is defined %}
+    {% if resource.id is null %}
+        {% set breadcrumbs = breadcrumbs|merge([{ label: 'setono_sylius_google_ads.ui.new_customer_list'|trans }]) %}
+    {% else %}
+        {% set breadcrumbs = breadcrumbs|merge([{ label: resource.name }, { label: 'setono_sylius_google_ads.ui.edit_customer_list'|trans }]) %}
+    {% endif %}
+{% endif %}
+
+{{ breadcrumb.crumble(breadcrumbs) }}

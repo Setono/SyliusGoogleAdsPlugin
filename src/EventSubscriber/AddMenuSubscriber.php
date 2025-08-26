@@ -34,10 +34,10 @@ final class AddMenuSubscriber implements EventSubscriberInterface
     {
         $item
             ->addChild('google_ads', [
-                'route' => 'setono_sylius_google_ads_admin_redirect_main_menu',
+                'route' => 'setono_sylius_google_ads_admin_dashboard',
             ])
             ->setLabel('setono_sylius_google_ads.ui.google_ads')
-            ->setLabelAttribute('icon', 'money bill alternate outline')
+            ->setLabelAttribute('icon', 'google')
         ;
     }
 }

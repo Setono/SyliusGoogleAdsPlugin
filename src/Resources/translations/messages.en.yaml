@@ -1,5 +1,6 @@
 setono_sylius_google_ads:
     form:
+        channel_placeholder: Select channel...
         connection:
             client_id: Client id
             client_secret: Client secret
@@ -14,6 +15,30 @@ setono_sylius_google_ads:
         connection_mapping:
             customer_id: Customer id
             conversion_action_id: Conversion action id
+        customer_list:
+            membership_lifespan: Membership lifespan (in days)
+            customer_type_category: Customer type category
+            customer_type_category_placeholder: Select customer type...
+            customer_type_category_help: Customer type cannot be changed once set because Google Ads user list customer types are not updatable.
+            customer_type_categories:
+                unspecified: Unspecified
+                unknown: Unknown
+                all_customers: All customers
+                purchasers: Purchasers
+                high_value_customers: High value customers
+                disengaged_customers: Disengaged customers
+                qualified_leads: Qualified leads
+                converted_leads: Converted leads
+                paid_subscribers: Paid subscribers
+                loyalty_sign_ups: Loyalty sign ups
+                cart_abandoners: Cart abandoners
+                loyalty_tier_1_members: Loyalty tier 1
+                loyalty_tier_2_members: Loyalty tier 2
+                loyalty_tier_3_members: Loyalty tier 3
+                loyalty_tier_4_members: Loyalty tier 4
+                loyalty_tier_5_members: Loyalty tier 5
+                loyalty_tier_6_members: Loyalty tier 6
+                loyalty_tier_7_members: Loyalty tier 7
         merchant_mapping:
             merchant_id: Merchant id
     ui:
@@ -32,12 +57,12 @@ setono_sylius_google_ads:
         manage_connections: Manage Google Ads API connections
         manage_conversions: A list of conversions with a Google Ads click identifier
         manage_merchant_mappings: Map your channels to merchants
-        map_merchants: Map merchants
         map_merchants_help:
             heading: Map between channel and merchant
             body: |
                 <p>You should have a mapping between each channel that receives traffic from Google Ads and a related merchant.</p>
                 <p>This allows the plugin to automatically send cart to Google Ads as well.</p>
+                <p>You will find the merchant center id inside your Google Merchant center by clicking on your account name in the upper right corner. See the image below:</p>
         merchant_id: Merchant id
         merchant_mappings: Merchant mappings
         new_connection: New connection
@@ -87,3 +112,12 @@ setono_sylius_google_ads:
                     </ol>
                 </p>
         view_conversions: View conversions
+        dashboard: Google Ads dashboard
+        dashboard_sub_header: Manage your Google Ads settings, customer lists and see conversions
+        customer_lists: Customer lists
+        manage_customer_lists: Manage your customer lists
+        new_customer_list: New customer list
+        edit_customer_list: Edit customer list
+        membership_lifespan: Membership lifespan
+        uploaded_at: Uploaded at
+        not_uploaded: Not uploaded

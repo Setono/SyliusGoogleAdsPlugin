@@ -10,5 +10,12 @@
 
             <tag name="messenger.message_handler"/>
         </service>
+
+        <service id="Setono\SyliusGoogleAdsPlugin\Message\Handler\ProcessCustomerListHandler">
+            <argument type="service" id="setono_sylius_google_ads.repository.customer_list"/>
+            <argument type="service" id="Setono\SyliusGoogleAdsPlugin\Processor\CustomerList\CustomerListProcessorInterface"/>
+
+            <tag name="messenger.message_handler"/>
+        </service>
     </services>
 </container>

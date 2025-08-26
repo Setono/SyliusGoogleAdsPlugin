@@ -17,5 +17,11 @@
 
             <tag name="console.command"/>
         </service>
+
+        <service id="Setono\SyliusGoogleAdsPlugin\Command\ProcessCustomerListsCommand">
+            <argument type="service" id="Setono\SyliusGoogleAdsPlugin\Processor\CustomerList\CustomerListProcessorInterface"/>
+
+            <tag name="console.command"/>
+        </service>
     </services>
 </container>
