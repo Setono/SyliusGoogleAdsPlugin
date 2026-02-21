@@ -87,6 +87,7 @@ class Conversion implements ConversionInterface
     public function getTrackingIdParameter(): string
     {
         foreach (['gclid', 'gbraid', 'wbraid'] as $parameter) {
+            /** @phpstan-ignore property.dynamicName */
             if (null !== $this->{$parameter}) {
                 return $parameter;
             }
