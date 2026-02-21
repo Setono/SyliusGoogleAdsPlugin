@@ -29,7 +29,7 @@ final class CustomerDataProvider implements CustomerDataProviderInterface
         $this->managerRegistry = $managerRegistry;
     }
 
-    public function getCustomers(CustomerListInterface $customerList): \Generator
+    public function getCustomers(CustomerListInterface $customerList): iterable
     {
         $channel = $customerList->getChannel();
         Assert::notNull($channel, 'The customer list must have a channel');

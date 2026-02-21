@@ -80,7 +80,7 @@ final class ConversionProcessor implements ConversionProcessorInterface
             'order_id' => $order->getId(),
             'conversion_environment' => ConversionEnvironment::WEB,
             $conversion->getTrackingIdParameter() => $conversion->getTrackingId(),
-        ]));
+        ], static fn (mixed $v): bool => null !== $v));
 
         $this->eventDispatcher->dispatch($preSetClickConversionDataEvent);
 

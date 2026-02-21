@@ -113,6 +113,7 @@ abstract class AbstractResource
     protected static function getResourceFromGoogleAdsRow(GoogleAdsRow $row): ?object
     {
         $method = sprintf('get%s', str_replace('_', '', ucwords(static::getResourceType(), '_')));
+        /** @phpstan-ignore method.dynamicName */
         $obj = $row->{$method}();
         Assert::nullOrIsInstanceOf($obj, static::getResourceClass());
 

@@ -22,7 +22,7 @@ final class PaymentStateQualificationVoter implements QualificationVoterInterfac
         }
 
         if (in_array($order->getPaymentState(), [OrderPaymentStates::STATE_PAID, OrderPaymentStates::STATE_AUTHORIZED], true)) {
-            return Vote::qualify(sprintf('The conversion was qualified because the payment was %s', (string) $order->getPaymentState()));
+            return Vote::qualify(sprintf('The conversion was qualified because the payment was %s', $order->getPaymentState()));
         }
 
         return Vote::abstain('The conversion does not qualify for further processing yet because the order is not paid');

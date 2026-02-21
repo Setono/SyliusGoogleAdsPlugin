@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Webmozart\Assert\Assert;
 
 /**
  * @experimental
@@ -70,7 +71,8 @@ final class CustomerListType extends AbstractResourceType
 
         /** @var mixed $value */
         foreach ($constants as $constant => $value) {
-            $choices[sprintf('setono_sylius_google_ads.form.customer_list.customer_type_categories.%s', strtolower($constant))] = (int) $value;
+            Assert::integer($value);
+            $choices[sprintf('setono_sylius_google_ads.form.customer_list.customer_type_categories.%s', strtolower($constant))] = $value;
         }
 
         return $choices;

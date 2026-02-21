@@ -20,6 +20,7 @@ final class ClientMetadataBasedTrackingInformationStorage extends AbstractTracki
     public function get(): ?TrackingInformation
     {
         $clientMetadata = $this->clientContext->getClient()->metadata;
+        /** @phpstan-ignore method.alreadyNarrowedType */
         if (!$clientMetadata->has($this->metadataKey)) {
             return null;
         }

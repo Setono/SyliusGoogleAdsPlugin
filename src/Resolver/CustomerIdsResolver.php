@@ -50,7 +50,9 @@ final class CustomerIdsResolver implements CustomerIdsResolverInterface, LoggerA
         /** @psalm-suppress RawObjectIteration,DeprecatedClass */
         foreach ($customersResponse->getResourceNames() as $customerResourceName) {
             Assert::string($customerResourceName);
-            $rootCustomerIds[] = (string) CustomerServiceClient::parseName($customerResourceName)['customer_id'];
+            /** @var array<string, string> $parsedName */
+            $parsedName = CustomerServiceClient::parseName($customerResourceName);
+            $rootCustomerIds[] = $parsedName['customer_id'];
         }
 
         $customerIds = [];
@@ -88,7 +90,7 @@ final class CustomerIdsResolver implements CustomerIdsResolverInterface, LoggerA
         // managers to their child accounts ($customerIdsToChildAccounts).
         $customerIdsToChildAccounts = [];
 
-        while (!empty($managerCustomerIdsToSearch)) {
+        while ($managerCustomerIdsToSearch !== []) {
             $customerIdToSearch = array_shift($managerCustomerIdsToSearch);
             Assert::string($customerIdToSearch);
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Tests\Resolver\UserIdentifier;
 
-use Google\Ads\GoogleAds\V20\Common\UserIdentifier;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -74,7 +73,6 @@ final class PhoneNumberUserIdentifierResolverTest extends TestCase
         $result = $this->resolver->getUserIdentifiers($customer->reveal());
 
         self::assertCount(1, $result);
-        self::assertInstanceOf(UserIdentifier::class, $result[0]);
         self::assertSame($expectedHash, $result[0]->getHashedPhoneNumber());
     }
 
@@ -98,7 +96,6 @@ final class PhoneNumberUserIdentifierResolverTest extends TestCase
         $result = $this->resolver->getUserIdentifiers($customer->reveal());
 
         self::assertCount(1, $result);
-        self::assertInstanceOf(UserIdentifier::class, $result[0]);
         self::assertSame($expectedHash, $result[0]->getHashedPhoneNumber());
     }
 
@@ -159,7 +156,6 @@ final class PhoneNumberUserIdentifierResolverTest extends TestCase
         $result = $this->resolver->getUserIdentifiers($customer->reveal());
 
         self::assertCount(1, $result);
-        self::assertInstanceOf(UserIdentifier::class, $result[0]);
         self::assertSame($expectedHash, $result[0]->getHashedPhoneNumber());
     }
 
@@ -183,7 +179,6 @@ final class PhoneNumberUserIdentifierResolverTest extends TestCase
         $result = $this->resolver->getUserIdentifiers($customer->reveal());
 
         self::assertCount(1, $result);
-        self::assertInstanceOf(UserIdentifier::class, $result[0]);
         self::assertSame($expectedHash, $result[0]->getHashedPhoneNumber());
     }
 
@@ -207,7 +202,6 @@ final class PhoneNumberUserIdentifierResolverTest extends TestCase
         $result = $this->resolver->getUserIdentifiers($customer->reveal());
 
         self::assertCount(1, $result);
-        self::assertInstanceOf(UserIdentifier::class, $result[0]);
         self::assertSame($expectedHash, $result[0]->getHashedPhoneNumber());
     }
 }

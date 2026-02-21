@@ -26,7 +26,8 @@ final class CustomerIdChoiceType extends AbstractType
             ->setAllowedTypes('connection', ConnectionInterface::class)
             ->setDefaults([
                 'choices' => function (Options $options): array {
-                    $connection = $options->offsetGet('connection');
+                    /** @var mixed $connection */
+                    $connection = $options['connection'];
                     Assert::isInstanceOf($connection, ConnectionInterface::class);
 
                     return $this->customerIdsResolver->getCustomerIdsFromConnection($connection);

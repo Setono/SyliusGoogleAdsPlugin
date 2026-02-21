@@ -37,6 +37,7 @@ final class SearchResponse implements \IteratorAggregate
      */
     public function getIterator(): \Generator
     {
+        /** @phpstan-ignore generator.keyType, generator.valueType */
         yield from $this->serverStream->iterateAllElements();
     }
 }

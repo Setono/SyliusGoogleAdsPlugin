@@ -53,10 +53,10 @@ final class ConsentType extends Type
         }
 
         try {
+            /** @var array{adUserData?: bool, adPersonalization?: bool} $data */
             $data = json_decode($value, true, 512, JSON_THROW_ON_ERROR);
             Assert::isArray($data);
 
-            /** @psalm-suppress MixedArgumentTypeCoercion */
             return Consent::fromArray($data);
         } catch (\JsonException|\InvalidArgumentException $e) {
             throw ConversionException::conversionFailed($value, $this->getName(), $e);

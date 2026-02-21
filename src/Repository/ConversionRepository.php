@@ -26,13 +26,16 @@ class ConversionRepository extends EntityRepository implements ConversionReposit
     {
         $threshold = (new \DateTimeImmutable())->sub(new \DateInterval('P30D'));
 
-        return (int) $this->createQueryBuilder('o')
+        /** @var int|string $result */
+        $result = $this->createQueryBuilder('o')
             ->delete()
             ->andWhere('o.createdAt <= :threshold')
             ->setParameter('threshold', $threshold)
             ->getQuery()
             ->execute()
         ;
+
+        return (int) $result;
     }
 
     public function findOneByOrder(OrderInterface $order): ?ConversionInterface

@@ -32,7 +32,7 @@ final class AddEmailUserIdentifierSubscriber implements EventSubscriberInterface
         }
 
         // Google Ads requires removal of any '.' characters preceding "gmail.com" or "googlemail.com".
-        if (preg_match('/^(gmail|googlemail)\.com\s*/', $emailParts[1])) {
+        if (1 === preg_match('/^(gmail|googlemail)\.com\s*/', $emailParts[1])) {
             $emailParts[0] = str_replace('.', '', $emailParts[0]);
             $email = sprintf('%s@%s', $emailParts[0], $emailParts[1]);
         }

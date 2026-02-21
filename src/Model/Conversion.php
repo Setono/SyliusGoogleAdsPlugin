@@ -73,6 +73,7 @@ class Conversion implements ConversionInterface
 
     public function getTrackingId(): string
     {
+        /** @phpstan-ignore property.dynamicName */
         $val = $this->{$this->getTrackingIdParameter()};
         Assert::nullOrString($val);
 

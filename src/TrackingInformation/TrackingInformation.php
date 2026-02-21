@@ -94,7 +94,7 @@ final class TrackingInformation implements \JsonSerializable
             'gclid' => $this->gclid,
             'gbraid' => $this->gbraid,
             'wbraid' => $this->wbraid,
-        ]);
+        ], static fn (?string $v): bool => null !== $v);
     }
 
     public function assignToConversion(ConversionInterface $conversion): void
