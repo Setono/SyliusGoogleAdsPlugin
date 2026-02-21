@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin\Client\Resource;
 
 use Google\Ads\GoogleAds\Util\FieldMasks;
-use Google\Ads\GoogleAds\V19\Resources\UserList;
-use Google\Ads\GoogleAds\V19\Services\MutateUserListsRequest;
-use Google\Ads\GoogleAds\V19\Services\UserListOperation;
+use Google\Ads\GoogleAds\V20\Resources\UserList;
+use Google\Ads\GoogleAds\V20\Services\MutateUserListsRequest;
+use Google\Ads\GoogleAds\V20\Services\UserListOperation;
 
 /**
  * @experimental
- * See https://developers.google.com/google-ads/api/reference/rpc/v19/UserList
+ * See https://developers.google.com/google-ads/api/reference/rpc/v20/UserList
  *
  * @extends AbstractResource<UserList>
  */

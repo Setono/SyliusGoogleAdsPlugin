@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Client\Resource;
 
-use Google\Ads\GoogleAds\V19\Resources\OfflineUserDataJob;
-use Google\Ads\GoogleAds\V19\Services\AddOfflineUserDataJobOperationsRequest;
-use Google\Ads\GoogleAds\V19\Services\CreateOfflineUserDataJobRequest;
-use Google\Ads\GoogleAds\V19\Services\OfflineUserDataJobOperation;
-use Google\Ads\GoogleAds\V19\Services\RunOfflineUserDataJobRequest;
+use Google\Ads\GoogleAds\V20\Resources\OfflineUserDataJob;
+use Google\Ads\GoogleAds\V20\Services\AddOfflineUserDataJobOperationsRequest;
+use Google\Ads\GoogleAds\V20\Services\CreateOfflineUserDataJobRequest;
+use Google\Ads\GoogleAds\V20\Services\OfflineUserDataJobOperation;
+use Google\Ads\GoogleAds\V20\Services\RunOfflineUserDataJobRequest;
 
 /**
  * @experimental
- * See https://developers.google.com/google-ads/api/reference/rpc/v19/OfflineUserDataJob
+ * See https://developers.google.com/google-ads/api/reference/rpc/v20/OfflineUserDataJob
  *
  * @extends AbstractResource<OfflineUserDataJob>
  */

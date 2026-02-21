@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\ConversionProcessor;
 
-use Google\Ads\GoogleAds\Util\V18\ResourceNames;
-use Google\Ads\GoogleAds\V19\Common\Consent as GoogleConsent;
-use Google\Ads\GoogleAds\V19\Enums\ConsentStatusEnum\ConsentStatus;
-use Google\Ads\GoogleAds\V19\Enums\ConversionEnvironmentEnum\ConversionEnvironment;
-use Google\Ads\GoogleAds\V19\Services\ClickConversion;
-use Google\Ads\GoogleAds\V19\Services\UploadClickConversionsRequest;
+use Google\Ads\GoogleAds\Util\V20\ResourceNames;
+use Google\Ads\GoogleAds\V20\Common\Consent as GoogleConsent;
+use Google\Ads\GoogleAds\V20\Enums\ConsentStatusEnum\ConsentStatus;
+use Google\Ads\GoogleAds\V20\Enums\ConversionEnvironmentEnum\ConversionEnvironment;
+use Google\Ads\GoogleAds\V20\Services\ClickConversion;
+use Google\Ads\GoogleAds\V20\Services\UploadClickConversionsRequest;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Setono\SyliusGoogleAdsPlugin\Event\PreSetClickConversionConsentEvent;
 use Setono\SyliusGoogleAdsPlugin\Event\PreSetClickConversionDataEvent;

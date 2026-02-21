@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin\Factory;
 
 use Google\Ads\GoogleAds\Lib\OAuth2TokenBuilder;
-use Google\Ads\GoogleAds\Lib\V19\GoogleAdsClient;
-use Google\Ads\GoogleAds\Lib\V19\GoogleAdsClientBuilder;
+use Google\Ads\GoogleAds\Lib\V20\GoogleAdsClient;
+use Google\Ads\GoogleAds\Lib\V20\GoogleAdsClientBuilder;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Setono\SyliusGoogleAdsPlugin\Model\ConnectionInterface;

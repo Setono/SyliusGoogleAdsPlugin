@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Tests\Resolver\UserIdentifier;
 
-use Google\Ads\GoogleAds\V19\Common\UserIdentifier;
+use Google\Ads\GoogleAds\V20\Common\UserIdentifier;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Setono\SyliusGoogleAdsPlugin\Resolver\UserIdentifier\EmailUserIdentifierResolver;

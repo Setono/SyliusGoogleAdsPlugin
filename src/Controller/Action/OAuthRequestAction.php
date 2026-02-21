@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * This OAuth request is based on the example from the Google Ads PHP library:
- * https://github.com/googleads/google-ads-php/blob/v19.0.0/examples/Authentication/GenerateUserCredentials.php
+ * https://github.com/googleads/google-ads-php/blob/v20.0.0/examples/Authentication/GenerateUserCredentials.php
  */
 final class OAuthRequestAction extends AbstractOAuthAction
 {

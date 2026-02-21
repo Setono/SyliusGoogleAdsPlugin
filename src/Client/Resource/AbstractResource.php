@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Client\Resource;
 
-use Google\Ads\GoogleAds\Lib\V19\GoogleAdsClient;
-use Google\Ads\GoogleAds\V19\Resources\GoogleAdsField;
-use Google\Ads\GoogleAds\V19\Services\GoogleAdsRow;
-use Google\Ads\GoogleAds\V19\Services\SearchGoogleAdsFieldsRequest;
+use Google\Ads\GoogleAds\Lib\V20\GoogleAdsClient;
+use Google\Ads\GoogleAds\V20\Resources\GoogleAdsField;
+use Google\Ads\GoogleAds\V20\Services\GoogleAdsRow;
+use Google\Ads\GoogleAds\V20\Services\SearchGoogleAdsFieldsRequest;
 use Google\Protobuf\Internal\Message;
 use Setono\SyliusGoogleAdsPlugin\Client\ClientInterface;
 use function Symfony\Component\String\u;

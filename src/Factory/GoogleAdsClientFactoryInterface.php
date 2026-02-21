@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Factory;
 
-use Google\Ads\GoogleAds\Lib\V19\GoogleAdsClient;
+use Google\Ads\GoogleAds\Lib\V20\GoogleAdsClient;
 use Psr\Log\LoggerInterface;
 use Setono\SyliusGoogleAdsPlugin\Model\ConnectionInterface;
 

@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Setono\SyliusGoogleAdsPlugin\Uploader;
 
 use Doctrine\Persistence\ManagerRegistry;
-use Google\Ads\GoogleAds\V19\Common\CrmBasedUserListInfo;
-use Google\Ads\GoogleAds\V19\Enums\CustomerMatchUploadKeyTypeEnum\CustomerMatchUploadKeyType;
-use Google\Ads\GoogleAds\V19\Resources\UserList;
-use Google\Ads\GoogleAds\V19\Resources\UserListCustomerType;
+use Google\Ads\GoogleAds\V20\Common\CrmBasedUserListInfo;
+use Google\Ads\GoogleAds\V20\Enums\CustomerMatchUploadKeyTypeEnum\CustomerMatchUploadKeyType;
+use Google\Ads\GoogleAds\V20\Resources\UserList;
+use Google\Ads\GoogleAds\V20\Resources\UserListCustomerType;
 use Setono\Doctrine\ORMTrait;
 use Setono\SyliusGoogleAdsPlugin\Factory\ClientFactoryInterface;
 use Setono\SyliusGoogleAdsPlugin\Model\CustomerListInterface;

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Client\Resource;
 
-use Google\Ads\GoogleAds\V19\Resources\UserListCustomerType;
-use Google\Ads\GoogleAds\V19\Services\MutateUserListCustomerTypesRequest;
-use Google\Ads\GoogleAds\V19\Services\UserListCustomerTypeOperation;
+use Google\Ads\GoogleAds\V20\Resources\UserListCustomerType;
+use Google\Ads\GoogleAds\V20\Services\MutateUserListCustomerTypesRequest;
+use Google\Ads\GoogleAds\V20\Services\UserListCustomerTypeOperation;
 
 /**
  * @experimental
- * See https://developers.google.com/google-ads/api/reference/rpc/v19/UserListCustomerType
+ * See https://developers.google.com/google-ads/api/reference/rpc/v20/UserListCustomerType
  *
  * @extends AbstractResource<UserListCustomerType>
  */
