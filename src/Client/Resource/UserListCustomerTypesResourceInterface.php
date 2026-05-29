@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Client\Resource;
 
-use Google\Ads\GoogleAds\V20\Resources\UserListCustomerType;
+use Google\Ads\GoogleAds\V24\Resources\UserListCustomerType;
 
 /**
  * @experimental

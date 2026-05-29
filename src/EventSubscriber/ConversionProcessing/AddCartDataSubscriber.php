@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\EventSubscriber\ConversionProcessing;
 
-use Google\Ads\GoogleAds\V20\Services\CartData;
+use Google\Ads\GoogleAds\V24\Services\CartData;
 use Setono\SyliusGoogleAdsPlugin\Event\PreSetClickConversionDataEvent;
 use Setono\SyliusGoogleAdsPlugin\Repository\MerchantMappingRepositoryInterface;
 use Sylius\Component\Core\Model\OrderInterface;

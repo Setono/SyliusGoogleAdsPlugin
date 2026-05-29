@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Form\Type;
 
-use Google\Ads\GoogleAds\V20\Enums\UserListCustomerTypeCategoryEnum\UserListCustomerTypeCategory;
+use Google\Ads\GoogleAds\V24\Enums\UserListCustomerTypeCategoryEnum\UserListCustomerTypeCategory;
 use Setono\SyliusGoogleAdsPlugin\Model\CustomerListInterface;
 use Sylius\Bundle\ChannelBundle\Form\Type\ChannelChoiceType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;

@@ -30,7 +30,6 @@ setono_sylius_google_ads:
                 qualified_leads: Qualified leads
                 converted_leads: Converted leads
                 paid_subscribers: Paid subscribers
-                loyalty_sign_ups: Loyalty sign ups
                 cart_abandoners: Cart abandoners
                 loyalty_tier_1_members: Loyalty tier 1
                 loyalty_tier_2_members: Loyalty tier 2

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Client;
 
-use Google\Ads\GoogleAds\Lib\V20\GoogleAdsServerStreamDecorator;
-use Google\Ads\GoogleAds\V20\Services\GoogleAdsRow;
+use Google\Ads\GoogleAds\Lib\V24\GoogleAdsServerStreamDecorator;
+use Google\Ads\GoogleAds\V24\Services\GoogleAdsRow;
 use Google\ApiCore\ServerStream;
 use Webmozart\Assert\Assert;
 
@@ -21,7 +21,7 @@ final class SearchResponse implements \IteratorAggregate
     }
 
     /**
-     * @throws \InvalidArgumentException if $serverStream is not an instance of Google\Ads\GoogleAds\Lib\V20\GoogleAdsServerStreamDecorator
+     * @throws \InvalidArgumentException if $serverStream is not an instance of Google\Ads\GoogleAds\Lib\V24\GoogleAdsServerStreamDecorator
      */
     public static function fromServerStream(ServerStream $serverStream): self
     {
