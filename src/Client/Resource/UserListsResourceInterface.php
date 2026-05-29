@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Client\Resource;
 
-use Google\Ads\GoogleAds\V20\Resources\UserList;
+use Google\Ads\GoogleAds\V24\Resources\UserList;
 
 /**
- * @experimental
+ * @internal
  *
  * @extends UpdatableResourceInterface<UserList>
  * @extends ReadableResourceInterface<UserList>

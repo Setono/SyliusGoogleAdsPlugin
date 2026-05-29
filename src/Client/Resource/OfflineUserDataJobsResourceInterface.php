@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Client\Resource;
 
-use Google\Ads\GoogleAds\V20\Resources\OfflineUserDataJob;
-use Google\Ads\GoogleAds\V20\Services\OfflineUserDataJobOperation;
+use Google\Ads\GoogleAds\V24\Resources\OfflineUserDataJob;
+use Google\Ads\GoogleAds\V24\Services\OfflineUserDataJobOperation;
 
 /**
- * @experimental
+ * @internal
  *
  * @extends CreatableResourceInterface<OfflineUserDataJob>
  * @extends ReadableResourceInterface<OfflineUserDataJob>

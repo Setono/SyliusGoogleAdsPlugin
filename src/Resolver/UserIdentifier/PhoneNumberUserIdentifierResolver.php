@@ -7,12 +7,13 @@ namespace Setono\SyliusGoogleAdsPlugin\Resolver\UserIdentifier;
 use Brick\PhoneNumber\PhoneNumber;
 use Brick\PhoneNumber\PhoneNumberException;
 use Brick\PhoneNumber\PhoneNumberFormat;
-use Google\Ads\GoogleAds\V20\Common\UserIdentifier;
+use Google\Ads\GoogleAds\V24\Common\UserIdentifier;
 use Setono\SyliusGoogleAdsPlugin\Resolver\CustomerCountryResolverInterface;
 use Sylius\Component\Customer\Model\CustomerInterface;
 
 /**
- * @experimental
+ * @internal
+ *
  * Resolves phone number user identifiers for Google Ads Customer Match.
  *
  * Uses the brick/phonenumber library to properly parse and format phone numbers to E.164 format

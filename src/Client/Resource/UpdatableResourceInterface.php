@@ -7,7 +7,7 @@ namespace Setono\SyliusGoogleAdsPlugin\Client\Resource;
 use Google\Protobuf\Internal\Message;
 
 /**
- * @experimental
+ * @internal
  *
  * @template T of Message
  * @extends CreatableResourceInterface<T>

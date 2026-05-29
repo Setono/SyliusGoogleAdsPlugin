@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Setono\SyliusGoogleAdsPlugin\Client;
 
-use Google\Ads\GoogleAds\Lib\V20\GoogleAdsClient;
-use Google\Ads\GoogleAds\V20\Services\SearchGoogleAdsStreamRequest;
+use Google\Ads\GoogleAds\Lib\V24\GoogleAdsClient;
+use Google\Ads\GoogleAds\V24\Services\SearchGoogleAdsStreamRequest;
 use Setono\SyliusGoogleAdsPlugin\Client\Resource\OfflineUserDataJobsResource;
 use Setono\SyliusGoogleAdsPlugin\Client\Resource\OfflineUserDataJobsResourceInterface;
 use Setono\SyliusGoogleAdsPlugin\Client\Resource\UserListCustomerTypesResource;
@@ -14,7 +14,7 @@ use Setono\SyliusGoogleAdsPlugin\Client\Resource\UserListsResource;
 use Setono\SyliusGoogleAdsPlugin\Client\Resource\UserListsResourceInterface;
 
 /**
- * @experimental
+ * @internal
  */
 final class Client implements ClientInterface
 {
