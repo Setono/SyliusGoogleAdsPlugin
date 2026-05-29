@@ -14,6 +14,8 @@ use function Symfony\Component\String\u;
 use Webmozart\Assert\Assert;
 
 /**
+ * @internal
+ *
  * @experimental
  *
  * @template T of Message

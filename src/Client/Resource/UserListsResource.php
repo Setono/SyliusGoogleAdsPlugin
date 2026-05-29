@@ -10,6 +10,8 @@ use Google\Ads\GoogleAds\V24\Services\MutateUserListsRequest;
 use Google\Ads\GoogleAds\V24\Services\UserListOperation;
 
 /**
+ * @internal
+ *
  * @experimental
  * See https://developers.google.com/google-ads/api/reference/rpc/v24/UserList
  *

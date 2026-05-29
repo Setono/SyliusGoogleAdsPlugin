@@ -99,9 +99,12 @@ To start using the plugin, go to https://your-domain.com/admin/google-ads and fo
 
 # Backward compatibility
 
-The plugin adheres to semantic versioning, however, if a feature is `experimental` it is not included in the promise.
+The plugin adheres to [semantic versioning](https://semver.org). However, any class, interface, method or property
+annotated with `@experimental` or `@internal` is **not** covered by that promise and may change or be removed in any release.
 
-Right now the customer lists feature is experimental.
+Right now the customer lists feature is experimental. In addition, the classes that expose types from the underlying
+[Google Ads PHP library](https://github.com/googleads/google-ads-php) (for example the `Client`, its resources and the
+conversion events) are marked `@internal`, because those types change with every Google Ads API version we upgrade to.
 
 [ico-version]: https://poser.pugx.org/setono/sylius-google-ads-plugin/v/stable
 [ico-license]: https://poser.pugx.org/setono/sylius-google-ads-plugin/license

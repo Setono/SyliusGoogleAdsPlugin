@@ -7,6 +7,8 @@ namespace Setono\SyliusGoogleAdsPlugin\Client\Resource;
 use Google\Ads\GoogleAds\V24\Resources\UserListCustomerType;
 
 /**
+ * @internal
+ *
  * @experimental
  *
  * @extends CreatableResourceInterface<UserListCustomerType>

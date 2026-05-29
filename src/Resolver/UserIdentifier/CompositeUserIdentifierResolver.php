@@ -8,6 +8,8 @@ use Setono\CompositeCompilerPass\CompositeService;
 use Sylius\Component\Customer\Model\CustomerInterface;
 
 /**
+ * @internal
+ *
  * @experimental
  *
  * @extends CompositeService<UserIdentifierResolverInterface>

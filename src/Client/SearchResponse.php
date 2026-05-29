@@ -10,6 +10,8 @@ use Google\ApiCore\ServerStream;
 use Webmozart\Assert\Assert;
 
 /**
+ * @internal
+ *
  * @experimental
  *
  * @implements \IteratorAggregate<array-key, GoogleAdsRow>

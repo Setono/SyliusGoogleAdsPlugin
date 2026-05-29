@@ -12,6 +12,8 @@ use Setono\SyliusGoogleAdsPlugin\Resolver\CustomerCountryResolverInterface;
 use Sylius\Component\Customer\Model\CustomerInterface;
 
 /**
+ * @internal
+ *
  * @experimental
  * Resolves phone number user identifiers for Google Ads Customer Match.
  *
