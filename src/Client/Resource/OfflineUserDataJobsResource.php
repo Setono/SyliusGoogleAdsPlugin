@@ -13,7 +13,6 @@ use Google\Ads\GoogleAds\V24\Services\RunOfflineUserDataJobRequest;
 /**
  * @internal
  *
- * @experimental
  * See https://developers.google.com/google-ads/api/reference/rpc/v24/OfflineUserDataJob
  *
  * @extends AbstractResource<OfflineUserDataJob>

@@ -12,8 +12,6 @@ use Webmozart\Assert\Assert;
 /**
  * @internal
  *
- * @experimental
- *
  * @implements \IteratorAggregate<array-key, GoogleAdsRow>
  */
 final class SearchResponse implements \IteratorAggregate

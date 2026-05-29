@@ -14,7 +14,6 @@ use Sylius\Component\Customer\Model\CustomerInterface;
 /**
  * @internal
  *
- * @experimental
  * Resolves phone number user identifiers for Google Ads Customer Match.
  *
  * Uses the brick/phonenumber library to properly parse and format phone numbers to E.164 format

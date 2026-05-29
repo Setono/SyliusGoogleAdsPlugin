@@ -9,8 +9,6 @@ use Google\Protobuf\Internal\Message;
 /**
  * @internal
  *
- * @experimental
- *
  * @template T of Message
  */
 interface ReadableResourceInterface

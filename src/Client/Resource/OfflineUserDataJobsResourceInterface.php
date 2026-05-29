@@ -10,8 +10,6 @@ use Google\Ads\GoogleAds\V24\Services\OfflineUserDataJobOperation;
 /**
  * @internal
  *
- * @experimental
- *
  * @extends CreatableResourceInterface<OfflineUserDataJob>
  * @extends ReadableResourceInterface<OfflineUserDataJob>
  */

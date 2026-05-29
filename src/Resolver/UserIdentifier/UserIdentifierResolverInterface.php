@@ -10,7 +10,6 @@ use Sylius\Component\Customer\Model\CustomerInterface;
 /**
  * @internal
  *
- * @experimental
  * todo is 'resolver' the right name for this?
  */
 interface UserIdentifierResolverInterface

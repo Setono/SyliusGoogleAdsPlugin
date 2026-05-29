@@ -15,8 +15,6 @@ use Setono\SyliusGoogleAdsPlugin\Client\Resource\UserListsResourceInterface;
 
 /**
  * @internal
- *
- * @experimental
  */
 final class Client implements ClientInterface
 {

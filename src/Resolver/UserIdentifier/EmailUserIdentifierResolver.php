@@ -9,8 +9,6 @@ use Sylius\Component\Customer\Model\CustomerInterface;
 
 /**
  * @internal
- *
- * @experimental
  */
 final class EmailUserIdentifierResolver extends AbstractUserIdentifierResolver
 {

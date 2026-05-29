@@ -11,7 +11,6 @@ use Google\Ads\GoogleAds\V24\Services\UserListCustomerTypeOperation;
 /**
  * @internal
  *
- * @experimental
  * See https://developers.google.com/google-ads/api/reference/rpc/v24/UserListCustomerType
  *
  * @extends AbstractResource<UserListCustomerType>

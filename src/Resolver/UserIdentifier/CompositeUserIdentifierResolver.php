@@ -10,8 +10,6 @@ use Sylius\Component\Customer\Model\CustomerInterface;
 /**
  * @internal
  *
- * @experimental
- *
  * @extends CompositeService<UserIdentifierResolverInterface>
  */
 final class CompositeUserIdentifierResolver extends CompositeService implements UserIdentifierResolverInterface

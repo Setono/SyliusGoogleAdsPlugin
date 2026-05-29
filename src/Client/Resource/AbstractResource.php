@@ -16,8 +16,6 @@ use Webmozart\Assert\Assert;
 /**
  * @internal
  *
- * @experimental
- *
  * @template T of Message
  */
 abstract class AbstractResource

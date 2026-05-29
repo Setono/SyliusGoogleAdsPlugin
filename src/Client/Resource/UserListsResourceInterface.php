@@ -9,8 +9,6 @@ use Google\Ads\GoogleAds\V24\Resources\UserList;
 /**
  * @internal
  *
- * @experimental
- *
  * @extends UpdatableResourceInterface<UserList>
  * @extends ReadableResourceInterface<UserList>
  */
